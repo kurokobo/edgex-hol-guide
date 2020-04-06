@@ -91,6 +91,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
+      <a href="#lab-5-" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -322,10 +326,157 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Lab 5 - ルールエンジンの利用
+      </label>
     
     <a href="./" title="Lab 5 - ルールエンジンの利用" class="md-nav__link md-nav__link--active">
       Lab 5 - ルールエンジンの利用
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rest" class="md-nav__link">
+    REST デバイスの追加
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest_1" class="md-nav__link">
+    REST デバイスサービスの概要
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    今回試す設計
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest_2" class="md-nav__link">
+    REST デバイスサービスの動作確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ルールエンジンの利用
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ルールエンジンの概要
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    ルールエンジンの設定
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    ルールの設定
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    ルールの検討
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    ルールの投入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    ルールの確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    ルールエンジンの動作確認
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -378,6 +529,153 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rest" class="md-nav__link">
+    REST デバイスの追加
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest_1" class="md-nav__link">
+    REST デバイスサービスの概要
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    今回試す設計
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest_2" class="md-nav__link">
+    REST デバイスサービスの動作確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ルールエンジンの利用
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ルールエンジンの概要
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    ルールエンジンの設定
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    ルールの設定
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    ルールの検討
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    ルールの投入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    ルールの確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    ルールエンジンの動作確認
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -386,9 +684,623 @@
                   <a href="https://github.com/kurokobo/edgex-hol-guide/edit/master/docs/fuji/lab5-rulesengine.md" title="編集" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Lab 5 - ルールエンジンの利用</h1>
-                
-                
+                <h1 id="lab-5-">Lab 5 - ルールエンジンの利用<a class="headerlink" href="#lab-5-" title="Permanent link">&para;</a></h1>
+<p>これまでのエントリでは、仮想デバイスや MQTT デバイスを用いて、デバイスからの情報の収集やデバイスへのコマンドの実行を試してきました。</p>
+<p>今回は、ルールエンジンの動作、つまり、</p>
+<ul>
+<li>何らかのデバイスのリソースの値が</li>
+<li>何らかの条件を満たしたら</li>
+<li>別のデバイスでコマンドを実行する</li>
+</ul>
+<p>ような自動制御を実際に試します。</p>
+<p>前回のエントリ で構成した MQTT デバイスだけを利用してもすぐできるのですが、それだけだとおもしろくないので、新しいデバイスサービスをひとつ追加して、それを組み込みます。具体的には、</p>
+<ul>
+<li>ルール (1)<ul>
+<li>REST デバイスから送られる値が</li>
+<li>80 を越えたら</li>
+<li>MQTT デバイスにメッセージ HIGH を送信する</li>
+</ul>
+</li>
+<li>ルール (2)<ul>
+<li>REST デバイスから送られる値が</li>
+<li>20 を下回ったら</li>
+<li>MQTT デバイスにメッセージ LOW を送信する</li>
+</ul>
+</li>
+</ul>
+<p>ような状態を目指します。図示すると以下のような状態です。</p>
+<p><img alt="" src="../img/rulesengine-architecture.png" /></p>
+<h2 id="_1">必要なファイルの用意<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>前のラボでリポジトリをクローンしていない場合はクローンします。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ git clone https://github.com/kurokobo/edgex-lab-handson.git
+</code></pre></div>
+</td></tr></table>
+
+<p>今回は <code>lab05</code> ディレクトリです。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ <span class="nb">cd</span> lab05
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="rest">REST デバイスの追加<a class="headerlink" href="#rest" title="Permanent link">&para;</a></h2>
+<p>まだ開発途中で正式リリースには至っていないようですが、device-rest-go と名付けられたデバイスサービスがあります。</p>
+<h3 id="rest_1">REST デバイスサービスの概要<a class="headerlink" href="#rest_1" title="Permanent link">&para;</a></h3>
+<p>これは、以下のようなデバイスサービスです。</p>
+<ul>
+<li>REST で POST してくるデバイスに利用する</li>
+<li>POST されたリクエストボディの中身を値として EdgeX Foundry に取り込む</li>
+</ul>
+<p>このデバイスサービスを構成すると、エンドポイントとして</p>
+<ul>
+<li>/api/v1/resource/&lt;デバイス名&gt;/&lt;リソース名&gt;</li>
+</ul>
+<p>が作成され、これに対して POST することで値を取り込んでくれるようになります。デバイス名やリソース名は、前回取り扱った MQTT デバイスと同様、デバイスプロファイルなどの設定ファイルで定義できます。</p>
+<p>なお、現時点では情報のやりとりは一方向であり、つまり、デバイス側から POST された値を取り込むのみで、逆にデバイス側へのリクエストの発行はできないようです。 また、JSON を投げても、現時点の実装ではパースはしてくれず単なる文字列として扱われるようです。</p>
+<h3 id="_2">今回試す設計<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>今回は、 device-rest-go の README.md を参考に、以下のデバイスサービスとデバイスを定義しています。</p>
+<ul>
+<li>デバイスプロファイル<ul>
+<li>rest/rest.test.device.profile.yml ファイル</li>
+<li>リソース int と float を定義</li>
+</ul>
+</li>
+<li>デバイスサービス設定<ul>
+<li>rest/configuration.toml ファイル</li>
+<li>上記のデバイスプロファイルに紐づけた REST_DEVICE を定義</li>
+</ul>
+</li>
+</ul>
+<p>これにより、</p>
+<ul>
+<li>/api/v1/resource/REST_DEVICE/int</li>
+<li>/api/v1/resource/REST_DEVICE/float</li>
+</ul>
+<p>に値を POST すれば取り込んでもらえるようになるはずです。</p>
+<p>この REST デバイスサービスを含め、今回分の環境は、Docker Compose ファイルに反映済みです</p>
+<h3 id="_3">起動<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>では、今回分の環境をまとめて起動させます。</p>
+<p>MQTT デバイスは今回も使うので、 環境に合わせて mqtt/configuration.toml は修正してください。</p>
+<p>MQTT ブローカ、MQTT デバイス、EdgeX Foundry の順に起動します。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker run -d --rm --name broker -p <span class="m">1883</span>:1883 eclipse-mosquitto
+
+$ docker run -d --restart<span class="o">=</span>always --name<span class="o">=</span>mqtt-scripts -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/mqtt-scripts:/scripts&quot;</span> dersimn/mqtt-scripts --url mqtt://192.168.0.100 --dir /scripts
+
+$ docker-compose up -d
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="rest_2">REST デバイスサービスの動作確認<a class="headerlink" href="#rest_2" title="Permanent link">&para;</a></h3>
+<p>起動が確認できたら、実際にエンドポイントに POST して、データの取り込みを確認します。待ち受けポートは 49986 です。Content-Type は text/plain である必要があります。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ curl -X POST -H <span class="s2">&quot;Content-Type: text/plain&quot;</span> -d <span class="m">12345</span> http://localhost:49986/api/v1/resource/REST_DEVICE/int
+</code></pre></div>
+</td></tr></table>
+
+<p>edgex-device-rest コンテナのログで Pushed event to core data が記録されていれば、値は正常に受け付けられています。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker logs --tail <span class="m">5</span> edgex-device-rest
+<span class="nv">level</span><span class="o">=</span>DEBUG <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0621062Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>resthandler.go:82 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;Received POST for Device=REST_DEVICE Resource=int&quot;</span>
+<span class="nv">level</span><span class="o">=</span>DEBUG <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0673842Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>resthandler.go:101 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;Content Type is &#39;text/plain&#39; &amp; Media Type is &#39;text/plain&#39; and Type is &#39;Int64&#39;&quot;</span>
+<span class="nv">level</span><span class="o">=</span>DEBUG <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0726606Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>resthandler.go:142 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;Incoming reading received: Device=REST_DEVICE Resource=int&quot;</span>
+<span class="nv">level</span><span class="o">=</span>DEBUG <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0766349Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>utils.go:75 correlation-id<span class="o">=</span>946f482c-db1f-44b5-8a76-437c4ca3d3e9 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;SendEvent: EventClient.MarshalEvent encoded event&quot;</span>
+<span class="nv">level</span><span class="o">=</span>INFO <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0899243Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>utils.go:93 Content-Type<span class="o">=</span>application/json correlation-id<span class="o">=</span>946f482c-db1f-44b5-8a76-437c4ca3d3e9 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;SendEvent: Pushed event to core data&quot;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>実際に取り込まれているようです。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ edgex-cli reading list REST_DEVICE -l <span class="m">10</span>
+Reading ID                              Name    Device          Origin                  Value   Created         Modified        Pushed
+b43f7300-1377-4fdb-a82f-44eb497d9568    int     REST_DEVICE     <span class="m">1579938557072646900</span>     <span class="m">12345</span>   <span class="m">3</span> minutes       <span class="m">3</span> minutes       <span class="m">50</span> years
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="_4">ルールエンジンの利用<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>お膳立てができたので、本題のルールエンジンを構成していきます。</p>
+<h3 id="_5">ルールエンジンの概要<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>詳細は <a href="https://docs.edgexfoundry.org/2.0/microservices/support/rulesengine/Ch-RulesEngine/">公式のドキュメント</a> がわかりやすいですが、端的に言えば、</p>
+<ul>
+<li>コアサービスまたはエクスポートサービスからデータを受け取る</li>
+<li>事前に定義されたルールの条件との合致を確認する</li>
+<li>合致していた場合は、そのルールで定義されたアクションを実行する</li>
+</ul>
+<p>ような処理をしてくれるサービスです。</p>
+<p>実装は現段階では BRMS の <a href="https://www.drools.org/">Drools</a> ベースとのことなので、Java 製ですね。</p>
+<p>ルールエンジンへデータを配信する構成パタンは、ドキュメントでは以下の二つが説明されています。</p>
+<ul>
+<li>エクスポートサービスのクライアントとして動作させるパタン<ul>
+<li>データは Export Distribution（edgex-export-distro コンテナ）から配信される</li>
+<li>データの流れが全体で統一されてシンプルに</li>
+<li>レイテンシやエクスポートサービスのキャパシティなどの面にデメリット</li>
+</ul>
+</li>
+<li>コアサービスに直結させるパタン<ul>
+<li>データは Core Data（edgex-core-data コンテナ）から配信される</li>
+<li>エクスポートサービスをバイパスすることで、レイテンシやパフォーマンス面ではメリットがある</li>
+<li>データの流れはやや複雑に</li>
+</ul>
+</li>
+</ul>
+<p>この構成パタンの選択や、具体的な接続先の情報は、次で紹介する設定ファイルで指定できます。</p>
+<h3 id="_6">ルールエンジンの設定<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>設定がデフォルトのままでよければ、コンテナイメージの中にすべて含まれているので、敢えて手で投入する必要はありませんが、今回はせっかくなので触れるようにしています。rulesengine フォルダの中のファイル群がそれです。</p>
+<p><a href="https://docs.edgexfoundry.org/2.0/microservices/support/rulesengine/Ch-RulesEngine/">公式のドキュメント</a> で触れられている設定が含まれるファイルが、rulesengine/application.properties です。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ cat rulesengine/application.properties
+...
+export.client<span class="o">=</span><span class="nb">false</span>
+...
+export.client.registration.url<span class="o">=</span>http://edgex-export-client:48071/api/v1
+export.client.registration.name<span class="o">=</span>EdgeXRulesEngine
+...
+export.zeromq.port<span class="o">=</span><span class="m">5563</span>
+export.zeromq.host<span class="o">=</span>tcp://edgex-core-data
+...
+</code></pre></div>
+</td></tr></table>
+
+<p>export.client が false なので、今回はコアサービスから直接データを受け取ります。export.zeromq.host は現時点のデフォルトでは tcp://edgex-app-service-configurable-rules になっており、アプリケーションサービス からデータを受け取る形になっていますが、今回はシンプルにドキュメントに従って tcp://edgex-core-data にしています。</p>
+<p>もう一つのファイルが、rulesengine/rule-template.drl です。これはルールそのもののテンプレートとして利用されます。これについては後述します。</p>
+<h2 id="_7">ルールの設定<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>では、実際にルールを設定していきます。現状、GUI でも CLI でもできないので、API を叩きます。標準 GUI には設定画面はあるものの、プルダウンに項目が出てこなくて設定できずでした。</p>
+<h3 id="_8">ルールの検討<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>ルールは以下ような JSON で投入します。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;ルール名&gt;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガ条件にするデバイス名&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;checks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;parameter&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガ条件にするリソース名&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand1&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガ条件にする値&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;比較演算子&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand2&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガする閾値&gt;&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;操作対象のデバイス ID&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;操作対象のコマンド ID&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;操作対象のコマンドに PUT される内容&gt;&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガされたときのログ出力文字列&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>全体の構造は、condition で指定した条件を満たしたら action で指定したコマンドがトリガされる、と思えばよいでしょう。</p>
+<p>condition での指定値は以下のように組んでいきます。</p>
+<ul>
+<li>device<ul>
+<li>トリガ条件にするデバイスの名称を指定します。ID では動かないので注意です</li>
+<li>今回だと、REST デバイスの値を元にコマンドを実行したいので、REST_DEVICE を指定します</li>
+</ul>
+</li>
+<li>parameter<ul>
+<li>トリガ条件にするデバイスのリソース名を指定します。リソース名なので、デバイスプロファイルで指定した名称であり、すなわち Reading の名前でもあります</li>
+<li>今回の REST_DEVICE はリソース int と float を持ちますが、今回は int を指定します</li>
+</ul>
+</li>
+<li>operand1<ul>
+<li>比較元になる値を作ります。デバイスの値は内部では文字列値として扱われているため、数値であれば適切な型にキャストする必要があります</li>
+<li>Drools が Java ベースのため、ここでは Java の文法で書きます。値に応じて、例えば以下などが使い分けられるでしょう<ul>
+<li>Integer.parseInt(value)</li>
+<li>Float.parseFloat(value)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>operation<ul>
+<li>比較演算子です。&lt;、=、&gt; などが考えられます</li>
+</ul>
+</li>
+<li>operand2<ul>
+<li>閾値です</li>
+</ul>
+</li>
+</ul>
+<p>action での指定値は、以下のように組みます。</p>
+<ul>
+<li>device<ul>
+<li>先ほどと異なり、ここでは ID で指定します</li>
+<li>今回は MQ_DEVICE の ID です</li>
+<li>デバイスの ID は API で確認できます（方法は 過去のエントリ で）</li>
+</ul>
+</li>
+<li>command<ul>
+<li>コマンドも ID で指定します</li>
+<li>今回は testmessage の ID です</li>
+<li>コマンドの ID も API で確認できます（方法は 過去のエントリ で）</li>
+</ul>
+</li>
+<li>body<ul>
+<li>コマンドの PUT 命令のボディを JSON 形式で指定します</li>
+<li>めっちゃエスケープが必要です</li>
+<li>例えば今回だと、{\\"message\\":\\"HIGH\\"} や {\\"message\\":\\"LOW\\"} です</li>
+</ul>
+</li>
+</ul>
+<p>最終的に、今回作りたい以下のルール群は、</p>
+<ul>
+<li>ルール (1)<ul>
+<li>REST デバイスから送られる値が</li>
+<li>80 を越えたら</li>
+<li>MQTT デバイスにメッセージ HIGH を送信する</li>
+</ul>
+</li>
+<li>ルール (2)<ul>
+<li>REST デバイスから送られる値が</li>
+<li>20 を下回ったら</li>
+<li>MQTT デバイスにメッセージ LOW を送信する</li>
+</ul>
+</li>
+</ul>
+<p>ひとつめは以下の JSON で、</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;rule_int_high&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;REST_DEVICE&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;checks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;parameter&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand1&quot;</span><span class="p">:</span> <span class="s2">&quot;Integer.parseInt(value)&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand2&quot;</span><span class="p">:</span> <span class="s2">&quot;80&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;09dae1fc-e2be-4388-9677-639d2f24c58b&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;1c7a50e7-5424-4bce-9b9a-29849510580e&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;{\\\&quot;message\\\&quot;:\\\&quot;HIGH\\\&quot;}&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;Action triggered: The value is too high.&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>ふたつめは以下の JSON であらわされます。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;rule_int_low&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;REST_DEVICE&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;checks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;parameter&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand1&quot;</span><span class="p">:</span> <span class="s2">&quot;Integer.parseInt(value)&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand2&quot;</span><span class="p">:</span> <span class="s2">&quot;20&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;09dae1fc-e2be-4388-9677-639d2f24c58b&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;1c7a50e7-5424-4bce-9b9a-29849510580e&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;{\\\&quot;message\\\&quot;:\\\&quot;LOW\\\&quot;}&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;Action triggered: The value is too low.&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="_9">ルールの投入<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>では、ルールを投入します。エンドポイントは以下です。</p>
+<ul>
+<li>http://localhost:48075/api/v1/rule</li>
+</ul>
+<p>ここに、先の JSON を POST します。</p>
+<p><img alt="" src="../img/rulesengine-rule1.png" /></p>
+<p><img alt="" src="../img/rulesengine-rule2.png" /></p>
+<h3 id="_10">ルールの確認<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>ルールが投入されると、rule-template.drl を元に新しい &lt;ルール名&gt;.drl ファイルが生成されて利用されます。edgex-support-rulesengine 内に配置されるので、ここではコンテナ内のファイルを cat して覗きます。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker <span class="nb">exec</span> edgex-support-rulesengine cat /edgex/edgex-support-rulesengine/rules/rule_int_high.drl
+package org.edgexfoundry.rules<span class="p">;</span>
+global org.edgexfoundry.engine.CommandExecutor executor<span class="p">;</span>
+global org.edgexfoundry.support.logging.client.EdgeXLogger logger<span class="p">;</span>
+import org.edgexfoundry.domain.core.Event<span class="p">;</span>
+import org.edgexfoundry.domain.core.Reading<span class="p">;</span>
+import java.util.Map<span class="p">;</span>
+rule <span class="s2">&quot;rule_int_high&quot;</span>
+when
+  <span class="nv">$e</span>:Event<span class="o">(</span><span class="nv">$rlist</span>: readings <span class="o">&amp;&amp;</span> <span class="nv">device</span><span class="o">==</span><span class="s2">&quot;REST_DEVICE&quot;</span><span class="o">)</span>
+  <span class="nv">$r0</span>:Reading<span class="o">(</span><span class="nv">name</span><span class="o">==</span><span class="s2">&quot;int&quot;</span> <span class="o">&amp;&amp;</span> Integer.parseInt<span class="o">(</span>value<span class="o">)</span> &gt; <span class="m">80</span><span class="o">)</span> from <span class="nv">$rlist</span>
+<span class="k">then</span>
+executor.fireCommand<span class="o">(</span><span class="s2">&quot;09dae1fc-e2be-4388-9677-639d2f24c58b&quot;</span>, <span class="s2">&quot;1c7a50e7-5424-4bce-9b9a-29849510580e&quot;</span>, <span class="s2">&quot;{\&quot;message\&quot;:\&quot;HIGH\&quot;}&quot;</span><span class="o">)</span><span class="p">;</span>
+logger.info<span class="o">(</span><span class="s2">&quot;Action triggered: The value is too high.&quot;</span><span class="o">)</span><span class="p">;</span>
+end
+
+$ docker <span class="nb">exec</span> edgex-support-rulesengine cat /edgex/edgex-support-rulesengine/rules/rule_int_low.drl
+package org.edgexfoundry.rules<span class="p">;</span>
+global org.edgexfoundry.engine.CommandExecutor executor<span class="p">;</span>
+global org.edgexfoundry.support.logging.client.EdgeXLogger logger<span class="p">;</span>
+import org.edgexfoundry.domain.core.Event<span class="p">;</span>
+import org.edgexfoundry.domain.core.Reading<span class="p">;</span>
+import java.util.Map<span class="p">;</span>
+rule <span class="s2">&quot;rule_int_low&quot;</span>
+when
+  <span class="nv">$e</span>:Event<span class="o">(</span><span class="nv">$rlist</span>: readings <span class="o">&amp;&amp;</span> <span class="nv">device</span><span class="o">==</span><span class="s2">&quot;REST_DEVICE&quot;</span><span class="o">)</span>
+  <span class="nv">$r0</span>:Reading<span class="o">(</span><span class="nv">name</span><span class="o">==</span><span class="s2">&quot;int&quot;</span> <span class="o">&amp;&amp;</span> Integer.parseInt<span class="o">(</span>value<span class="o">)</span> &lt; <span class="m">20</span><span class="o">)</span> from <span class="nv">$rlist</span>
+<span class="k">then</span>
+executor.fireCommand<span class="o">(</span><span class="s2">&quot;09dae1fc-e2be-4388-9677-639d2f24c58b&quot;</span>, <span class="s2">&quot;1c7a50e7-5424-4bce-9b9a-29849510580e&quot;</span>, <span class="s2">&quot;{\&quot;message\&quot;:\&quot;LOW\&quot;}&quot;</span><span class="o">)</span><span class="p">;</span>
+logger.info<span class="o">(</span><span class="s2">&quot;Action triggered: The value is too low.&quot;</span><span class="o">)</span><span class="p">;</span>
+end
+</code></pre></div>
+</td></tr></table>
+
+<p>手元の rule-template.drl と見比べると、テンプレートを元に展開されているっぽさがわかりますね。Drools の drl ファイルの文法にあまり詳しくないですが、行われているのが単純な文字列連結なのであれば、operand に指定する値あたりは工夫すると、もうちょっと複雑な計算もできるのかもしれません。試していませんし、インジェクション攻撃っぽいですけど。</p>
+<p>なお、現在の API ではルールの中身までは確認できず、ルール名の一覧が取得できるのみのようです。悲しい。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ curl -s http://localhost:48075/api/v1/rule <span class="p">|</span> jq
+<span class="o">[</span>
+  <span class="s2">&quot;rule_int_high&quot;</span>,
+  <span class="s2">&quot;rule_int_low&quot;</span>
+<span class="o">]</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="_11">ルールエンジンの動作確認<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>動作を確認していきます。</p>
+<p>動きを追いやすくするため、下準備として edgex-support-rulesengine のログを常時表示させて、さらに別のターミナルで MQTT ブローカの全トピックを購読しておくとわかりやすいです。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker logs -f --tail<span class="o">=</span><span class="m">10</span> edgex-support-rulesengine
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:15.023<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: JSON event received
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:15.024<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: Event sent to rules engine <span class="k">for</span> device id:  MQ_DEVICE
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:17.214<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: JSON event received
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:17.216<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: Event sent to rules engine <span class="k">for</span> device id:  MQ_DEVICE
+...
+</code></pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker run --init --rm -it efrecon/mqtt-client sub -h <span class="m">192</span>.168.0.100 -t <span class="s2">&quot;#&quot;</span> -v
+logic/connected <span class="m">2</span>
+DataTopic <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;MQ_DEVICE&quot;</span>,<span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat32&quot;</span>,<span class="s2">&quot;randfloat32&quot;</span>:<span class="s2">&quot;27.0&quot;</span><span class="o">}</span>
+...
+</code></pre></div>
+</td></tr></table>
+
+<p>では、REST デバイスの気持ちになって、まずはルールに合致しないデータを REST デバイスサービスに POST します。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ curl -X POST -H <span class="s2">&quot;Content-Type: text/plain&quot;</span> -d <span class="m">50</span> http://localhost:49986/api/v1/resource/REST_DEVICE/int
+</code></pre></div>
+</td></tr></table>
+
+<p>値は取り込まれていますし、</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ edgex-cli reading list REST_DEVICE -l <span class="m">10</span>
+Reading ID                              Name    Device          Origin                  Value   Created         Modified        Pushed
+<span class="m">66461804</span>-a894-470f-a099-631ffd4c32cb    int     REST_DEVICE     <span class="m">1579960045357298000</span>     <span class="m">50</span>      About a minute  About a minute  <span class="m">50</span> years
+</code></pre></div>
+</td></tr></table>
+
+<p>ルールエンジンにも REST_DEVICE からの値は届いているようなログが出ますが、実際には何もトリガされません。正常です。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker logs -f --tail<span class="o">=</span><span class="m">10</span> edgex-support-rulesengine
+...
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:47:25.370<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: JSON event received
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:47:25.466<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: Event sent to rules engine <span class="k">for</span> device id:  REST_DEVICE
+...
+</code></pre></div>
+</td></tr></table>
+
+<p>つづいて、ルールに合致する値を投げます。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ curl -X POST -H <span class="s2">&quot;Content-Type: text/plain&quot;</span> -d <span class="m">90</span> http://192.168.0.100:49986/api/v1/resource/REST_DEVICE/int
+</code></pre></div>
+</td></tr></table>
+
+<p>ルールエンジンのログでは、指定したログメッセージが記録され、 {"message":"HIGH"} が指定したコマンドにリクエストされたことがわかります。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">docker</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="c1">--tail=10 edgex-support-rulesengine</span>
+<span class="p">...</span><span class="w"></span>
+<span class="o">[</span><span class="n">2020-01-25 13:57:26.805</span><span class="o">]</span><span class="w"> </span><span class="n">boot</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="w">  </span><span class="n">INFO</span><span class="w"> </span><span class="o">[</span><span class="n">main</span><span class="o">]</span><span class="w"> </span><span class="c1">--- ZeroMQEventSubscriber: JSON event received</span>
+<span class="o">[</span><span class="n">2020-01-25 13:57:26.853</span><span class="o">]</span><span class="w"> </span><span class="n">boot</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="w">  </span><span class="n">INFO</span><span class="w"> </span><span class="o">[</span><span class="n">main</span><span class="o">]</span><span class="w"> </span><span class="c1">--- RuleEngine: Action triggered: The value is too high.</span>
+<span class="o">[</span><span class="n">2020-01-25 13:57:26.853</span><span class="o">]</span><span class="w"> </span><span class="n">boot</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="w">  </span><span class="n">INFO</span><span class="w"> </span><span class="o">[</span><span class="n">SimpleAsyncTaskExecutor-2</span><span class="o">]</span><span class="w"> </span><span class="c1">--- CommandExecutor: Sending request to:  09dae1fc-e2be-4388-9677-639d2f24c58bfor command:  1c7a50e7-5424-4bce-9b9a-29849510580e with body: {&quot;message&quot;:&quot;HIGH&quot;}</span>
+<span class="o">[</span><span class="n">2020-01-25 13:57:26.866</span><span class="o">]</span><span class="w"> </span><span class="n">boot</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="w">  </span><span class="n">INFO</span><span class="w"> </span><span class="o">[</span><span class="n">main</span><span class="o">]</span><span class="w"> </span><span class="c1">--- RuleEngine: Event triggered 1rules: Event [pushed=0, device=REST_DEVICE, readings=[Reading [pushed=0, name=int, value=90, device=REST_DEVICE]], toString()=BaseObject [id=538aea34-b4ce-4342-88a9-6c08cdac080e, created=0, modified=0, origin=1579960646793054700]]</span>
+<span class="p">...</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+
+<p>MQTT ブローカ上では、MQTT デバイスに対するコマンド実行が行われた様子がわかります。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker run --init --rm -it efrecon/mqtt-client sub -h <span class="m">192</span>.168.0.100 -t <span class="s2">&quot;#&quot;</span> -v
+CommandTopic <span class="o">{</span><span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;message&quot;</span>,<span class="s2">&quot;message&quot;</span>:<span class="s2">&quot;HIGH&quot;</span>,<span class="s2">&quot;method&quot;</span>:<span class="s2">&quot;set&quot;</span>,<span class="s2">&quot;uuid&quot;</span>:<span class="s2">&quot;5e2c4946b8dd790001754b8b&quot;</span><span class="o">}</span>
+ResponseTopic <span class="o">{</span><span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;message&quot;</span>,<span class="s2">&quot;message&quot;</span>:<span class="s2">&quot;HIGH&quot;</span>,<span class="s2">&quot;method&quot;</span>:<span class="s2">&quot;set&quot;</span>,<span class="s2">&quot;uuid&quot;</span>:<span class="s2">&quot;5e2c4946b8dd790001754b8b&quot;</span><span class="o">}</span>
+...
+</code></pre></div>
+</td></tr></table>
+
+<p>MQTT デバイスの testmessage コマンドに GET すると、値が狙い通りに変更されていることがわかります。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ curl -s http://localhost:48082/api/v1/device/name/MQ_DEVICE/command/testmessage <span class="p">|</span> jq
+<span class="o">{</span>
+  <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+  <span class="s2">&quot;origin&quot;</span>: <span class="m">1579960983817888000</span>,
+  <span class="s2">&quot;readings&quot;</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">&quot;origin&quot;</span>: <span class="m">1579960983809258000</span>,
+      <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+      <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;message&quot;</span>,
+      <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;HIGH&quot;</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">&quot;EncodedEvent&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>同様に、REST デバイスの気持ちになってふたつめのルールに合致する値を投げます。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ curl -X POST -H <span class="s2">&quot;Content-Type: text/plain&quot;</span> -d <span class="m">10</span> http://192.168.0.100:49986/api/v1/resource/REST_DEVICE/int
+</code></pre></div>
+</td></tr></table>
+
+<p>もろもろの処理が動き、MQTT デバイス側の値が変わったことが確認できます。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ curl -s http://localhost:48082/api/v1/device/name/MQ_DEVICE/command/testmessage <span class="p">|</span> jq
+<span class="o">{</span>
+  <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+  <span class="s2">&quot;origin&quot;</span>: <span class="m">1579961107845061000</span>,
+  <span class="s2">&quot;readings&quot;</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">&quot;origin&quot;</span>: <span class="m">1579961107837083000</span>,
+      <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+      <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;message&quot;</span>,
+      <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;LOW&quot;</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">&quot;EncodedEvent&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="_12">まとめ<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>あるデバイスの値の変化をトリガにして、別のデバイスを制御できることが確認できました。</p>
+<p>今回は、REST デバイスを使った関係で、実質手動でトリガさせたに等しい状況でしたが、本来はセンサの値をトリガにアクチュエータを動かすような使い方になるでしょう。REST デバイスの代わりに MQTT デバイスや仮想デバイスのランダム値を condition に指定すれば、似たような状況のテストが可能です。</p>
+<p>現段階ではシンプルなルールエンジンしか積まれていませんが、今後エコシステムが成熟してアプリケーションサービスなどが充実してくれば、より複雑な処理も可能になることが期待できます。</p>
                 
                   
                 

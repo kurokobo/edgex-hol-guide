@@ -91,6 +91,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
+      <a href="#lab-4-mqtt" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -310,10 +314,103 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Lab 4 - データのエクスポート（MQTT）
+      </label>
     
     <a href="./" title="Lab 4 - データのエクスポート（MQTT）" class="md-nav__link md-nav__link--active">
       Lab 4 - データのエクスポート（MQTT）
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    アプリケーションサービス
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    構成の考え方
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    設定ファイルの確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    環境変数による柔軟なオーバライド
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    今回の構成の定義
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    動作確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -378,6 +475,99 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目次</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    アプリケーションサービス
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    構成の考え方
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    設定ファイルの確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    環境変数による柔軟なオーバライド
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    今回の構成の定義
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    動作確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -386,9 +576,361 @@
                   <a href="https://github.com/kurokobo/edgex-hol-guide/edit/master/docs/fuji/lab4-appservice-export-mqtt.md" title="編集" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Lab 4 - データのエクスポート（MQTT）</h1>
-                
-                
+                <h1 id="lab-4-mqtt">Lab 4 - データのエクスポート（MQTT）<a class="headerlink" href="#lab-4-mqtt" title="Permanent link">&para;</a></h1>
+<p>データをエクスポートするには、Fuji リリースでは次の二種類の方法があります。</p>
+<ul>
+<li>エクスポートサービスを利用してエクスポートする</li>
+<li>アプリケーションサービスを利用してエクスポートする</li>
+</ul>
+<p><a href="https://docs.edgexfoundry.org/2.0/microservices/application/Ch-ApplServices/">アプリケーションサービスに関する公式ドキュメント</a> では、エクスポートサービスの利用はまだサポートされるものの、今後はアプリケーションサービスの利用が推奨されています。</p>
+<p>実際、エクスポートサービスはすでに標準の Docker Compose ファイルからは除外されており、エクスポートの機能はアプリケーションサービスに統合されているようです。</p>
+<p>エクスポートサービスを利用したエクスポートの欠点として、</p>
+<ul>
+<li>エクスポートサービスは、登録されているすべてのクライアントにデータを順次配信するが、これがボトルネックになり、エンドポイント側の受信が遅延する</li>
+<li>登録されているクライアントを管理することそれ自体のオーバヘッドと複雑さが EdgeX Foundry にとって負担である</li>
+<li>特定のクラウドへのエクスポートに限定して作りこむのではなく、SDK を提供してクラウドプロバイダにとらわれない状態にすべきだ</li>
+</ul>
+<p>などが挙げられています。ここでいう SDK とそれを使った実装がアプリケーションサービスなわけですが、アプリケーションサービスでは、</p>
+<ul>
+<li>コアサービス（データを ZeroMQ で配る Core Data）に直接つなげられることで、パフォーマンスの問題を排除する</li>
+<li>開発者には、データが利用可能になったら直ちにそれに対して何らかの処理を行える手段が提供される</li>
+<li>登録作業が不要である</li>
+</ul>
+<p>などの点でよい感じになっています。</p>
+<p>いまいち正しくない気もしますが、ざっくりまとめると、下図の上が下になったので、</p>
+<p><img alt="" src="../img/appservice-export-mqtt-architecture.png" /></p>
+<p>エクスポートサービス（のディストリビューションサービス）がボトルネックにならなくなったし、値を好きに処理できる場所もできたよ！ ということかと思います。</p>
+<p>そういうわけで、エクスポートサービスのなくなった世界でも生きていけるよう、エクスポートサービスを扱ったエントリと同様に、MQTT トピックと REST エンドポイントへ、アプリケーションサービスを使ってエクスポートできる状態を作ります。</p>
+<h2 id="_1">必要なファイルの用意<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>前のラボでリポジトリをクローンしていない場合はクローンします。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ git clone https://github.com/kurokobo/edgex-lab-handson.git
+</code></pre></div>
+</td></tr></table>
+
+<p>今回は <code>lab05</code> ディレクトリです。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ <span class="nb">cd</span> lab05
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="_2">アプリケーションサービス<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>上図のアプリケーションサービスの箱の中には、ファンクション（Fn で表記）を並べました。アプリケーションサービスでは、このように任意のファンクション群をパイプライン化してデータフローを定義できます。</p>
+<p>例えば簡単な例では、標準で用意されているファンクションを並べるだけでも、</p>
+<ol>
+<li>デバイス名でフィルタするファンクション</li>
+<li>リソース名でフィルタするファンクション</li>
+<li>JSON 形式に変換するファンクション</li>
+<li>MQTT でエクスポートするファンクション</li>
+</ol>
+<p>などのパイプラインが構成できます。現時点で利用できるファンクションは、SDK の README.md で確認できます。</p>
+<h3 id="_3">構成の考え方<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>標準で実装されているアプリケーションサービスとして、app-service-configurable がありますが、これは、ひとつのパイプラインをひとつのインスタンスで処理する前提で作られているようです。また、パイプラインそのものは、インスタンスごとの設定ファイル configuration.toml で定義します。</p>
+<p>つまり、コンテナ環境の例でいえば、冒頭の絵のように、</p>
+<ul>
+<li>最終的に MQTT トピックにエクスポートする app-service-configurable コンテナ</li>
+<li>最終的に REST エンドポイントにエクスポートする app-service-configurable コンテナ</li>
+</ul>
+<p>など、app-service-configurable が、目的に応じて複数起動している状態を作るということです。</p>
+<p>なお、コアサービスのホスト名やポート番号、MQTT ではブローカのホスト名など環境に依存する情報は、コンテナの場合は環境変数で Docker Compose ファイルから渡せるようになっています。エクスポートサービスでは API を叩いてクライアントとして登録する作業が必要でしたが、すべての構成をあらかじめファイルとして定義しておけるということですね。</p>
+<h3 id="_4">設定ファイルの確認<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>コンテナの場合、デフォルトでコンテナ内の /res に、目的別に事前構成された configuration.toml がディレクトリを分けて配置されています。そして、起動時に渡す環境変数で、どのディレクトリの中身を利用するか指定します。</p>
+<p>例えば、MQTT トピックへのエクスポートで利用する configuration.toml は以下です。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ cat mqtt-export/configuration.toml
+...
+  <span class="o">[</span>Writable.Pipeline<span class="o">]</span>
+    <span class="nv">ExecutionOrder</span> <span class="o">=</span> <span class="s2">&quot;TransformToJSON, MQTTSend, MarkAsPushed&quot;</span>
+
+    <span class="o">[</span>Writable.Pipeline.Functions.TransformToJSON<span class="o">]</span>
+    <span class="o">[</span>Writable.Pipeline.Functions.MarkAsPushed<span class="o">]</span>
+    <span class="o">[</span>Writable.Pipeline.Functions.FilterByDeviceName<span class="o">]</span>
+      <span class="o">[</span>Writable.Pipeline.Functions.FilterByDeviceName.Parameters<span class="o">]</span>
+        <span class="nv">DeviceNames</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="o">[</span>Writable.Pipeline.Functions.FilterByValueDescriptor<span class="o">]</span>
+      <span class="o">[</span>Writable.Pipeline.Functions.FilterByValueDescriptor.Parameters<span class="o">]</span>
+        <span class="nv">ValueDescriptors</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="o">[</span>Writable.Pipeline.Functions.MQTTSend<span class="o">]</span>
+      <span class="o">[</span>Writable.Pipeline.Functions.MQTTSend.Parameters<span class="o">]</span>
+        <span class="nv">qos</span><span class="o">=</span><span class="s2">&quot;0&quot;</span>
+        <span class="nv">key</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+        <span class="nv">autoreconnect</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
+        <span class="nv">retain</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
+        <span class="nv">cert</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+        <span class="nv">persistOnError</span> <span class="o">=</span> <span class="s2">&quot;false&quot;</span>
+      <span class="o">[</span>Writable.Pipeline.Functions.MQTTSend.Addressable<span class="o">]</span>
+        <span class="nv">Address</span><span class="o">=</span>   <span class="s2">&quot;localhost&quot;</span>
+        <span class="nv">Port</span><span class="o">=</span>      <span class="m">1883</span>
+        <span class="nv">Protocol</span><span class="o">=</span>  <span class="s2">&quot;tcp&quot;</span>
+        <span class="nv">Publisher</span><span class="o">=</span> <span class="s2">&quot;AppServiceConfigurable-mqtt-export&quot;</span>
+        <span class="nv">User</span><span class="o">=</span>      <span class="s2">&quot;&quot;</span>
+        <span class="nv">Password</span><span class="o">=</span>  <span class="s2">&quot;&quot;</span>
+        <span class="nv">Topic</span><span class="o">=</span>     <span class="s2">&quot;edgex-events&quot;</span>
+...
+</code></pre></div>
+</td></tr></table>
+
+<p>ExecutionOrder に含まれる関数がパイプラインとして順次実行されていきます。この例だと、JSON に変換してから MQTT トピックに送信しています。</p>
+<p>利用する関数は下で列挙されていますが、ExecutionOrder に含まれないものは実際には利用されないようです。デバイス名でフィルタする関数（FilterByDeviceName）なども書かれていますが、使いたいなら自分で ExecutionOrder に書いてね、ということでしょう。</p>
+<p>また、MQTT ブローカのホスト名に localhost が指定されていたり、トピック名が edgex-events になっていたりしますが、先述のとおり、この辺りは環境変数で書き換えますのでこのままで問題ありません。</p>
+<p>同様に、REST エンドポイントへのエクスポートで利用する設定ファイルは以下です。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ cat http-export/configuration.toml
+...
+  <span class="o">[</span>Writable.StoreAndForward<span class="o">]</span>
+    <span class="nv">Enabled</span> <span class="o">=</span> <span class="nb">false</span>
+    <span class="nv">RetryInterval</span> <span class="o">=</span> <span class="s2">&quot;5m&quot;</span>
+    <span class="nv">MaxRetryCount</span> <span class="o">=</span> <span class="m">10</span>
+
+  <span class="o">[</span>Writable.Pipeline<span class="o">]</span>
+    <span class="nv">UseTargetTypeOfByteArray</span> <span class="o">=</span> <span class="nb">false</span>
+    <span class="nv">ExecutionOrder</span> <span class="o">=</span> <span class="s2">&quot;FilterByDeviceName, TransformToJSON, HTTPPostJSON, MarkAsPushed&quot;</span>
+
+    <span class="o">[</span>Writable.Pipeline.Functions.TransformToJSON<span class="o">]</span>
+    <span class="o">[</span>Writable.Pipeline.Functions.MarkAsPushed<span class="o">]</span>
+    <span class="o">[</span>Writable.Pipeline.Functions.FilterByDeviceName<span class="o">]</span>
+      <span class="o">[</span>Writable.Pipeline.Functions.FilterByDeviceName.Parameters<span class="o">]</span>
+        <span class="nv">DeviceNames</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="o">[</span>Writable.Pipeline.Functions.FilterByValueDescriptor<span class="o">]</span>
+      <span class="o">[</span>Writable.Pipeline.Functions.FilterByValueDescriptor.Parameters<span class="o">]</span>
+        <span class="nv">ValueDescriptors</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="o">[</span>Writable.Pipeline.Functions.HTTPPostJSON<span class="o">]</span>
+      <span class="o">[</span>Writable.Pipeline.Functions.HTTPPostJSON.Parameters<span class="o">]</span>
+        <span class="nv">url</span> <span class="o">=</span> <span class="s2">&quot;http://&quot;</span>
+        <span class="nv">persistOnError</span> <span class="o">=</span> <span class="s2">&quot;false&quot;</span>
+...
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="_5">環境変数による柔軟なオーバライド<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>設定ファイルに含まれるパラメータは、実装から推測すると、おそらくすべて環境変数で書き換えが可能です。セクション名の区切り文字を _ に置換して、さらに _&lt;パラメータ名&gt; を付与して環境変数として与えれば、オーバライドされるようでした。</p>
+<p>例えば、ExecutionOrder 自体も、Writable_Pipeline_ExecutionOrder 環境変数として与えられます。例えば先述の mqtt-export の ExecutionOrder には FilterByDeviceName が含まれせんが、環境変数で以下を与えることで、このフィルタも有効化できます。</p>
+<ul>
+<li>環境変数 Writable_Pipeline_ExecutionOrder<ul>
+<li>FilterByDeviceName, TransformToJSON, MQTTSend, MarkAsPushed</li>
+</ul>
+</li>
+<li>環境変数 Writable_Pipeline_Functions_FilterByDeviceName_Parameters_DeviceNames<ul>
+<li>&lt;デバイス名&gt;</li>
+</ul>
+</li>
+</ul>
+<h3 id="_6">今回の構成の定義<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>では、今回用の構成を作ります。先の通り、環境依存の値は環境変数経由で与えればよいので、今回編集するのは、Docker Compose ファイルです。</p>
+<p>Docker Compose ファイルには、もともと、ルールエンジンにデータを送る用の app-service-rules が定義されています。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ cat docker-composer.yml
+...
+  app-service-rules:
+    image: edgexfoundry/docker-app-service-configurable:1.0.0
+    ports:
+      - <span class="s2">&quot;48096:48096&quot;</span>
+    container_name: edgex-app-service-configurable-rules
+    hostname: edgex-app-service-configurable-rules
+    networks:
+      edgex-network:
+        aliases:
+          - edgex-app-service-configurable-rules
+    environment:
+      &lt;&lt;: *common-variables
+      edgex_service: http://edgex-app-service-configurable-rules:48096
+      edgex_profile: rules-engine
+      Service_Host: edgex-app-service-configurable-rules
+      MessageBus_SubscribeHost_Host: edgex-core-data
+    depends_on:
+      - consul
+      - logging
+      - data
+...
+</code></pre></div>
+</td></tr></table>
+
+<p>今回は、これに加えて、MQTT トピックにエクスポートする app-service-mqtt-export を追加しています。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ cat docker-composer.yml
+...
+  app-service-mqtt-export:
+    image: edgexfoundry/docker-app-service-configurable:1.0.0
+    ports:
+      - <span class="s2">&quot;48097:48097&quot;</span>
+    container_name: edgex-app-service-configurable-mqtt-export
+    hostname: edgex-app-service-configurable-mqtt-export
+    networks:
+      edgex-network:
+        aliases:
+          - edgex-app-service-configurable-mqtt-export
+    environment:
+      &lt;&lt;: *common-variables
+      edgex_service: http://edgex-app-service-configurable-mqtt-export:48097
+      edgex_profile: mqtt-export
+      Service_Host: edgex-app-service-configurable-mqtt-export
+      MessageBus_SubscribeHost_Host: edgex-core-data
+      Writable_Pipeline_Functions_MQTTSend_Addressable_Address: <span class="m">192</span>.168.0.100
+      Writable_Pipeline_Functions_MQTTSend_Addressable_Port: <span class="m">1883</span>
+      Writable_Pipeline_Functions_MQTTSend_Addressable_Protocol: tcp
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_Publisher: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_User: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_Password: </span>
+      Writable_Pipeline_Functions_MQTTSend_Addressable_Topic: edgex-handson-topic
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Qos: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Key: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Cert: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Autoreconnect: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Retain: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_PersistOnError: </span>
+    volumes:
+      - ./app-service-configurable:/res
+    depends_on:
+      - consul
+      - logging
+      - data
+...
+</code></pre></div>
+</td></tr></table>
+
+<p>使っているコンテナイメージは、いずれもまったく同じです。ボリュームも同じマウントのしかたをしていますが、使う設定ファイルを edgex_profile で制御しています。また、読ませる設定ファイルに応じて、必要な設定を環境変数で入れています。</p>
+<p>MQTT ブローカや REST エンドポイントのホスト名などは環境に合わせて適宜修正してください。ほかにも、configuration.toml で変更したい値があれば、環境変数として与えると変えられます。</p>
+<p>また、今回はエクスポートサービスが起動しないようにコメントアウトしています。</p>
+<h3 id="_7">起動<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>下準備として、MQTT ブローカを起動して、購読を開始します。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker run -d --rm --name broker -p <span class="m">1883</span>:1883 eclipse-mosquitto
+
+$ docker run --init --rm -it efrecon/mqtt-client sub -h <span class="m">192</span>.168.0.100 -t <span class="s2">&quot;#&quot;</span> -v
+</code></pre></div>
+</td></tr></table>
+
+<p>この状態で、EdgeX Foundry を起動します。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker-compose up -d
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="_8">動作確認<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>必要な設定はすべて環境変数を使って与えていたので、何もしないでも MQTT トピックと REST エンドポイントに値が届き出します。</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ docker run --init --rm -it efrecon/mqtt-client sub -h <span class="m">192</span>.168.0.100 -t <span class="s2">&quot;#&quot;</span> -v
+...
+edgex-handson-topic <span class="o">{</span><span class="s2">&quot;id&quot;</span>:<span class="s2">&quot;a11011bb-30cb-44fa-885c-8929c64e35b1&quot;</span>,<span class="s2">&quot;device&quot;</span>:<span class="s2">&quot;Random-UnsignedInteger-Device&quot;</span>,<span class="s2">&quot;origin&quot;</span>:1580015685340757500,<span class="s2">&quot;readings&quot;</span>:<span class="o">[{</span><span class="s2">&quot;id&quot;</span>:<span class="s2">&quot;26f50397-1e8b-4ca0-8db2-eeeee958a643&quot;</span>,<span class="s2">&quot;origin&quot;</span>:1580015685326443600,<span class="s2">&quot;device&quot;</span>:<span class="s2">&quot;Random-UnsignedInteger-Device&quot;</span>,<span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;Uint8&quot;</span>,<span class="s2">&quot;value&quot;</span>:<span class="s2">&quot;90&quot;</span><span class="o">}]}</span>
+edgex-handson-topic <span class="o">{</span><span class="s2">&quot;id&quot;</span>:<span class="s2">&quot;526631fd-a0f7-437d-98a9-4f6eb8a06775&quot;</span>,<span class="s2">&quot;device&quot;</span>:<span class="s2">&quot;Random-UnsignedInteger-Device&quot;</span>,<span class="s2">&quot;origin&quot;</span>:1580015685369824800,<span class="s2">&quot;readings&quot;</span>:<span class="o">[{</span><span class="s2">&quot;id&quot;</span>:<span class="s2">&quot;91ef8066-5c31-4377-84e6-a6d517457f62&quot;</span>,<span class="s2">&quot;origin&quot;</span>:1580015685356418200,<span class="s2">&quot;device&quot;</span>:<span class="s2">&quot;Random-UnsignedInteger-Device&quot;</span>,<span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;Uint16&quot;</span>,<span class="s2">&quot;value&quot;</span>:<span class="s2">&quot;27009&quot;</span><span class="o">}]}</span>
+...
+</code></pre></div>
+</td></tr></table>
+
+<p>簡単ですね。</p>
+<p>これらの値は、冒頭で紹介した通り、それぞれのアプリケーションサービスが直接コアサービス層から値を受け取って処理したうえでエクスポートしています。データパスが分散して並列化するので、エクスポートサービスを使っていた頃に存在していたボトルネックが回避されます。</p>
+<h2 id="_9">まとめ<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>エクスポートサービスを利用しないエクスポート手段として、アプリケーションサービスを構成して試しました。</p>
+<p>使ってみると、確かにこのアーキテクチャのほうが素直で圧倒的に使い勝手が良いです。家の環境もこっちに置き換えました。</p>
+<p>現段階ではバンドルされている関数は多くないですが、今後この辺りも充実してくることが期待できそうです。</p>
                 
                   
                 
