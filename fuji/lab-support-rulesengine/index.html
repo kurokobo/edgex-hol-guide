@@ -1,0 +1,1202 @@
+
+
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="kurokobo">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.3">
+    
+    
+      
+        <title>Lab 5 - ルールエンジンの利用 - EdgeX Foundry ハンズオンラボ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.62d34fff.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.c8acc6db.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#757575">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    <body dir="" data-md-color-primary="grey" data-md-color-accent="blue">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-5-" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="">
+    <a href="../.." title="EdgeX Foundry ハンズオンラボ" class="md-header-nav__button md-logo" aria-label="EdgeX Foundry ハンズオンラボ">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            EdgeX Foundry ハンズオンラボ
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Lab 5 - ルールエンジンの利用
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/kurokobo/edgex-hol-guide/" title="リポジトリへ" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="EdgeX Foundry ハンズオンラボ" class="md-nav__button md-logo" aria-label="EdgeX Foundry ハンズオンラボ">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    EdgeX Foundry ハンズオンラボ
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/kurokobo/edgex-hol-guide/" title="リポジトリへ" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="このガイドについて" class="md-nav__link">
+      このガイドについて
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Fuji リリース向けガイド
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Fuji リリース向けガイド" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Fuji リリース向けガイド
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Lab 0 - はじめに" class="md-nav__link">
+      Lab 0 - はじめに
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-overview/" title="Lab 1 - 概要" class="md-nav__link">
+      Lab 1 - 概要
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-getting-started/" title="Lab 2 - 導入とデータの確認" class="md-nav__link">
+      Lab 2 - 導入とデータの確認
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-device-service-mqtt/" title="Lab 3 - デバイスサービスの追加（MQTT）" class="md-nav__link">
+      Lab 3 - デバイスサービスの追加（MQTT）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-app-service-export-mqtt/" title="Lab 4 - データのエクスポート（MQTT）" class="md-nav__link">
+      Lab 4 - データのエクスポート（MQTT）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Lab 5 - ルールエンジンの利用
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Lab 5 - ルールエンジンの利用" class="md-nav__link md-nav__link--active">
+      Lab 5 - ルールエンジンの利用
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rest" class="md-nav__link">
+    REST デバイスの追加
+  </a>
+  
+    <nav class="md-nav" aria-label="REST デバイスの追加">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest_1" class="md-nav__link">
+    REST デバイスサービスの概要
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    今回試す設計
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest_2" class="md-nav__link">
+    REST デバイスサービスの動作確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ルールエンジンの利用
+  </a>
+  
+    <nav class="md-nav" aria-label="ルールエンジンの利用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ルールエンジンの概要
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    ルールエンジンの設定
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    ルールの設定
+  </a>
+  
+    <nav class="md-nav" aria-label="ルールの設定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    ルールの検討
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    ルールの投入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    ルールの確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    ルールエンジンの動作確認
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Geneva リリース向けガイド
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Geneva リリース向けガイド" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Geneva リリース向けガイド
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../geneva/" title="準備中" class="md-nav__link">
+      準備中
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rest" class="md-nav__link">
+    REST デバイスの追加
+  </a>
+  
+    <nav class="md-nav" aria-label="REST デバイスの追加">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest_1" class="md-nav__link">
+    REST デバイスサービスの概要
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    今回試す設計
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest_2" class="md-nav__link">
+    REST デバイスサービスの動作確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ルールエンジンの利用
+  </a>
+  
+    <nav class="md-nav" aria-label="ルールエンジンの利用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ルールエンジンの概要
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    ルールエンジンの設定
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    ルールの設定
+  </a>
+  
+    <nav class="md-nav" aria-label="ルールの設定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    ルールの検討
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    ルールの投入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    ルールの確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    ルールエンジンの動作確認
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/kurokobo/edgex-hol-guide/edit/master/docs/fuji/lab-support-rulesengine.md" title="編集" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="lab-5-">Lab 5 - ルールエンジンの利用<a class="headerlink" href="#lab-5-" title="Permanent link">&para;</a></h1>
+<p>これまでのエントリでは、仮想デバイスや MQTT デバイスを用いて、デバイスからの情報の収集やデバイスへのコマンドの実行を試してきました。</p>
+<p>今回は、ルールエンジンの動作、つまり、</p>
+<ul>
+<li>何らかのデバイスのリソースの値が</li>
+<li>何らかの条件を満たしたら</li>
+<li>別のデバイスでコマンドを実行する</li>
+</ul>
+<p>ような自動制御を実際に試します。</p>
+<p>前回のエントリ で構成した MQTT デバイスだけを利用してもすぐできるのですが、それだけだとおもしろくないので、新しいデバイスサービスをひとつ追加して、それを組み込みます。具体的には、</p>
+<ul>
+<li>ルール (1)<ul>
+<li>REST デバイスから送られる値が</li>
+<li>80 を越えたら</li>
+<li>MQTT デバイスにメッセージ HIGH を送信する</li>
+</ul>
+</li>
+<li>ルール (2)<ul>
+<li>REST デバイスから送られる値が</li>
+<li>20 を下回ったら</li>
+<li>MQTT デバイスにメッセージ LOW を送信する</li>
+</ul>
+</li>
+</ul>
+<p>ような状態を目指します。図示すると以下のような状態です。</p>
+<p><img alt="" src="../img/rulesengine-architecture.png" /></p>
+<h2 id="_1">必要なファイルの用意<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>前のラボでリポジトリをクローンしていない場合はクローンします。</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/kurokobo/edgex-lab-handson.git
+</code></pre></div>
+
+<p>今回は <code>lab05</code> ディレクトリです。</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> lab05
+</code></pre></div>
+
+<h2 id="rest">REST デバイスの追加<a class="headerlink" href="#rest" title="Permanent link">&para;</a></h2>
+<p>まだ開発途中で正式リリースには至っていないようですが、device-rest-go と名付けられたデバイスサービスがあります。</p>
+<h3 id="rest_1">REST デバイスサービスの概要<a class="headerlink" href="#rest_1" title="Permanent link">&para;</a></h3>
+<p>これは、以下のようなデバイスサービスです。</p>
+<ul>
+<li>REST で POST してくるデバイスに利用する</li>
+<li>POST されたリクエストボディの中身を値として EdgeX Foundry に取り込む</li>
+</ul>
+<p>このデバイスサービスを構成すると、エンドポイントとして</p>
+<ul>
+<li>/api/v1/resource/&lt;デバイス名&gt;/&lt;リソース名&gt;</li>
+</ul>
+<p>が作成され、これに対して POST することで値を取り込んでくれるようになります。デバイス名やリソース名は、前回取り扱った MQTT デバイスと同様、デバイスプロファイルなどの設定ファイルで定義できます。</p>
+<p>なお、現時点では情報のやりとりは一方向であり、つまり、デバイス側から POST された値を取り込むのみで、逆にデバイス側へのリクエストの発行はできないようです。 また、JSON を投げても、現時点の実装ではパースはしてくれず単なる文字列として扱われるようです。</p>
+<h3 id="_2">今回試す設計<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>今回は、 device-rest-go の README.md を参考に、以下のデバイスサービスとデバイスを定義しています。</p>
+<ul>
+<li>デバイスプロファイル<ul>
+<li>rest/rest.test.device.profile.yml ファイル</li>
+<li>リソース int と float を定義</li>
+</ul>
+</li>
+<li>デバイスサービス設定<ul>
+<li>rest/configuration.toml ファイル</li>
+<li>上記のデバイスプロファイルに紐づけた REST_DEVICE を定義</li>
+</ul>
+</li>
+</ul>
+<p>これにより、</p>
+<ul>
+<li>/api/v1/resource/REST_DEVICE/int</li>
+<li>/api/v1/resource/REST_DEVICE/float</li>
+</ul>
+<p>に値を POST すれば取り込んでもらえるようになるはずです。</p>
+<p>この REST デバイスサービスを含め、今回分の環境は、Docker Compose ファイルに反映済みです</p>
+<h3 id="_3">起動<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>では、今回分の環境をまとめて起動させます。</p>
+<p>MQTT デバイスは今回も使うので、 環境に合わせて mqtt/configuration.toml は修正してください。</p>
+<p>MQTT ブローカ、MQTT デバイス、EdgeX Foundry の順に起動します。</p>
+<div class="highlight"><pre><span></span><code>$ docker run -d --rm --name broker -p 1883:1883 eclipse-mosquitto
+
+$ docker run -d --restart=always --name=mqtt-scripts -v &quot;$(pwd)/mqtt-scripts:/scripts&quot; dersimn/mqtt-scripts --url mqtt://192.168.0.100 --dir /scripts
+
+$ docker-compose up -d
+</code></pre></div>
+
+<h3 id="rest_2">REST デバイスサービスの動作確認<a class="headerlink" href="#rest_2" title="Permanent link">&para;</a></h3>
+<p>起動が確認できたら、実際にエンドポイントに POST して、データの取り込みを確認します。待ち受けポートは 49986 です。Content-Type は text/plain である必要があります。</p>
+<div class="highlight"><pre><span></span><code>$ curl -X POST -H <span class="s2">&quot;Content-Type: text/plain&quot;</span> -d <span class="m">12345</span> http://localhost:49986/api/v1/resource/REST_DEVICE/int
+</code></pre></div>
+
+<p>edgex-device-rest コンテナのログで Pushed event to core data が記録されていれば、値は正常に受け付けられています。</p>
+<div class="highlight"><pre><span></span><code>$ docker logs --tail <span class="m">5</span> edgex-device-rest
+<span class="nv">level</span><span class="o">=</span>DEBUG <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0621062Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>resthandler.go:82 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;Received POST for Device=REST_DEVICE Resource=int&quot;</span>
+<span class="nv">level</span><span class="o">=</span>DEBUG <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0673842Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>resthandler.go:101 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;Content Type is &#39;text/plain&#39; &amp; Media Type is &#39;text/plain&#39; and Type is &#39;Int64&#39;&quot;</span>
+<span class="nv">level</span><span class="o">=</span>DEBUG <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0726606Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>resthandler.go:142 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;Incoming reading received: Device=REST_DEVICE Resource=int&quot;</span>
+<span class="nv">level</span><span class="o">=</span>DEBUG <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0766349Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>utils.go:75 correlation-id<span class="o">=</span>946f482c-db1f-44b5-8a76-437c4ca3d3e9 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;SendEvent: EventClient.MarshalEvent encoded event&quot;</span>
+<span class="nv">level</span><span class="o">=</span>INFO <span class="nv">ts</span><span class="o">=</span><span class="m">2020</span>-01-25T07:49:17.0899243Z <span class="nv">app</span><span class="o">=</span>edgex-device-rest <span class="nv">source</span><span class="o">=</span>utils.go:93 Content-Type<span class="o">=</span>application/json correlation-id<span class="o">=</span>946f482c-db1f-44b5-8a76-437c4ca3d3e9 <span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;SendEvent: Pushed event to core data&quot;</span>
+</code></pre></div>
+
+<p>実際に取り込まれているようです。</p>
+<div class="highlight"><pre><span></span><code>$ edgex-cli reading list REST_DEVICE -l <span class="m">10</span>
+Reading ID                              Name    Device          Origin                  Value   Created         Modified        Pushed
+b43f7300-1377-4fdb-a82f-44eb497d9568    int     REST_DEVICE     <span class="m">1579938557072646900</span>     <span class="m">12345</span>   <span class="m">3</span> minutes       <span class="m">3</span> minutes       <span class="m">50</span> years
+</code></pre></div>
+
+<h2 id="_4">ルールエンジンの利用<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>お膳立てができたので、本題のルールエンジンを構成していきます。</p>
+<h3 id="_5">ルールエンジンの概要<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>詳細は <a href="https://docs.edgexfoundry.org/2.0/microservices/support/rulesengine/Ch-RulesEngine/">公式のドキュメント</a> がわかりやすいですが、端的に言えば、</p>
+<ul>
+<li>コアサービスまたはエクスポートサービスからデータを受け取る</li>
+<li>事前に定義されたルールの条件との合致を確認する</li>
+<li>合致していた場合は、そのルールで定義されたアクションを実行する</li>
+</ul>
+<p>ような処理をしてくれるサービスです。</p>
+<p>実装は現段階では BRMS の <a href="https://www.drools.org/">Drools</a> ベースとのことなので、Java 製ですね。</p>
+<p>ルールエンジンへデータを配信する構成パタンは、ドキュメントでは以下の二つが説明されています。</p>
+<ul>
+<li>エクスポートサービスのクライアントとして動作させるパタン<ul>
+<li>データは Export Distribution（edgex-export-distro コンテナ）から配信される</li>
+<li>データの流れが全体で統一されてシンプルに</li>
+<li>レイテンシやエクスポートサービスのキャパシティなどの面にデメリット</li>
+</ul>
+</li>
+<li>コアサービスに直結させるパタン<ul>
+<li>データは Core Data（edgex-core-data コンテナ）から配信される</li>
+<li>エクスポートサービスをバイパスすることで、レイテンシやパフォーマンス面ではメリットがある</li>
+<li>データの流れはやや複雑に</li>
+</ul>
+</li>
+</ul>
+<p>この構成パタンの選択や、具体的な接続先の情報は、次で紹介する設定ファイルで指定できます。</p>
+<h3 id="_6">ルールエンジンの設定<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>設定がデフォルトのままでよければ、コンテナイメージの中にすべて含まれているので、敢えて手で投入する必要はありませんが、今回はせっかくなので触れるようにしています。rulesengine フォルダの中のファイル群がそれです。</p>
+<p><a href="https://docs.edgexfoundry.org/2.0/microservices/support/rulesengine/Ch-RulesEngine/">公式のドキュメント</a> で触れられている設定が含まれるファイルが、rulesengine/application.properties です。</p>
+<div class="highlight"><pre><span></span><code>$ cat rulesengine/application.properties
+...
+export.client<span class="o">=</span><span class="nb">false</span>
+...
+export.client.registration.url<span class="o">=</span>http://edgex-export-client:48071/api/v1
+export.client.registration.name<span class="o">=</span>EdgeXRulesEngine
+...
+export.zeromq.port<span class="o">=</span><span class="m">5563</span>
+export.zeromq.host<span class="o">=</span>tcp://edgex-core-data
+...
+</code></pre></div>
+
+<p>export.client が false なので、今回はコアサービスから直接データを受け取ります。export.zeromq.host は現時点のデフォルトでは tcp://edgex-app-service-configurable-rules になっており、アプリケーションサービス からデータを受け取る形になっていますが、今回はシンプルにドキュメントに従って tcp://edgex-core-data にしています。</p>
+<p>もう一つのファイルが、rulesengine/rule-template.drl です。これはルールそのもののテンプレートとして利用されます。これについては後述します。</p>
+<h2 id="_7">ルールの設定<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>では、実際にルールを設定していきます。現状、GUI でも CLI でもできないので、API を叩きます。標準 GUI には設定画面はあるものの、プルダウンに項目が出てこなくて設定できずでした。</p>
+<h3 id="_8">ルールの検討<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>ルールは以下ような JSON で投入します。</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;ルール名&gt;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガ条件にするデバイス名&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;checks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;parameter&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガ条件にするリソース名&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand1&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガ条件にする値&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;比較演算子&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand2&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガする閾値&gt;&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;操作対象のデバイス ID&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;操作対象のコマンド ID&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;操作対象のコマンドに PUT される内容&gt;&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;トリガされたときのログ出力文字列&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>全体の構造は、condition で指定した条件を満たしたら action で指定したコマンドがトリガされる、と思えばよいでしょう。</p>
+<p>condition での指定値は以下のように組んでいきます。</p>
+<ul>
+<li>device<ul>
+<li>トリガ条件にするデバイスの名称を指定します。ID では動かないので注意です</li>
+<li>今回だと、REST デバイスの値を元にコマンドを実行したいので、REST_DEVICE を指定します</li>
+</ul>
+</li>
+<li>parameter<ul>
+<li>トリガ条件にするデバイスのリソース名を指定します。リソース名なので、デバイスプロファイルで指定した名称であり、すなわち Reading の名前でもあります</li>
+<li>今回の REST_DEVICE はリソース int と float を持ちますが、今回は int を指定します</li>
+</ul>
+</li>
+<li>operand1<ul>
+<li>比較元になる値を作ります。デバイスの値は内部では文字列値として扱われているため、数値であれば適切な型にキャストする必要があります</li>
+<li>Drools が Java ベースのため、ここでは Java の文法で書きます。値に応じて、例えば以下などが使い分けられるでしょう<ul>
+<li>Integer.parseInt(value)</li>
+<li>Float.parseFloat(value)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>operation<ul>
+<li>比較演算子です。&lt;、=、&gt; などが考えられます</li>
+</ul>
+</li>
+<li>operand2<ul>
+<li>閾値です</li>
+</ul>
+</li>
+</ul>
+<p>action での指定値は、以下のように組みます。</p>
+<ul>
+<li>device<ul>
+<li>先ほどと異なり、ここでは ID で指定します</li>
+<li>今回は MQ_DEVICE の ID です</li>
+<li>デバイスの ID は API で確認できます（方法は 過去のエントリ で）</li>
+</ul>
+</li>
+<li>command<ul>
+<li>コマンドも ID で指定します</li>
+<li>今回は testmessage の ID です</li>
+<li>コマンドの ID も API で確認できます（方法は 過去のエントリ で）</li>
+</ul>
+</li>
+<li>body<ul>
+<li>コマンドの PUT 命令のボディを JSON 形式で指定します</li>
+<li>めっちゃエスケープが必要です</li>
+<li>例えば今回だと、{\\"message\\":\\"HIGH\\"} や {\\"message\\":\\"LOW\\"} です</li>
+</ul>
+</li>
+</ul>
+<p>最終的に、今回作りたい以下のルール群は、</p>
+<ul>
+<li>ルール (1)<ul>
+<li>REST デバイスから送られる値が</li>
+<li>80 を越えたら</li>
+<li>MQTT デバイスにメッセージ HIGH を送信する</li>
+</ul>
+</li>
+<li>ルール (2)<ul>
+<li>REST デバイスから送られる値が</li>
+<li>20 を下回ったら</li>
+<li>MQTT デバイスにメッセージ LOW を送信する</li>
+</ul>
+</li>
+</ul>
+<p>ひとつめは以下の JSON で、</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;rule_int_high&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;REST_DEVICE&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;checks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;parameter&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand1&quot;</span><span class="p">:</span> <span class="s2">&quot;Integer.parseInt(value)&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand2&quot;</span><span class="p">:</span> <span class="s2">&quot;80&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;09dae1fc-e2be-4388-9677-639d2f24c58b&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;1c7a50e7-5424-4bce-9b9a-29849510580e&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;{\\\&quot;message\\\&quot;:\\\&quot;HIGH\\\&quot;}&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;Action triggered: The value is too high.&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>ふたつめは以下の JSON であらわされます。</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;rule_int_low&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;REST_DEVICE&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;checks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;parameter&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand1&quot;</span><span class="p">:</span> <span class="s2">&quot;Integer.parseInt(value)&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;operand2&quot;</span><span class="p">:</span> <span class="s2">&quot;20&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;09dae1fc-e2be-4388-9677-639d2f24c58b&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;1c7a50e7-5424-4bce-9b9a-29849510580e&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;{\\\&quot;message\\\&quot;:\\\&quot;LOW\\\&quot;}&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;Action triggered: The value is too low.&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="_9">ルールの投入<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>では、ルールを投入します。エンドポイントは以下です。</p>
+<ul>
+<li>http://localhost:48075/api/v1/rule</li>
+</ul>
+<p>ここに、先の JSON を POST します。</p>
+<p><img alt="" src="../img/rulesengine-rule1.png" /></p>
+<p><img alt="" src="../img/rulesengine-rule2.png" /></p>
+<h3 id="_10">ルールの確認<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>ルールが投入されると、rule-template.drl を元に新しい &lt;ルール名&gt;.drl ファイルが生成されて利用されます。edgex-support-rulesengine 内に配置されるので、ここではコンテナ内のファイルを cat して覗きます。</p>
+<div class="highlight"><pre><span></span><code>$ docker <span class="nb">exec</span> edgex-support-rulesengine cat /edgex/edgex-support-rulesengine/rules/rule_int_high.drl
+package org.edgexfoundry.rules<span class="p">;</span>
+global org.edgexfoundry.engine.CommandExecutor executor<span class="p">;</span>
+global org.edgexfoundry.support.logging.client.EdgeXLogger logger<span class="p">;</span>
+import org.edgexfoundry.domain.core.Event<span class="p">;</span>
+import org.edgexfoundry.domain.core.Reading<span class="p">;</span>
+import java.util.Map<span class="p">;</span>
+rule <span class="s2">&quot;rule_int_high&quot;</span>
+when
+  <span class="nv">$e</span>:Event<span class="o">(</span><span class="nv">$rlist</span>: readings <span class="o">&amp;&amp;</span> <span class="nv">device</span><span class="o">==</span><span class="s2">&quot;REST_DEVICE&quot;</span><span class="o">)</span>
+  <span class="nv">$r0</span>:Reading<span class="o">(</span><span class="nv">name</span><span class="o">==</span><span class="s2">&quot;int&quot;</span> <span class="o">&amp;&amp;</span> Integer.parseInt<span class="o">(</span>value<span class="o">)</span> &gt; <span class="m">80</span><span class="o">)</span> from <span class="nv">$rlist</span>
+<span class="k">then</span>
+executor.fireCommand<span class="o">(</span><span class="s2">&quot;09dae1fc-e2be-4388-9677-639d2f24c58b&quot;</span>, <span class="s2">&quot;1c7a50e7-5424-4bce-9b9a-29849510580e&quot;</span>, <span class="s2">&quot;{\&quot;message\&quot;:\&quot;HIGH\&quot;}&quot;</span><span class="o">)</span><span class="p">;</span>
+logger.info<span class="o">(</span><span class="s2">&quot;Action triggered: The value is too high.&quot;</span><span class="o">)</span><span class="p">;</span>
+end
+
+$ docker <span class="nb">exec</span> edgex-support-rulesengine cat /edgex/edgex-support-rulesengine/rules/rule_int_low.drl
+package org.edgexfoundry.rules<span class="p">;</span>
+global org.edgexfoundry.engine.CommandExecutor executor<span class="p">;</span>
+global org.edgexfoundry.support.logging.client.EdgeXLogger logger<span class="p">;</span>
+import org.edgexfoundry.domain.core.Event<span class="p">;</span>
+import org.edgexfoundry.domain.core.Reading<span class="p">;</span>
+import java.util.Map<span class="p">;</span>
+rule <span class="s2">&quot;rule_int_low&quot;</span>
+when
+  <span class="nv">$e</span>:Event<span class="o">(</span><span class="nv">$rlist</span>: readings <span class="o">&amp;&amp;</span> <span class="nv">device</span><span class="o">==</span><span class="s2">&quot;REST_DEVICE&quot;</span><span class="o">)</span>
+  <span class="nv">$r0</span>:Reading<span class="o">(</span><span class="nv">name</span><span class="o">==</span><span class="s2">&quot;int&quot;</span> <span class="o">&amp;&amp;</span> Integer.parseInt<span class="o">(</span>value<span class="o">)</span> &lt; <span class="m">20</span><span class="o">)</span> from <span class="nv">$rlist</span>
+<span class="k">then</span>
+executor.fireCommand<span class="o">(</span><span class="s2">&quot;09dae1fc-e2be-4388-9677-639d2f24c58b&quot;</span>, <span class="s2">&quot;1c7a50e7-5424-4bce-9b9a-29849510580e&quot;</span>, <span class="s2">&quot;{\&quot;message\&quot;:\&quot;LOW\&quot;}&quot;</span><span class="o">)</span><span class="p">;</span>
+logger.info<span class="o">(</span><span class="s2">&quot;Action triggered: The value is too low.&quot;</span><span class="o">)</span><span class="p">;</span>
+end
+</code></pre></div>
+
+<p>手元の rule-template.drl と見比べると、テンプレートを元に展開されているっぽさがわかりますね。Drools の drl ファイルの文法にあまり詳しくないですが、行われているのが単純な文字列連結なのであれば、operand に指定する値あたりは工夫すると、もうちょっと複雑な計算もできるのかもしれません。試していませんし、インジェクション攻撃っぽいですけど。</p>
+<p>なお、現在の API ではルールの中身までは確認できず、ルール名の一覧が取得できるのみのようです。悲しい。</p>
+<div class="highlight"><pre><span></span><code>$ curl -s http://localhost:48075/api/v1/rule <span class="p">|</span> jq
+<span class="o">[</span>
+  <span class="s2">&quot;rule_int_high&quot;</span>,
+  <span class="s2">&quot;rule_int_low&quot;</span>
+<span class="o">]</span>
+</code></pre></div>
+
+<h2 id="_11">ルールエンジンの動作確認<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>動作を確認していきます。</p>
+<p>動きを追いやすくするため、下準備として edgex-support-rulesengine のログを常時表示させて、さらに別のターミナルで MQTT ブローカの全トピックを購読しておくとわかりやすいです。</p>
+<div class="highlight"><pre><span></span><code>$ docker logs -f --tail<span class="o">=</span><span class="m">10</span> edgex-support-rulesengine
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:15.023<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: JSON event received
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:15.024<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: Event sent to rules engine <span class="k">for</span> device id:  MQ_DEVICE
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:17.214<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: JSON event received
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:17.216<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: Event sent to rules engine <span class="k">for</span> device id:  MQ_DEVICE
+...
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>$ docker run --init --rm -it efrecon/mqtt-client sub -h <span class="m">192</span>.168.0.100 -t <span class="s2">&quot;#&quot;</span> -v
+logic/connected <span class="m">2</span>
+DataTopic <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;MQ_DEVICE&quot;</span>,<span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat32&quot;</span>,<span class="s2">&quot;randfloat32&quot;</span>:<span class="s2">&quot;27.0&quot;</span><span class="o">}</span>
+...
+</code></pre></div>
+
+<p>では、REST デバイスの気持ちになって、まずはルールに合致しないデータを REST デバイスサービスに POST します。</p>
+<div class="highlight"><pre><span></span><code>$ curl -X POST -H <span class="s2">&quot;Content-Type: text/plain&quot;</span> -d <span class="m">50</span> http://localhost:49986/api/v1/resource/REST_DEVICE/int
+</code></pre></div>
+
+<p>値は取り込まれていますし、</p>
+<div class="highlight"><pre><span></span><code>$ edgex-cli reading list REST_DEVICE -l <span class="m">10</span>
+Reading ID                              Name    Device          Origin                  Value   Created         Modified        Pushed
+<span class="m">66461804</span>-a894-470f-a099-631ffd4c32cb    int     REST_DEVICE     <span class="m">1579960045357298000</span>     <span class="m">50</span>      About a minute  About a minute  <span class="m">50</span> years
+</code></pre></div>
+
+<p>ルールエンジンにも REST_DEVICE からの値は届いているようなログが出ますが、実際には何もトリガされません。正常です。</p>
+<div class="highlight"><pre><span></span><code>$ docker logs -f --tail<span class="o">=</span><span class="m">10</span> edgex-support-rulesengine
+...
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:47:25.370<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: JSON event received
+<span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:47:25.466<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: Event sent to rules engine <span class="k">for</span> device id:  REST_DEVICE
+...
+</code></pre></div>
+
+<p>つづいて、ルールに合致する値を投げます。</p>
+<div class="highlight"><pre><span></span><code>$ curl -X POST -H &quot;Content-Type: text/plain&quot; -d 90 http://192.168.0.100:49986/api/v1/resource/REST_DEVICE/int
+</code></pre></div>
+
+<p>ルールエンジンのログでは、指定したログメッセージが記録され、 {"message":"HIGH"} が指定したコマンドにリクエストされたことがわかります。</p>
+<div class="highlight"><pre><span></span><code>$ docker logs -f --tail=10 edgex-support-rulesengine
+...
+[2020-01-25 13:57:26.805] boot - 6  INFO [main] --- ZeroMQEventSubscriber: JSON event received
+[2020-01-25 13:57:26.853] boot - 6  INFO [main] --- RuleEngine: Action triggered: The value is too high.
+[2020-01-25 13:57:26.853] boot - 6  INFO [SimpleAsyncTaskExecutor-2] --- CommandExecutor: Sending request to:  09dae1fc-e2be-4388-9677-639d2f24c58bfor command:  1c7a50e7-5424-4bce-9b9a-29849510580e with body: {&quot;message&quot;:&quot;HIGH&quot;}
+[2020-01-25 13:57:26.866] boot - 6  INFO [main] --- RuleEngine: Event triggered 1rules: Event [pushed=0, device=REST_DEVICE, readings=[Reading [pushed=0, name=int, value=90, device=REST_DEVICE]], toString()=BaseObject [id=538aea34-b4ce-4342-88a9-6c08cdac080e, created=0, modified=0, origin=1579960646793054700]]
+...
+</code></pre></div>
+
+<p>MQTT ブローカ上では、MQTT デバイスに対するコマンド実行が行われた様子がわかります。</p>
+<div class="highlight"><pre><span></span><code>$ docker run --init --rm -it efrecon/mqtt-client sub -h <span class="m">192</span>.168.0.100 -t <span class="s2">&quot;#&quot;</span> -v
+CommandTopic <span class="o">{</span><span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;message&quot;</span>,<span class="s2">&quot;message&quot;</span>:<span class="s2">&quot;HIGH&quot;</span>,<span class="s2">&quot;method&quot;</span>:<span class="s2">&quot;set&quot;</span>,<span class="s2">&quot;uuid&quot;</span>:<span class="s2">&quot;5e2c4946b8dd790001754b8b&quot;</span><span class="o">}</span>
+ResponseTopic <span class="o">{</span><span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;message&quot;</span>,<span class="s2">&quot;message&quot;</span>:<span class="s2">&quot;HIGH&quot;</span>,<span class="s2">&quot;method&quot;</span>:<span class="s2">&quot;set&quot;</span>,<span class="s2">&quot;uuid&quot;</span>:<span class="s2">&quot;5e2c4946b8dd790001754b8b&quot;</span><span class="o">}</span>
+...
+</code></pre></div>
+
+<p>MQTT デバイスの testmessage コマンドに GET すると、値が狙い通りに変更されていることがわかります。</p>
+<div class="highlight"><pre><span></span><code>$ curl -s http://localhost:48082/api/v1/device/name/MQ_DEVICE/command/testmessage <span class="p">|</span> jq
+<span class="o">{</span>
+  <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+  <span class="s2">&quot;origin&quot;</span>: <span class="m">1579960983817888000</span>,
+  <span class="s2">&quot;readings&quot;</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">&quot;origin&quot;</span>: <span class="m">1579960983809258000</span>,
+      <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+      <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;message&quot;</span>,
+      <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;HIGH&quot;</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">&quot;EncodedEvent&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>同様に、REST デバイスの気持ちになってふたつめのルールに合致する値を投げます。</p>
+<div class="highlight"><pre><span></span><code>$ curl -X POST -H &quot;Content-Type: text/plain&quot; -d 10 http://192.168.0.100:49986/api/v1/resource/REST_DEVICE/int
+</code></pre></div>
+
+<p>もろもろの処理が動き、MQTT デバイス側の値が変わったことが確認できます。</p>
+<div class="highlight"><pre><span></span><code>$ curl -s http://localhost:48082/api/v1/device/name/MQ_DEVICE/command/testmessage | jq
+{
+  &quot;device&quot;: &quot;MQ_DEVICE&quot;,
+  &quot;origin&quot;: 1579961107845061000,
+  &quot;readings&quot;: [
+    {
+      &quot;origin&quot;: 1579961107837083000,
+      &quot;device&quot;: &quot;MQ_DEVICE&quot;,
+      &quot;name&quot;: &quot;message&quot;,
+      &quot;value&quot;: &quot;LOW&quot;
+    }
+  ],
+  &quot;EncodedEvent&quot;: null
+}
+</code></pre></div>
+
+<h2 id="_12">まとめ<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>あるデバイスの値の変化をトリガにして、別のデバイスを制御できることが確認できました。</p>
+<p>今回は、REST デバイスを使った関係で、実質手動でトリガさせたに等しい状況でしたが、本来はセンサの値をトリガにアクチュエータを動かすような使い方になるでしょう。REST デバイスの代わりに MQTT デバイスや仮想デバイスのランダム値を condition に指定すれば、似たような状況のテストが可能です。</p>
+<p>現段階ではシンプルなルールエンジンしか積まれていませんが、今後エコシステムが成熟してアプリケーションサービスなどが充実してくれば、より複雑な処理も可能になることが期待できます。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="">
+        
+          <a href="../lab-app-service-export-mqtt/" title="Lab 4 - データのエクスポート（MQTT）" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  前
+                </span>
+                Lab 4 - データのエクスポート（MQTT）
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../../geneva/" title="準備中" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  次
+                </span>
+                準備中
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+      <a href="https://github.com/kurokobo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://twitter.com/kurokobo" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.f81b9e8b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.23546af0.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "search.config.lang": "ja", "search.config.pipeline": "", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e]+", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

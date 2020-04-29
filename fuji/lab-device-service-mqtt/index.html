@@ -1,0 +1,1689 @@
+
+
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="kurokobo">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.3">
+    
+    
+      
+        <title>Lab 3 - デバイスサービスの追加（MQTT） - EdgeX Foundry ハンズオンラボ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.62d34fff.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.c8acc6db.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#757575">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    <body dir="" data-md-color-primary="grey" data-md-color-accent="blue">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-3-mqtt" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="">
+    <a href="../.." title="EdgeX Foundry ハンズオンラボ" class="md-header-nav__button md-logo" aria-label="EdgeX Foundry ハンズオンラボ">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            EdgeX Foundry ハンズオンラボ
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Lab 3 - デバイスサービスの追加（MQTT）
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/kurokobo/edgex-hol-guide/" title="リポジトリへ" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="EdgeX Foundry ハンズオンラボ" class="md-nav__button md-logo" aria-label="EdgeX Foundry ハンズオンラボ">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    EdgeX Foundry ハンズオンラボ
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/kurokobo/edgex-hol-guide/" title="リポジトリへ" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="このガイドについて" class="md-nav__link">
+      このガイドについて
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Fuji リリース向けガイド
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Fuji リリース向けガイド" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Fuji リリース向けガイド
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Lab 0 - はじめに" class="md-nav__link">
+      Lab 0 - はじめに
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-overview/" title="Lab 1 - 概要" class="md-nav__link">
+      Lab 1 - 概要
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-getting-started/" title="Lab 2 - 導入とデータの確認" class="md-nav__link">
+      Lab 2 - 導入とデータの確認
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Lab 3 - デバイスサービスの追加（MQTT）
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Lab 3 - デバイスサービスの追加（MQTT）" class="md-nav__link md-nav__link--active">
+      Lab 3 - デバイスサービスの追加（MQTT）
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    このラボのゴールと構成
+  </a>
+  
+    <nav class="md-nav" aria-label="このラボのゴールと構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    新しいデバイスの仕様と動作確認
+  </a>
+  
+    <nav class="md-nav" aria-label="新しいデバイスの仕様と動作確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    新しいデバイスの仕様の整理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ラボとしての構成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    シミュレータの起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    シミュレータの動作確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    デバイスサービスの構成
+  </a>
+  
+    <nav class="md-nav" aria-label="デバイスサービスの構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    デバイスサービスの概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    デバイスサービスの構成要素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    デバイスプロファイル
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    デバイスサービスコンフィグレーション
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edgex-foundry" class="md-nav__link">
+    デバイスサービスを含んだ EdgeX Foundry の起動
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    動作確認
+  </a>
+  
+    <nav class="md-nav" aria-label="動作確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    登録状態の確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    デバイスから配信された値の蓄積の確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    デバイスサービスの自動実行イベントの確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    デバイスへのコマンド実行の確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    環境の停止
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-app-service-export-mqtt/" title="Lab 4 - データのエクスポート（MQTT）" class="md-nav__link">
+      Lab 4 - データのエクスポート（MQTT）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-support-rulesengine/" title="Lab 5 - ルールエンジンの利用" class="md-nav__link">
+      Lab 5 - ルールエンジンの利用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Geneva リリース向けガイド
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Geneva リリース向けガイド" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Geneva リリース向けガイド
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../geneva/" title="準備中" class="md-nav__link">
+      準備中
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    このラボのゴールと構成
+  </a>
+  
+    <nav class="md-nav" aria-label="このラボのゴールと構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    新しいデバイスの仕様と動作確認
+  </a>
+  
+    <nav class="md-nav" aria-label="新しいデバイスの仕様と動作確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    新しいデバイスの仕様の整理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ラボとしての構成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    シミュレータの起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    シミュレータの動作確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    デバイスサービスの構成
+  </a>
+  
+    <nav class="md-nav" aria-label="デバイスサービスの構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    デバイスサービスの概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    デバイスサービスの構成要素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    デバイスプロファイル
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    デバイスサービスコンフィグレーション
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edgex-foundry" class="md-nav__link">
+    デバイスサービスを含んだ EdgeX Foundry の起動
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    動作確認
+  </a>
+  
+    <nav class="md-nav" aria-label="動作確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    登録状態の確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    デバイスから配信された値の蓄積の確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    デバイスサービスの自動実行イベントの確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    デバイスへのコマンド実行の確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    環境の停止
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/kurokobo/edgex-hol-guide/edit/master/docs/fuji/lab-device-service-mqtt.md" title="編集" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="lab-3-mqtt">Lab 3 - デバイスサービスの追加（MQTT）<a class="headerlink" href="#lab-3-mqtt" title="Permanent link">&para;</a></h1>
+<p>このラボでは、EdgeX Foundry の制御下に任意のデバイスを追加する手法を実践します。</p>
+<p>ここでは、MQTT プロトコルを利用するデバイス（のシミュレータ）を用意し、これを制御するためのデバイスサービスを構成することで、下図のように EdgeX Foundry がそのデバイスと実際に（MQTT ブローカを介して）インタラクションできる状態を構成します。</p>
+<p><img alt="" src="../img/device-service-mqtt-architecture.png" /></p>
+<h2 id="_1">このラボのゴールと構成<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>このラボの目的は次の通りです。</p>
+<ul>
+<li>デバイスサービスの概要を理解する</li>
+<li>デバイスサービスを用いて任意のデバイスを EdgeX Foundry の制御下に置く手法を理解する</li>
+</ul>
+<p>このラボでは、Docker Compose を利用して、Ubuntu 上の Docker コンテナ群として EdgeX Foundry を起動させます。また、デバイスのシミュレータと MQTT のブローカも Docker コンテナとして起動させます。</p>
+<p><img alt="" src="../img/device-service-mqtt-overview.png" /></p>
+<h3 id="_2">必要なファイルの用意<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>ラボに必要なファイルは、前のラボでクローンしたリポジトリに含まれています。クローンを実施していない場合は、Ubuntu 上でクローンし、CPU のアーキテクチャに応じてディレクトリを移動してください。</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">amd64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>git clone https://github.com/kurokobo/edgex-hol-fuji.git
+<span class="nb">cd</span> edgex-hol-fuji
+<span class="nb">cd</span> amd64
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">arm64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>git clone https://github.com/kurokobo/edgex-hol-fuji.git
+<span class="nb">cd</span> edgex-hol-fuji
+<span class="nb">cd</span> arm64
+</code></pre></div>
+
+</div>
+</div>
+<p>このラボでは、<code>lab-device-service-mqtt</code> ディレクトリの中身を利用します。</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> lab-device-service-mqtt
+ls -l
+</code></pre></div>
+
+<p>ファイル <code>docker-compose.yml</code> と、ディレクトリ <code>device-service</code>、<code>simulator</code> が存在しているはずです。</p>
+<h2 id="_3">新しいデバイスの仕様と動作確認<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>まずは、今回新しく EdgeX Foundry の制御下におきたいデバイスの仕様を整理します。その後、実際にそのデバイスのシミュレータを動作させ、仕様通りに動くことを確認します。</p>
+<h3 id="_4">新しいデバイスの仕様の整理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>今回は、以下のような仕様のデバイスが存在するものとして、これを EdgeX Foundry の制御下に置くことを考えます。</p>
+<p><img alt="" src="../img/device-service-mqtt-device-overview.png" /></p>
+<ul>
+<li>二種類のセンサを持つ<ul>
+<li><code>randfloat32</code></li>
+<li><code>randfloat64</code></li>
+</ul>
+</li>
+<li>二種類の文字列情報を持つ<ul>
+<li><code>ping</code></li>
+<li><code>message</code></li>
+</ul>
+</li>
+<li>MQTT のトピック <code>DataTopic</code> にセンサ <code>randfloat32</code> の値を 15 秒ごとに配信する<ul>
+<li><code>{"name":"MQ_DEVICE","cmd":"randfloat32","randfloat32":"&lt;値&gt;"}</code> の形式で配信する</li>
+</ul>
+</li>
+<li>MQTT のトピック <code>CommandTopic</code> を購読して、外部からのコマンドを待ち受ける<ul>
+<li><code>{"name":"MQTT_DEVICE","method":"&lt;get または set&gt;","cmd":"&lt;コマンド名&gt;"}</code> の形式のコマンドを受け取る</li>
+</ul>
+</li>
+<li>外部からのコマンドを受け取ったら、コマンド応じて処理を実行し、結果を MQTT のトピック <code>ResponseTopic</code> に配信する<ul>
+<li>コマンドのメソッドが <code>set</code> だった場合は、保存されている <code>message</code> を書き換える</li>
+<li>コマンドが <code>ping</code> だった場合は、<code>pong</code> を返す</li>
+<li>コマンドが <code>message</code> だった場合は、保存されている <code>message</code> を返す</li>
+<li>コマンドが <code>randfloat32</code> または <code>randfloat64</code> だった場合は、それぞれ対応するセンサの値を返す</li>
+<li>結果は <code>{"name":"MQ_DEVICE","method":"&lt;メソッド&gt;","cmd":"&lt;コマンド名&gt;","&lt;コマンド名&gt;":"&lt;値&gt;"}</code> の形式で配信する</li>
+</ul>
+</li>
+</ul>
+<p>デバイス側が定期的にデータを配信するだけでなく、外部からのコマンド操作も受け付けるようなデバイスです。ただし、二つあるセンサのうちのひとつ <code>randfloat64</code> は、値の定期的な自動での配信はしてくれません。</p>
+<h3 id="_5">ラボとしての構成<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>MQTT を利用するデバイスを EdgeX Foundry で管理する場合、典型的には、EdgeX Foundry のホストとは別に、MQTT ブローカと実際のデバイスが存在すると考えられます。</p>
+<p><img alt="" src="../img/device-service-mqtt-lab-tobe.png" /></p>
+<p>ただし、今回はラボなので、すべてをラボ用の Ubuntu ホスト上で Docker コンテナとして動作させてしまいます。本来の姿とは若干の乖離がある点を理解した上で進めてください。</p>
+<p><img alt="" src="../img/device-service-mqtt-lab-asis.png" /></p>
+<h3 id="_6">シミュレータの起動<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>このラボでは、前述の仕様に沿ったデバイスを、シミュレータを使って Docker コンテナとして用意します。</p>
+<p>まずは、MQTT を扱うには MQTT ブローカが不可欠なので、これを起動します。起動後、<code>docker ps</code> で <code>STATUS</code> が <code>Up</code> であることを確認してください。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker run -d --rm --name broker -p <span class="m">1883</span>:1883 eclipse-mosquitto
+</span>9e1c5939be6a9c6366c2cbdad5eae5ab5c1665062125d0a8971aa030d2116a8d
+
+<span class="hll">$ docker ps
+</span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+9e1c5939be6a        eclipse-mosquitto   <span class="s2">&quot;/docker-entrypoint.…&quot;</span>   <span class="m">6</span> seconds ago       Up <span class="m">3</span> seconds        <span class="m">0</span>.0.0.0:1883-&gt;1883/tcp   broker
+</code></pre></div>
+
+<p>続けて、実デバイス（のシミュレータ）の用意です。</p>
+<p>ここでは、Node.js で MQTT を扱えるコンテナイメージ <code>dersimn/mqtt-scripts</code> を利用して、次のようなスクリプトを起動させることで、前述の仕様通りに動くシミュレータとしています。このスクリプトは、お手元の <code>simulator</code> ディレクトリ内の <code>mock-device.js</code> として保存されていますので、エディタで確認してもよいでしょう。</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">getRandomFloat</span><span class="p">(</span><span class="nx">min</span><span class="p">,</span> <span class="nx">max</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="nx">max</span> <span class="o">-</span> <span class="nx">min</span><span class="p">)</span> <span class="o">+</span> <span class="nx">min</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">deviceName</span> <span class="o">=</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">message</span> <span class="o">=</span> <span class="s2">&quot;test-message&quot;</span><span class="p">;</span>
+
+<span class="c1">// 1. Publish random number every 15 seconds</span>
+<span class="nx">schedule</span><span class="p">(</span><span class="s1">&#39;*/15 * * * * *&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">body</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">deviceName</span><span class="p">,</span>
+        <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;randfloat32&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;randfloat32&quot;</span><span class="o">:</span> <span class="nx">getRandomFloat</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">29</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">};</span>
+    <span class="nx">publish</span><span class="p">(</span><span class="s1">&#39;DataTopic&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">body</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="c1">// 2. Receive the reading request, then return the response</span>
+<span class="c1">// 3. Receive the put request, then change the device value</span>
+<span class="nx">subscribe</span><span class="p">(</span><span class="s2">&quot;CommandTopic&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">method</span> <span class="o">==</span> <span class="s2">&quot;set&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">message</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">data</span><span class="p">.</span><span class="nx">cmd</span><span class="p">]</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">cmd</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="s2">&quot;ping&quot;</span><span class="o">:</span>
+                <span class="nx">data</span><span class="p">.</span><span class="nx">ping</span> <span class="o">=</span> <span class="s2">&quot;pong&quot;</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">&quot;message&quot;</span><span class="o">:</span>
+                <span class="nx">data</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">&quot;randfloat32&quot;</span><span class="o">:</span>
+                <span class="nx">data</span><span class="p">.</span><span class="nx">randfloat32</span> <span class="o">=</span> <span class="nx">getRandomFloat</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">29</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">&quot;randfloat64&quot;</span><span class="o">:</span>
+                <span class="nx">data</span><span class="p">.</span><span class="nx">randfloat64</span> <span class="o">=</span> <span class="nx">getRandomFloat</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">publish</span><span class="p">(</span><span class="s2">&quot;ResponseTopic&quot;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>これを起動するには、次のように作業します。</p>
+<p><strong>コマンドに MQTT ブローカを示す IP アドレスを含む</strong> ため、ご自身の環境に合わせて <strong>適宜書き換えて</strong> ください。ガイド通りに EdgeX Foundry と同じホストで MQTT ブローカを動作させた場合は、EdgeX Foundry の IP アドレスと同一です。</p>
+<p>また、CPU アーキテクチャによって利用するイメージが異なります。起動後、<code>docker ps</code> で <code>STATUS</code> が <code>Up</code> であることを確認してください。</p>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">amd64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="hll">$ <span class="nb">cd</span> simulator
+</span>
+<span class="hll">$ docker run -d --restart<span class="o">=</span>always --name<span class="o">=</span>mqtt-scripts -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">:/scripts&quot;</span> dersimn/mqtt-scripts --url mqtt://192.168.0.239 --dir /scripts
+</span>Unable to find image <span class="s1">&#39;dersimn/mqtt-scripts:latest&#39;</span> locally
+...
+9d52b4956ebbec60dd0f93bdf9750ff915fefd8e8c58d3ce8bc7ba1429693d2b
+
+<span class="hll">$ docker ps
+</span>CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS                    NAMES
+13f70f88b67b        dersimn/mqtt-scripts         <span class="s2">&quot;node /node/index.js…&quot;</span>   <span class="m">18</span> seconds ago      Up <span class="m">16</span> seconds                                mqtt-scripts
+9e1c5939be6a        eclipse-mosquitto            <span class="s2">&quot;/docker-entrypoint.…&quot;</span>   <span class="m">16</span> minutes ago      Up <span class="m">16</span> minutes       <span class="m">0</span>.0.0.0:1883-&gt;1883/tcp   broker
+</code></pre></div>
+
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">arm64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="hll">$ <span class="nb">cd</span> simulator
+</span>
+<span class="hll">$ docker run -d --restart<span class="o">=</span>always --name<span class="o">=</span>mqtt-scripts -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">:/scripts&quot;</span> dersimn/mqtt-scripts:armhf --url mqtt://192.168.0.239 --dir /scripts
+</span>Unable to find image <span class="s1">&#39;dersimn/mqtt-scripts:armhf&#39;</span> locally
+...
+9d52b4956ebbec60dd0f93bdf9750ff915fefd8e8c58d3ce8bc7ba1429693d2b
+
+<span class="hll">$ docker ps
+</span>CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS                    NAMES
+13f70f88b67b        dersimn/mqtt-scripts:armhf   <span class="s2">&quot;node /node/index.js…&quot;</span>   <span class="m">18</span> seconds ago      Up <span class="m">16</span> seconds                                mqtt-scripts
+9e1c5939be6a        eclipse-mosquitto            <span class="s2">&quot;/docker-entrypoint.…&quot;</span>   <span class="m">16</span> minutes ago      Up <span class="m">16</span> minutes       <span class="m">0</span>.0.0.0:1883-&gt;1883/tcp   broker
+</code></pre></div>
+
+</div>
+</div>
+<h3 id="_7">シミュレータの動作確認<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>最後に、シミュレータが仕様通り動作していることを確認します。</p>
+<p>新しいターミナルを起動して、ブローカの全トピックを購読するためのコンテナを新たに起動します。15 秒ごとにトピック <code>DataTopic</code> にセンサ <code>randfloat32</code> の値が届いていれば、動作は正常です。ここでも、<strong>コマンドに MQTT ブローカを示す IP アドレスを含む</strong> ため、ご自身の環境に合わせて <strong>適宜書き換えて</strong> ください。</p>
+<p><img alt="" src="../img/device-service-mqtt-device-test1.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker run --init --rm --name<span class="o">=</span>client -it kurokobo/mqtt-client sub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;#&quot;</span> -v
+</span>...
+DataTopic <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;MQ_DEVICE&quot;</span>,<span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat32&quot;</span>,<span class="s2">&quot;randfloat32&quot;</span>:<span class="s2">&quot;27.4&quot;</span><span class="o">}</span>
+DataTopic <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;MQ_DEVICE&quot;</span>,<span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat32&quot;</span>,<span class="s2">&quot;randfloat32&quot;</span>:<span class="s2">&quot;28.6&quot;</span><span class="o">}</span>
+</code></pre></div>
+
+<p>このターミナルは、今後の動作確認のためにも <strong>起動させたまま</strong> にします。</p>
+<p>続けて、デバイスに対する操作ができることも確認します。追加で新しいターミナルを起動して、トピック <code>CommandTopic</code> にコマンドを配信します。これまで同様、ご自身の環境に合わせて <strong>コマンド中の IP アドレスは適宜書き換えて</strong> ください。</p>
+<p>実行するごとに MQTT を購読しているターミナルを見ると、デバイスからの応答が確認できます。まずはデバイスからの情報の取得を行う <code>get</code> の動作を確認します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker run --init -it --rm kurokobo/mqtt-client pub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;CommandTopic&quot;</span> -m <span class="s1">&#39;{&quot;name&quot;:&quot;MQTT_DEVICE&quot;,&quot;method&quot;:&quot;get&quot;,&quot;cmd&quot;:&quot;ping&quot;}&#39;</span>
+</span><span class="hll">$ docker run --init -it --rm kurokobo/mqtt-client pub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;CommandTopic&quot;</span> -m <span class="s1">&#39;{&quot;name&quot;:&quot;MQTT_DEVICE&quot;,&quot;method&quot;:&quot;get&quot;,&quot;cmd&quot;:&quot;randfloat32&quot;}&#39;</span>
+</span><span class="hll">$ docker run --init -it --rm kurokobo/mqtt-client pub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;CommandTopic&quot;</span> -m <span class="s1">&#39;{&quot;name&quot;:&quot;MQTT_DEVICE&quot;,&quot;method&quot;:&quot;get&quot;,&quot;cmd&quot;:&quot;randfloat64&quot;}&#39;</span>
+</span></code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title"><code>failed to resize tty</code></p>
+<p>実行時に <code>failed to resize tty, using default size</code> のメッセージが表示される場合がありますが、無視して構いません。</p>
+</div>
+<p><img alt="" src="../img/device-service-mqtt-device-test2.png" /></p>
+<p>購読している側では、命令が <code>CommandTopic</code> に届き、そのコマンドに応じた応答が <code>ResponseTopic</code> に配信されていることが確認できます。</p>
+<div class="highlight"><pre><span></span><code><span class="err">...</span>
+<span class="err">CommandTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;ping&quot;</span><span class="p">}</span>
+<span class="err">ResponseTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;ping&quot;</span><span class="p">,</span><span class="nt">&quot;ping&quot;</span><span class="p">:</span><span class="s2">&quot;pong&quot;</span><span class="p">}</span>
+<span class="err">...</span>
+<span class="err">CommandTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;randfloat32&quot;</span><span class="p">}</span>
+<span class="err">ResponseTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;randfloat32&quot;</span><span class="p">,</span><span class="nt">&quot;randfloat32&quot;</span><span class="p">:</span><span class="s2">&quot;27.6&quot;</span><span class="p">}</span>
+<span class="err">...</span>
+<span class="err">CommandTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;randfloat64&quot;</span><span class="p">}</span>
+<span class="err">ResponseTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;randfloat64&quot;</span><span class="p">,</span><span class="nt">&quot;randfloat64&quot;</span><span class="p">:</span><span class="s2">&quot;8.39883&quot;</span><span class="p">}</span>
+<span class="err">...</span>
+</code></pre></div>
+
+<p>同様に、デバイスを操作する <code>set</code> の動作も確認します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker run --init -it --rm kurokobo/mqtt-client pub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;CommandTopic&quot;</span> -m <span class="s1">&#39;{&quot;name&quot;:&quot;MQTT_DEVICE&quot;,&quot;method&quot;:&quot;get&quot;,&quot;cmd&quot;:&quot;message&quot;}&#39;</span> 
+</span><span class="hll">$ docker run --init -it --rm kurokobo/mqtt-client pub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;CommandTopic&quot;</span> -m <span class="s1">&#39;{&quot;name&quot;:&quot;MQTT_DEVICE&quot;,&quot;method&quot;:&quot;set&quot;,&quot;cmd&quot;:&quot;message&quot;,&quot;message&quot;:&quot;modified-message&quot;}&#39;</span>
+</span><span class="hll">$ docker run --init -it --rm kurokobo/mqtt-client pub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;CommandTopic&quot;</span> -m <span class="s1">&#39;{&quot;name&quot;:&quot;MQTT_DEVICE&quot;,&quot;method&quot;:&quot;get&quot;,&quot;cmd&quot;:&quot;message&quot;}&#39;</span>
+</span></code></pre></div>
+
+<p>購読している側では、<code>set</code> の実行前後で <code>message</code> コマンドの結果が変化していることが確認できます。</p>
+<div class="highlight"><pre><span></span><code><span class="err">...</span>
+<span class="err">CommandTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;message&quot;</span><span class="p">}</span>
+<span class="err">ResponseTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;message&quot;</span><span class="p">,</span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;test-message&quot;</span><span class="p">}</span>
+<span class="err">...</span>
+<span class="err">CommandTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;set&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;message&quot;</span><span class="p">,</span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;modified-message&quot;</span><span class="p">}</span>
+<span class="err">ResponseTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;set&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;message&quot;</span><span class="p">,</span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;modified-message&quot;</span><span class="p">}</span>
+<span class="err">...</span>
+<span class="err">CommandTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;message&quot;</span><span class="p">}</span>
+<span class="err">ResponseTopic</span> <span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;MQTT_DEVICE&quot;</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="nt">&quot;cmd&quot;</span><span class="p">:</span><span class="s2">&quot;message&quot;</span><span class="p">,</span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;modified-message&quot;</span><span class="p">}</span>
+<span class="err">...</span>
+</code></pre></div>
+
+<p>ここまでで、デバイス（のシミュレータ）が動作している状態が作れました。</p>
+<p>とはいえ現段階では、ただ単に前述の仕様のデバイスを論理的に作っただけで、EdgeX Foundry は全く関係ありません。ここから、このデバイスを EdgeX Foundry の制御下に置く手法を実践します。</p>
+<h2 id="_8">デバイスサービスの構成<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>先ほど作ったデバイスを、EdgeX Foundry の制御下におくことを考えます。</p>
+<h3 id="_9">デバイスサービスの概念<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>現実世界に存在するデバイスは、それぞれが異なるセンサやスイッチを持っていて、異なるプロトコルをインタフェイスに持つため、それぞれに応じた適切な方法で値の取得や制御命令の発行をする必要があります。</p>
+<p>この実態を踏まえ、EdgeX Foundry では、実デバイスと EdgeX Foundry の間を取り持つ存在として、<strong>デバイスサービス</strong> とよばれるマイクロサービスを定義しています。デバイスサービスは、典型的には <strong>プロトコルごと</strong> または <strong>デバイスの種類ごと</strong> に用意します。ひとつのデバイスサービスで <strong>ひとつ以上のデバイスを制御</strong> できます。</p>
+<p><img alt="" src="../img/device-service-mqtt-device-service-overview.png" /></p>
+<p>デバイスサービスは、以下のような役割を持ちます。</p>
+<ul>
+<li>コアサービスに対して REST エンドポイントを提供し、デバイスからの情報取得やデバイスへの制御命令の発行を行えるようにする</li>
+<li>コアサービスから送られてきた制御命令を、実デバイスに合わせた命令に翻訳して実行し、実デバイスを制御する</li>
+<li>デバイスから送られてきた情報を、コアサービスに合わせた情報に翻訳して送信する</li>
+<li>事前の定義に従って定期的にデバイスに対して特定の処理を行い、結果をコアサービスに送信する</li>
+</ul>
+<p>現段階では、<a href="https://github.com/edgexfoundry/device-mqtt-go"><strong>MQTT</strong></a>、<a href="https://github.com/edgexfoundry/device-bacnet-c"><strong>BACnet</strong></a>、<a href="https://github.com/edgexfoundry/device-modbus-go"><strong>Modbus</strong></a>、<a href="https://github.com/edgexfoundry/device-rest-go"><strong>REST API</strong></a> など、IoT でよく利用されるプロトコルごとに、デバイスサービスの参考実装が提供されており、実デバイスの仕様によってはそのまま流用できることもあるでしょう。</p>
+<p>既存の実装が利用できない場合でも、C 言語や Go 言語の <a href="https://github.com/edgexfoundry/device-sdk-go">SDK が提供</a> されているため、自製が可能なほか、エコシステムが成熟すれば、IoT デバイスのメーカ側がデバイスと併せて EdgeX Foundry 用のデバイスサービスを提供するような可能性も考えられます。</p>
+<p>いずれにせよ、すべてのデバイスサービスは、この SDK を用いたフレームワークのもとで実装されるため、実デバイスの操作方法や設定方法の差異は抽象化されます。結果的に、すべてのデバイスが共通の手法で制御できるインタフェイスを自ずと持つようになり、相互運用性を大きく高められます。これが、デバイスサービスの、ひいては EdgeX Foundry の大きなメリットのひとつです。</p>
+<h3 id="_10">デバイスサービスの構成要素<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>デバイスサービスの動作には、以下の 3 つの要素を考える必要があります。</p>
+<ul>
+<li><strong>デバイスプロファイル</strong>（Device Profile）<ul>
+<li>YAML ファイルとして定義する</li>
+<li>管理対象のデバイスが持つリソースや、そのリソースが持つ値の意味、それぞれのリソースに対して行える操作などを定義する</li>
+</ul>
+</li>
+<li><strong>デバイスサービスコンフィグレーション</strong>（Drvice Service Configuration）<ul>
+<li><code>configuration.toml</code> ファイルとして定義する</li>
+<li>デバイスプロファイルと実際のデバイスを紐づけて、EdgeX Foundry のデバイスとして定義する。デバイスやリソースに対する自動実行処理なども定義する</li>
+<li>その他、デバイスサービスの動作に必要なパラメータを指定する</li>
+</ul>
+</li>
+<li><strong>デバイスサービスそのもの</strong><ul>
+<li>今回はコンテナとして MQTT を利用できるデバイスサービス <code>edgex-device-mqtt</code> を利用する</li>
+<li>デバイスプロファイルとデバイスサービスコンフィグレーションを読み込んで動作する</li>
+</ul>
+</li>
+</ul>
+<h3 id="_11">デバイスプロファイル<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>今回利用するデバイスプロファイルは、お手元の <code>device-service</code> ディレクトリ内の <code>mqtt.test.device.profile.yml</code> です。以下の内容を含んでいます。エディタで確認してもよいでしょう。</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span> <span class="s">&quot;Test.Device.MQTT.Profile&quot;</span>
+<span class="nt">manufacturer</span><span class="p">:</span> <span class="s">&quot;Dell&quot;</span>
+<span class="nt">model</span><span class="p">:</span> <span class="s">&quot;MQTT-2&quot;</span>
+<span class="nt">labels</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="s">&quot;test&quot;</span>
+<span class="nt">description</span><span class="p">:</span> <span class="s">&quot;Test</span><span class="nv"> </span><span class="s">device</span><span class="nv"> </span><span class="s">profile&quot;</span>
+
+<span class="nt">deviceResources</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">randfloat32</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;device</span><span class="nv"> </span><span class="s">random</span><span class="nv"> </span><span class="s">number</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">Base64</span><span class="nv"> </span><span class="s">encoding&quot;</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">value</span><span class="p">:</span>
+      <span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span> <span class="s">&quot;Float32&quot;</span><span class="p p-Indicator">,</span><span class="nt"> size</span><span class="p">:</span> <span class="s">&quot;4&quot;</span><span class="p p-Indicator">,</span><span class="nt"> readWrite</span><span class="p">:</span> <span class="s">&quot;R&quot;</span><span class="p p-Indicator">,</span><span class="nt"> defaultValue</span><span class="p">:</span> <span class="s">&quot;0.00&quot;</span><span class="p p-Indicator">,</span><span class="nt"> minimum</span><span class="p">:</span> <span class="s">&quot;100.00&quot;</span><span class="p p-Indicator">,</span><span class="nt"> maximum</span><span class="p">:</span> <span class="s">&quot;0.00&quot;</span><span class="p p-Indicator">,</span><span class="nt"> floatEncoding</span><span class="p">:</span> <span class="s">&quot;Base64&quot;</span> <span class="p p-Indicator">}</span>
+    <span class="nt">units</span><span class="p">:</span>
+      <span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span> <span class="s">&quot;String&quot;</span><span class="p p-Indicator">,</span><span class="nt"> readWrite</span><span class="p">:</span> <span class="s">&quot;R&quot;</span><span class="p p-Indicator">,</span><span class="nt"> defaultValue</span><span class="p">:</span> <span class="s">&quot;&quot;</span> <span class="p p-Indicator">}</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">randfloat64</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;device</span><span class="nv"> </span><span class="s">random</span><span class="nv"> </span><span class="s">number</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">e</span><span class="nv"> </span><span class="s">notion&quot;</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">value</span><span class="p">:</span>
+      <span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span> <span class="s">&quot;Float64&quot;</span><span class="p p-Indicator">,</span><span class="nt"> size</span><span class="p">:</span> <span class="s">&quot;4&quot;</span><span class="p p-Indicator">,</span><span class="nt"> readWrite</span><span class="p">:</span> <span class="s">&quot;R&quot;</span><span class="p p-Indicator">,</span><span class="nt"> defaultValue</span><span class="p">:</span> <span class="s">&quot;0.00&quot;</span><span class="p p-Indicator">,</span><span class="nt"> minimum</span><span class="p">:</span> <span class="s">&quot;100.00&quot;</span><span class="p p-Indicator">,</span><span class="nt"> maximum</span><span class="p">:</span> <span class="s">&quot;0.00&quot;</span><span class="p p-Indicator">,</span><span class="nt"> floatEncoding</span><span class="p">:</span> <span class="s">&quot;eNotation&quot;</span> <span class="p p-Indicator">}</span>
+    <span class="nt">units</span><span class="p">:</span>
+      <span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span> <span class="s">&quot;String&quot;</span><span class="p p-Indicator">,</span><span class="nt"> readWrite</span><span class="p">:</span> <span class="s">&quot;R&quot;</span><span class="p p-Indicator">,</span><span class="nt"> defaultValue</span><span class="p">:</span> <span class="s">&quot;&quot;</span> <span class="p p-Indicator">}</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ping</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;device</span><span class="nv"> </span><span class="s">awake&quot;</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">value</span><span class="p">:</span>
+      <span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span> <span class="s">&quot;String&quot;</span><span class="p p-Indicator">,</span><span class="nt"> size</span><span class="p">:</span> <span class="s">&quot;0&quot;</span><span class="p p-Indicator">,</span><span class="nt"> readWrite</span><span class="p">:</span> <span class="s">&quot;R&quot;</span><span class="p p-Indicator">,</span><span class="nt"> defaultValue</span><span class="p">:</span> <span class="s">&quot;oops&quot;</span> <span class="p p-Indicator">}</span>
+    <span class="nt">units</span><span class="p">:</span>
+      <span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span> <span class="s">&quot;String&quot;</span><span class="p p-Indicator">,</span><span class="nt"> readWrite</span><span class="p">:</span> <span class="s">&quot;R&quot;</span><span class="p p-Indicator">,</span><span class="nt"> defaultValue</span><span class="p">:</span> <span class="s">&quot;&quot;</span> <span class="p p-Indicator">}</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">message</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;device</span><span class="nv"> </span><span class="s">notification</span><span class="nv"> </span><span class="s">message&quot;</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">value</span><span class="p">:</span>
+      <span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span> <span class="s">&quot;String&quot;</span><span class="p p-Indicator">,</span><span class="nt"> size</span><span class="p">:</span> <span class="s">&quot;0&quot;</span><span class="p p-Indicator">,</span><span class="nt"> readWrite</span><span class="p">:</span> <span class="s">&quot;W&quot;</span> <span class="p p-Indicator">,</span><span class="nt">scale</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p p-Indicator">,</span><span class="nt"> offset</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p p-Indicator">,</span><span class="nt"> base</span><span class="p">:</span> <span class="s">&quot;&quot;</span>  <span class="p p-Indicator">}</span>
+    <span class="nt">units</span><span class="p">:</span>
+      <span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span> <span class="s">&quot;String&quot;</span><span class="p p-Indicator">,</span><span class="nt"> readWrite</span><span class="p">:</span> <span class="s">&quot;R&quot;</span><span class="p p-Indicator">,</span><span class="nt"> defaultValue</span><span class="p">:</span> <span class="s">&quot;&quot;</span> <span class="p p-Indicator">}</span>
+
+<span class="nt">deviceCommands</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">testrandfloat32</span>
+  <span class="nt">get</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt"> index</span><span class="p">:</span> <span class="s">&quot;1&quot;</span><span class="p p-Indicator">,</span><span class="nt"> operation</span><span class="p">:</span> <span class="s">&quot;get&quot;</span><span class="p p-Indicator">,</span><span class="nt"> deviceResource</span><span class="p">:</span> <span class="s">&quot;randfloat32&quot;</span><span class="p p-Indicator">}</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">testrandfloat64</span>
+  <span class="nt">get</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt"> index</span><span class="p">:</span> <span class="s">&quot;1&quot;</span><span class="p p-Indicator">,</span><span class="nt"> operation</span><span class="p">:</span> <span class="s">&quot;get&quot;</span><span class="p p-Indicator">,</span><span class="nt"> deviceResource</span><span class="p">:</span> <span class="s">&quot;randfloat64&quot;</span><span class="p p-Indicator">}</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">testping</span>
+  <span class="nt">get</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt"> index</span><span class="p">:</span> <span class="s">&quot;1&quot;</span><span class="p p-Indicator">,</span><span class="nt"> operation</span><span class="p">:</span> <span class="s">&quot;get&quot;</span><span class="p p-Indicator">,</span><span class="nt"> deviceResource</span><span class="p">:</span> <span class="s">&quot;ping&quot;</span><span class="p p-Indicator">}</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">testmessage</span>
+  <span class="nt">get</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt"> index</span><span class="p">:</span> <span class="s">&quot;1&quot;</span><span class="p p-Indicator">,</span><span class="nt"> operation</span><span class="p">:</span> <span class="s">&quot;get&quot;</span><span class="p p-Indicator">,</span><span class="nt"> deviceResource</span><span class="p">:</span> <span class="s">&quot;message&quot;</span><span class="p p-Indicator">}</span>
+  <span class="nt">set</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt"> index</span><span class="p">:</span> <span class="s">&quot;1&quot;</span><span class="p p-Indicator">,</span><span class="nt"> operation</span><span class="p">:</span> <span class="s">&quot;set&quot;</span><span class="p p-Indicator">,</span><span class="nt"> deviceResource</span><span class="p">:</span> <span class="s">&quot;message&quot;</span><span class="p p-Indicator">}</span>
+
+<span class="nt">coreCommands</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">testrandfloat32</span>
+  <span class="nt">get</span><span class="p">:</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="s">&quot;/api/v1/device/{deviceId}/testrandfloat32&quot;</span>
+    <span class="nt">responses</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;200&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;get</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">random</span><span class="nv"> </span><span class="s">float32</span><span class="nv"> </span><span class="s">value&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;randfloat32&quot;</span><span class="p p-Indicator">]</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;500&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;internal</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">error&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[]</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">testrandfloat64</span>
+  <span class="nt">get</span><span class="p">:</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="s">&quot;/api/v1/device/{deviceId}/testrandfloat64&quot;</span>
+    <span class="nt">responses</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;200&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;get</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">random</span><span class="nv"> </span><span class="s">float64</span><span class="nv"> </span><span class="s">value&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;randfloat64&quot;</span><span class="p p-Indicator">]</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;500&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;internal</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">error&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[]</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">testping</span>
+  <span class="nt">get</span><span class="p">:</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="s">&quot;/api/v1/device/{deviceId}/testping&quot;</span>
+    <span class="nt">responses</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;200&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;ping</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">device&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;ping&quot;</span><span class="p p-Indicator">]</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;500&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;internal</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">error&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[]</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">testmessage</span>
+  <span class="nt">get</span><span class="p">:</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="s">&quot;/api/v1/device/{deviceId}/testmessage&quot;</span>
+    <span class="nt">responses</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;200&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;get</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">message&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;message&quot;</span><span class="p p-Indicator">]</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;500&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;internal</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">error&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[]</span>
+  <span class="nt">put</span><span class="p">:</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="s">&quot;/api/v1/device/{deviceId}/testmessage&quot;</span>
+    <span class="nt">parameterNames</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;message&quot;</span><span class="p p-Indicator">]</span>
+    <span class="nt">responses</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;204&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;set</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">message.&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[]</span>
+    <span class="p p-Indicator">-</span> <span class="nt">code</span><span class="p">:</span> <span class="s">&quot;500&quot;</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;internal</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">error&quot;</span>
+      <span class="nt">expectedValues</span><span class="p">:</span> <span class="p p-Indicator">[]</span>
+</code></pre></div>
+
+<p>デバイスプロファイルは、冒頭に <code>manufacturer</code> と <code>model</code> があるように、典型的にはデバイスのモデルや型番ごとにひとつ用意します。そのモデルや型番のデバイスが、</p>
+<ul>
+<li>どのようなセンサやアクチュエータを持ち、値の意味はなにか（<code>deviceResources</code> セクション）</li>
+<li>それぞれのセンサやアクチュエータに対してできる操作はなにか（<code>deviceCommands</code> セクション）</li>
+<li>コアサービスにそれらの操作をどのように公開するか（<code>coreCommands</code> セクション）</li>
+</ul>
+<p>を定義します。</p>
+<p>今回の例では、<code>deviceResources</code> セクションを見ると、例えば、</p>
+<ul>
+<li>このデバイスにリソース <code>randfloat64</code> があり</li>
+<li>それは <code>0.00</code> から <code>100.00</code> の範囲の</li>
+<li><code>Float64</code> 型の値を持つ</li>
+</ul>
+<p>ことなどが定義されています。また、<code>message</code> リソースは <code>String</code> 型の値を持ち、他のリソースと違って書き換えが可能（<code>W</code>）と定義されています。</p>
+<p><code>deviceCommands</code> セクションでは、例えば <code>testrandfloat64</code> コマンドを定義し、このコマンドの <code>get</code> メソッドでは、先に <code>deviecResources</code> で定義したリソース <code>randfloat64</code> からの値の読み取りを行うことなどが定義されています。また、<code>testmessage</code> コマンドでは、<code>message</code> リソースに対する<code>get</code> だけでなく、<code>set</code> メソッドも定義しています。</p>
+<div class="admonition tip">
+<p class="admonition-title">複数リソースの同時操作</p>
+<p>ここでは実装されていませんが、ひとつのメソッドに複数のリソースを紐付けることも可能です。つまり、一回の <code>get</code> 操作で複数のリソースの値を同時に取得するようにも構成できます。<a href="http://www.iotechsys.com/cmsfiles/iotech_systems/docs/edgexpert/device-services/Ch-DeviceProfiles.html">Edge Xpert のドキュメントでは、そのような例が解説され</a> ています。</p>
+</div>
+<p><code>coreCommands</code> セクションでは、例えばコアサービスが <code>testrandfloat64</code> コマンドを実行でき、その <code>GET</code> リクエストはパス <code>/api/v1/device/{deviceId}/testrandfloat64</code> に渡される（このパスは、先の <code>deviceCommands</code> で定義した <code>testrandfloat64</code> コマンドのことです）ものと定義されています。そして、結果のレスポンスコード <code>200</code> だった場合は、そのレスポンスのボディに含まれる値がリソース <code>randfloat32</code> の値として取り扱えるものであることが定義されています。また、<code>testmessage</code> コマンドでは、ほかのコマンドと異なり <code>PUT</code> リクエストの動作も定義されています。</p>
+<h3 id="_12">デバイスサービスコンフィグレーション<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>今回利用するデバイスサービスコンフィグレーションファイルは、お手元の <code>device-service</code> ディレクトリ内の <code>configuration.toml</code> です。</p>
+<p>このファイルは <strong>MQTT ブローカの IP アドレスを含む</strong> ので、<strong>IP アドレス部分 <code>192.168.0.239</code> をご自身の環境に合わせて修正し上書き</strong> してください。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># configuration.toml</span>
+<span class="k">[Writable]</span>
+<span class="n">LogLevel</span> <span class="o">=</span> <span class="s">&#39;DEBUG&#39;</span>
+
+<span class="k">[Service]</span>
+<span class="n">Host</span> <span class="o">=</span> <span class="s">&quot;edgex-device-mqtt&quot;</span>
+<span class="n">Port</span> <span class="o">=</span> <span class="mi">49982</span>
+<span class="n">ConnectRetries</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">Labels</span> <span class="o">=</span> <span class="k">[]</span>
+<span class="n">OpenMsg</span> <span class="o">=</span> <span class="s">&quot;device mqtt started&quot;</span>
+<span class="n">Timeout</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">EnableAsyncReadings</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="n">AsyncBufferSize</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="k">[Registry]</span>
+<span class="n">Host</span> <span class="o">=</span> <span class="s">&quot;edgex-core-consul&quot;</span>
+<span class="n">Port</span> <span class="o">=</span> <span class="mi">8500</span>
+<span class="n">CheckInterval</span> <span class="o">=</span> <span class="s">&quot;10s&quot;</span>
+<span class="n">FailLimit</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">FailWaitTime</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">Type</span> <span class="o">=</span> <span class="s">&quot;consul&quot;</span>
+
+<span class="k">[Logging]</span>
+<span class="n">EnableRemote</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="n">File</span> <span class="o">=</span> <span class="s">&quot;./device-mqtt.log&quot;</span>
+
+<span class="k">[Clients]</span>
+  <span class="k">[Clients.Data]</span>
+  <span class="n">Name</span> <span class="o">=</span> <span class="s">&quot;edgex-core-data&quot;</span>
+  <span class="n">Protocol</span> <span class="o">=</span> <span class="s">&quot;http&quot;</span>
+  <span class="n">Host</span> <span class="o">=</span> <span class="s">&quot;edgex-core-data&quot;</span>
+  <span class="n">Port</span> <span class="o">=</span> <span class="mi">48080</span>
+  <span class="n">Timeout</span> <span class="o">=</span> <span class="mi">50000</span>
+
+  <span class="k">[Clients.Metadata]</span>
+  <span class="n">Name</span> <span class="o">=</span> <span class="s">&quot;edgex-core-metadata&quot;</span>
+  <span class="n">Protocol</span> <span class="o">=</span> <span class="s">&quot;http&quot;</span>
+  <span class="n">Host</span> <span class="o">=</span> <span class="s">&quot;edgex-core-metadata&quot;</span>
+  <span class="n">Port</span> <span class="o">=</span> <span class="mi">48081</span>
+  <span class="n">Timeout</span> <span class="o">=</span> <span class="mi">50000</span>
+
+  <span class="k">[Clients.Logging]</span>
+  <span class="n">Name</span> <span class="o">=</span> <span class="s">&quot;edgex-support-logging&quot;</span>
+  <span class="n">Protocol</span> <span class="o">=</span> <span class="s">&quot;http&quot;</span>
+  <span class="n">Host</span> <span class="o">=</span><span class="s">&quot;edgex-support-logging&quot;</span>
+  <span class="n">Port</span> <span class="o">=</span> <span class="mi">48061</span>
+
+<span class="k">[Device]</span>
+  <span class="n">DataTransform</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="n">InitCmd</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+  <span class="n">InitCmdArgs</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+  <span class="n">MaxCmdOps</span> <span class="o">=</span> <span class="mi">128</span>
+  <span class="n">MaxCmdValueLen</span> <span class="o">=</span> <span class="mi">256</span>
+  <span class="n">RemoveCmd</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+  <span class="n">RemoveCmdArgs</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+  <span class="n">ProfilesDir</span> <span class="o">=</span> <span class="s">&quot;/custom-config&quot;</span>
+
+<span class="c1"># Pre-define Devices</span>
+<span class="k">[[DeviceList]]</span>
+  <span class="n">Name</span> <span class="o">=</span> <span class="s">&quot;MQ_DEVICE&quot;</span>
+  <span class="n">Profile</span> <span class="o">=</span> <span class="s">&quot;Test.Device.MQTT.Profile&quot;</span>
+  <span class="n">Description</span> <span class="o">=</span> <span class="s">&quot;General MQTT device&quot;</span>
+  <span class="n">Labels</span> <span class="o">=</span> <span class="k">[ &quot;MQTT&quot;]</span>
+  <span class="k">[DeviceList.Protocols]</span>
+    <span class="k">[DeviceList.Protocols.mqtt]</span>
+       <span class="n">Schema</span> <span class="o">=</span> <span class="s">&quot;tcp&quot;</span>
+       <span class="n">Host</span> <span class="o">=</span> <span class="s">&quot;192.168.0.239&quot;</span>
+       <span class="n">Port</span> <span class="o">=</span> <span class="s">&quot;1883&quot;</span>
+       <span class="n">ClientId</span> <span class="o">=</span> <span class="s">&quot;CommandPublisher&quot;</span>
+       <span class="n">User</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+       <span class="n">Password</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+       <span class="n">Topic</span> <span class="o">=</span> <span class="s">&quot;CommandTopic&quot;</span>
+  <span class="k">[[DeviceList.AutoEvents]]</span>
+    <span class="n">Frequency</span> <span class="o">=</span> <span class="s">&quot;30s&quot;</span>
+    <span class="n">OnChange</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="n">Resource</span> <span class="o">=</span> <span class="s">&quot;testrandfloat64&quot;</span>
+
+<span class="c1"># Driver configs</span>
+<span class="k">[Driver]</span>
+<span class="n">IncomingSchema</span> <span class="o">=</span> <span class="s">&quot;tcp&quot;</span>
+<span class="n">IncomingHost</span> <span class="o">=</span> <span class="s">&quot;192.168.0.239&quot;</span>
+<span class="n">IncomingPort</span> <span class="o">=</span> <span class="s">&quot;1883&quot;</span>
+<span class="n">IncomingUser</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">IncomingPassword</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">IncomingQos</span> <span class="o">=</span> <span class="s">&quot;0&quot;</span>
+<span class="n">IncomingKeepAlive</span> <span class="o">=</span> <span class="s">&quot;3600&quot;</span>
+<span class="n">IncomingClientId</span> <span class="o">=</span> <span class="s">&quot;IncomingDataSubscriber&quot;</span>
+<span class="n">IncomingTopic</span> <span class="o">=</span> <span class="s">&quot;DataTopic&quot;</span>
+<span class="n">ResponseSchema</span> <span class="o">=</span> <span class="s">&quot;tcp&quot;</span>
+<span class="n">ResponseHost</span> <span class="o">=</span> <span class="s">&quot;192.168.0.239&quot;</span>
+<span class="n">ResponsePort</span> <span class="o">=</span> <span class="s">&quot;1883&quot;</span>
+<span class="n">ResponseUser</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">ResponsePassword</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">ResponseQos</span> <span class="o">=</span> <span class="s">&quot;0&quot;</span>
+<span class="n">ResponseKeepAlive</span> <span class="o">=</span> <span class="s">&quot;3600&quot;</span>
+<span class="n">ResponseClientId</span> <span class="o">=</span> <span class="s">&quot;CommandResponseSubscriber&quot;</span>
+<span class="n">ResponseTopic</span> <span class="o">=</span> <span class="s">&quot;ResponseTopic&quot;</span>
+</code></pre></div>
+
+<p>このファイルでは、前半部分でデバイスサービス自身の動作に必要なパラメータを指定しています。後半部分では、デバイスプロファイルと実際のデバイスを紐づけて、EdgeX Foundry のデバイスとして定義しています。</p>
+<p>デバイスを定義している部分は、<code>[[DeviceList]]</code> です。デバイスプロファイル <code>Test.Device.MQTT.Profile</code> に紐づけて、デバイス <code>MQ_DEVICE</code> の存在を定義しています。また、このデバイスに対するコマンドの実行に利用する MQTT ブローカも指定しています。</p>
+<p>ここに含まれる <code>[[DeviceList.AutoEvents]]</code> の部分では、デバイスに対するコマンドの定期実行を定義しています。今回利用するデバイスのリソース <code>randfloat64</code> は、デバイスサービスに値を自動では送らないため、データを収集するにはデバイスサービス側から定期的に確認しに行く必要があります。今回は、<code>30</code> 秒ごとに <code>testrandfloat64</code> コマンドを実行するように設定しています。</p>
+<p>最後の <code>[Driver]</code> の部分では、デバイスサービスがデバイスから情報を受け取るために購読する MQTT ブローカやトピック名を設定しています。</p>
+<div class="admonition tip">
+<p class="admonition-title">あとからのデバイスの追加</p>
+<p><code>configuration.toml</code> はデバイスサービスの <strong>起動時の構成</strong> を指定するものです。起動後にデバイスを追加したい場合は、このファイルではなく <a href="https://fuji-docs.edgexfoundry.org/Ch-WalkthroughProvision.html">API を利用して追加</a> できます。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">他のデバイスサービスの場合</p>
+<p>今回のファイルは、あくまで <strong>MQTT デバイスサービス専用</strong> の設定ファイルなので、利用したいデバイスサービスが違えば、当然この設定ファイルで書くべき内容も変わることに注意が必要です。</p>
+</div>
+<h3 id="edgex-foundry">デバイスサービスを含んだ EdgeX Foundry の起動<a class="headerlink" href="#edgex-foundry" title="Permanent link">&para;</a></h3>
+<p>設定ファイルができたら、デバイスサービスを含む EdgeX Foundry を起動します。</p>
+<p>お手元にある今回用の <code>docker-compose.yml</code> は、デバイスサービスを起動するための記述として、以下を追加しています。エディタで確認してもよいでしょう。</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">amd64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>  <span class="nt">device-mqtt</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgexfoundry/docker-device-mqtt-go:1.1.1</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;49982:49982&quot;</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-device-mqtt</span>
+    <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-device-mqtt</span>
+    <span class="nt">networks</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">edgex-network</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">db-data:/data/db</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">log-data:/edgex/logs</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">consul-config:/consul/config</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">consul-data:/consul/data</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./device-service:/custom-config</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">command</span>
+    <span class="nt">entrypoint</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/device-mqtt</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--registry=consul://edgex-core-consul:8500</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--confdir=/custom-config</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">arm64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>  <span class="nt">device-mqtt</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgexfoundry/docker-device-mqtt-go-arm64:1.1.1</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;49982:49982&quot;</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-device-mqtt</span>
+    <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-device-mqtt</span>
+    <span class="nt">networks</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">edgex-network</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">db-data:/data/db</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">log-data:/edgex/logs</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">consul-config:/consul/config</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">consul-data:/consul/data</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./device-service:/custom-config</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">command</span>
+    <span class="nt">entrypoint</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/device-mqtt</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--registry=consul://edgex-core-consul:8500</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--confdir=/custom-config</span>
+</code></pre></div>
+
+</div>
+</div>
+<p>これにより、<code>edgexfoundry/docker-device-mqtt-go</code> イメージを利用してデバイスサービスが起動します。</p>
+<p>また、今回用の設定ファイルが含まれるお手元の <code>device-service</code> ディレクトリを、コンテナ内の <code>/custom-config</code> にマウントし、起動時の引数で <code>--confdir=/custom-config</code> を与えています。これでデバイスサービスの起動時にお手元の設定ファイル群が読み込まれるようになり、EdgeX Foundry にデバイスサービスとデバイスが登録されます。</p>
+<div class="admonition tip">
+<p class="admonition-title">設定ファイルのマウント</p>
+<p>今回の手法は、他のデバイスサービスを利用する場合も応用できます。設定ファイルを含んだコンテナイメージをビルドして使うことも手ですが、設定ファイルの修正が相当な手間になってしまうため、日常的に書き換えうるファイルは後からマウントして利用させる工夫が有効です。</p>
+</div>
+<p>実際にこのファイルを利用して EdgeX Foundry を起動させ、<code>State</code> が <code>Up</code> になることを確認します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose up -d
+</span>
+<span class="hll">$ docker-compose ps
+</span></code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title">マイクロサービスの起動状態</p>
+<p>EdgeX Foundry は、マイクロサービス群の状態管理に <a href="https://www.consul.io/">HashiCorp の Consul</a> を利用しており、各サービスの起動状態や登録状態は、この Consul を通じても確認できます。</p>
+<p><img alt="" src="../img/device-service-mqtt-consul.png" /></p>
+<p>Consul の GUI には、<code>http://&lt;IP アドレス&gt;:8500/</code> でアクセスでき、サービスの状態のほか、構成情報（Key-Value ストアの中身）も確認できます。</p>
+</div>
+<h2 id="_13">動作確認<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>まずは、デバイスサービスやデバイスが正常に EdgeX Foundry に認識されているか確認し、その後、値の収集やコマンド操作を確認します。</p>
+<h3 id="_14">登録状態の確認<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<p>Web GUI を利用して、登録状態を確認します。</p>
+<ol>
+<li>Docker ホストの IP アドレスを確認して、<code>http://&lt;IP アドレス&gt;:4000/</code> にブラウザでアクセスし、デフォルトのユーザ <code>admin</code>（パスワードも <code>admin</code>）でログインします。</li>
+<li>[<code>Gateway</code>] に Docker ホストを登録して選択状態にしてから、[<code>Device Service</code>] に遷移します。</li>
+<li>デバイスサービス <code>edgex-device-mqtt</code> が登録されていることを確認します。</li>
+<li>デバイスサービス <code>edgex-device-mqtt</code> の行の [<code>Devices</code>] アイコンを展開して、デバイス <code>MQ_DEVICE</code> が登録されていることを確認します。</li>
+<li>デバイス <code>MQ_DEVICE</code> の行の [<code>Commands</code>] アイコンを展開して、<code>testrandfloat32</code> など、4 つのコマンドが登録されていることを確認します。</li>
+</ol>
+<p>API でも、同様の確認を行えます。API でデバイスサービスやデバイスの登録状態を確認する場合は、リクエスト先は <code>metadata</code> サービス（<code>48081</code> 番ポート）です。</p>
+<p><img alt="" src="../img/device-service-mqtt-device-api-metadata.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="err">$</span> <span class="err">curl</span> <span class="err">-s</span>  <span class="err">http://localhost:</span><span class="mi">48081</span><span class="err">/api/v</span><span class="mi">1</span><span class="err">/deviceservice</span> <span class="err">|</span> <span class="err">jq</span>
+</span><span class="err">...</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1588154133422</span><span class="p">,</span>
+    <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1588154133422</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1588154133416</span><span class="p">,</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;e2699690-fd1f-4d95-b3ad-0053c7c03f26&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;edgex-device-mqtt&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;operatingState&quot;</span><span class="p">:</span> <span class="s2">&quot;ENABLED&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;addressable&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1588154133414</span><span class="p">,</span>
+      <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1588154133414</span><span class="p">,</span>
+      <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1588154133411</span><span class="p">,</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;75d0e02f-1ab7-43f7-b1fa-d4a10858a177&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;edgex-device-mqtt&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTP&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;edgex-device-mqtt&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="mi">49982</span><span class="p">,</span>
+      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/v1/callback&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;baseURL&quot;</span><span class="p">:</span> <span class="s2">&quot;http://edgex-device-mqtt:49982&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://edgex-device-mqtt:49982/api/v1/callback&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;adminState&quot;</span><span class="p">:</span> <span class="s2">&quot;UNLOCKED&quot;</span>
+  <span class="p">}</span>
+<span class="err">...</span>
+
+<span class="hll"><span class="err">$</span> <span class="err">curl</span> <span class="err">-s</span>  <span class="err">http://localhost:</span><span class="mi">48081</span><span class="err">/api/v</span><span class="mi">1</span><span class="err">/device</span> <span class="err">|</span> <span class="err">jq</span>
+</span><span class="err">...</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1588154134502</span><span class="p">,</span>
+    <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1588154134502</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1588154134456</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;General MQTT device&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1b715850-b4ee-420e-b4cb-bb65577fa2a4&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;adminState&quot;</span><span class="p">:</span> <span class="s2">&quot;UNLOCKED&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;operatingState&quot;</span><span class="p">:</span> <span class="s2">&quot;ENABLED&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;protocols&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;mqtt&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;ClientId&quot;</span><span class="p">:</span> <span class="s2">&quot;CommandPublisher&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;Host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.239&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;Password&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;Port&quot;</span><span class="p">:</span> <span class="s2">&quot;1883&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;Schema&quot;</span><span class="p">:</span> <span class="s2">&quot;tcp&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;Topic&quot;</span><span class="p">:</span> <span class="s2">&quot;CommandTopic&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;User&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+      <span class="p">}</span>
+<span class="err">...</span>
+</code></pre></div>
+
+<h3 id="_15">デバイスから配信された値の蓄積の確認<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<p>今回のデバイスは、センサ <code>randfloat32</code> の値を <code>15</code> 秒ごとに自動的に MQTT トピックに配信していました。デバイスサービスはこれを受け取れるように構成したので、EdgeX Foundry にも取り込まれているはずです。</p>
+<p><code>data</code> サービスの API を利用して、これを確認します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="err">$</span> <span class="err">curl</span> <span class="err">-s</span> <span class="err">http://localhost:</span><span class="mi">48080</span><span class="err">/api/v</span><span class="mi">1</span><span class="err">/reading/name/randfloat</span><span class="mi">32</span><span class="err">/</span><span class="mi">3</span> <span class="err">|</span> <span class="err">jq</span>
+</span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;23fdac76-0870-4b9d-b653-561d8a7c0423&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1579707885029</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1579707885005379300</span><span class="p">,</span>
+    <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1579707885029</span><span class="p">,</span>
+    <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;randfloat32&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;QdpmZg==&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;5c086b1d-6b38-48c0-9aef-9b800f9c72ab&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1579707870018</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1579707870004742000</span><span class="p">,</span>
+    <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1579707870018</span><span class="p">,</span>
+    <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;randfloat32&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;QeGZmg==&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;de67c865-0406-408d-b238-d33de1fe1032&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1579707855022</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1579707855011006200</span><span class="p">,</span>
+    <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1579707855022</span><span class="p">,</span>
+    <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;randfloat32&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Qd2Zmg==&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>時刻はエポックミリ秒（<code>origin</code> はエポックナノ秒）なので、<code>date</code> コマンドで変換すると 15 秒おきであることが確認できます。</p>
+<div class="highlight"><pre><span></span><code>$ date -d <span class="s2">&quot;@1579707885.029&quot;</span>
+Wed <span class="m">22</span> Jan <span class="m">2020</span> <span class="m">03</span>:44:45 PM UTC
+
+$ date -d <span class="s2">&quot;@1579707870.018&quot;</span>
+Wed <span class="m">22</span> Jan <span class="m">2020</span> <span class="m">03</span>:44:30 PM UTC
+
+$ date -d <span class="s2">&quot;@1579707855.022&quot;</span>
+Wed <span class="m">22</span> Jan <span class="m">2020</span> <span class="m">03</span>:44:15 PM UTC
+</code></pre></div>
+
+<h3 id="_16">デバイスサービスの自動実行イベントの確認<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<p>センサ <code>randfloat64</code> の値は、自動では配信されないため、デバイスサービスの設定（<code>configuration.toml</code>）に <code>[[DeviceList.AutoEvents]]</code> を定義して、デバイスサービス側から <code>30</code> 秒ごとに自動で収集させていました。</p>
+<p>これもデータの蓄積を確認できるはずです。</p>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="err">$</span> <span class="err">curl</span> <span class="err">-s</span> <span class="err">http://localhost:</span><span class="mi">48080</span><span class="err">/api/v</span><span class="mi">1</span><span class="err">/reading/name/randfloat</span><span class="mi">64</span><span class="err">/</span><span class="mi">3</span> <span class="err">|</span> <span class="err">jq</span>
+</span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;c99bd0bc-14f7-46b6-a940-ed26f7738bdb&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1579709342807</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1579709342806935600</span><span class="p">,</span>
+    <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1579709342807</span><span class="p">,</span>
+    <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;randfloat64&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;8.047360e+00&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;68c36823-ca73-4033-8f40-a2d82088f644&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1579709312695</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1579709312695223100</span><span class="p">,</span>
+    <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1579709312695</span><span class="p">,</span>
+    <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;randfloat64&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;2.020540e+00&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;b9fceb6a-6ee3-4f20-aed5-2dab8c0db9c4&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1579709282612</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="mi">1579709282611878800</span><span class="p">,</span>
+    <span class="nt">&quot;modified&quot;</span><span class="p">:</span> <span class="mi">1579709282612</span><span class="p">,</span>
+    <span class="nt">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;randfloat64&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;4.781700e+00&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>これも変換すると 30 秒おきであることが確認できます。</p>
+<div class="highlight"><pre><span></span><code>$ date -d <span class="s2">&quot;@1579709342.807&quot;</span>
+Wed Jan <span class="m">22</span> <span class="m">16</span>:09:02 UTC <span class="m">2020</span>
+
+$ date -d <span class="s2">&quot;@1579709312.695&quot;</span>
+Wed Jan <span class="m">22</span> <span class="m">16</span>:08:32 UTC <span class="m">2020</span>
+
+$ date -d <span class="s2">&quot;@1579709282.612&quot;</span>
+Wed Jan <span class="m">22</span> <span class="m">16</span>:08:02 UTC <span class="m">2020</span>
+</code></pre></div>
+
+<p>MQTT ブローカを購読しているターミナルでは、<code>DataTopic</code> への自動配信に混ざって、30 秒ごとに <code>CommandTopic</code> にコマンドが届き、<code>ResponseTopic</code> に応答が返されていることが観察できるでしょう。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker run --init --rm --name<span class="o">=</span>client -it kurokobo/mqtt-client sub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;#&quot;</span> -v
+</span>...
+CommandTopic <span class="o">{</span><span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat64&quot;</span>,<span class="s2">&quot;method&quot;</span>:<span class="s2">&quot;get&quot;</span>,<span class="s2">&quot;uuid&quot;</span>:<span class="s2">&quot;5ea957f9b8dd790001fce499&quot;</span><span class="o">}</span>
+ResponseTopic <span class="o">{</span><span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat64&quot;</span>,<span class="s2">&quot;method&quot;</span>:<span class="s2">&quot;get&quot;</span>,<span class="s2">&quot;uuid&quot;</span>:<span class="s2">&quot;5ea957f9b8dd790001fce499&quot;</span>,<span class="s2">&quot;randfloat64&quot;</span>:<span class="s2">&quot;4.17029&quot;</span><span class="o">}</span>
+...
+CommandTopic <span class="o">{</span><span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat64&quot;</span>,<span class="s2">&quot;method&quot;</span>:<span class="s2">&quot;get&quot;</span>,<span class="s2">&quot;uuid&quot;</span>:<span class="s2">&quot;5ea95817b8dd790001fce49a&quot;</span><span class="o">}</span>
+ResponseTopic <span class="o">{</span><span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat64&quot;</span>,<span class="s2">&quot;method&quot;</span>:<span class="s2">&quot;get&quot;</span>,<span class="s2">&quot;uuid&quot;</span>:<span class="s2">&quot;5ea95817b8dd790001fce49a&quot;</span>,<span class="s2">&quot;randfloat64&quot;</span>:<span class="s2">&quot;7.36756&quot;</span><span class="o">}</span>
+...
+</code></pre></div>
+
+<h3 id="_17">デバイスへのコマンド実行の確認<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<p>このデバイスのリソース <code>message</code> の値は、EdgeX Foundry から制御できるように、デバイスプロファイルでも <code>PUT</code> リクエストの挙動を定義していました。ここでは、この操作ができることを確認します。</p>
+<p>デバイスプロファイルで定義した各コマンドは、<code>command</code> サービス経由で利用できます。実行用の URL は、<code>command</code> サービスの API で確認できます。</p>
+<p><code>command</code> サービス（<code>48082</code> 番ポート）にデバイスの情報を問い合わせると、レスポンスにコマンドを実行するための URL が含まれます。結果から、<code>testmessage</code> コマンドの情報を特定し、<code>get</code> と <code>put</code> の <code>url</code> を探します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="err">$</span> <span class="err">curl</span> <span class="err">-s</span> <span class="err">http://localhost:</span><span class="mi">48082</span><span class="err">/api/v</span><span class="mi">1</span><span class="err">/device/name/MQ_DEVICE</span> <span class="err">|</span> <span class="err">jq</span>
+</span><span class="err">...</span>
+  <span class="s2">&quot;id&quot;</span><span class="err">:</span> <span class="s2">&quot;77fccbb8-f33b-42d8-bf21-6d55cdde2068&quot;</span><span class="err">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="err">:</span> <span class="s2">&quot;MQ_DEVICE&quot;</span><span class="err">,</span>
+<span class="err">...</span>
+  <span class="s2">&quot;commands&quot;</span><span class="err">:</span> <span class="p">[</span>
+<span class="err">...</span>
+      <span class="s2">&quot;name&quot;</span><span class="err">:</span> <span class="s2">&quot;testmessage&quot;</span><span class="p">,</span>
+<span class="err">...</span>
+      <span class="s2">&quot;get&quot;</span><span class="err">:</span> <span class="p">{</span>
+        <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/v1/device/{deviceId}/testmessage&quot;</span><span class="p">,</span>
+<span class="err">...</span>
+        <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://edgex-core-command:48082/api/v1/device/77fccbb8-f33b-42d8-bf21-6d55cdde2068/command/4daa4148-7c0e-4cfd-81cc-b2b740bb4de4&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;put&quot;</span><span class="err">:</span> <span class="p">{</span>
+        <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/v1/device/{deviceId}/testmessage&quot;</span><span class="p">,</span>
+<span class="err">...</span>
+        <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://edgex-core-command:48082/api/v1/device/77fccbb8-f33b-42d8-bf21-6d55cdde2068/command/4daa4148-7c0e-4cfd-81cc-b2b740bb4de4&quot;</span><span class="p">,</span>
+<span class="err">...</span>
+</code></pre></div>
+
+<p>EdgeX Foundry がデバイスにコマンドを実行するときは、内部ではこの URL に対して <code>GET</code> や <code>PUT</code> が行われます。URL のとおり、<code>command</code> サービスがホストです。<code>command</code> サービスがリクエストを受け取ると、デバイスサービスにリクエストを渡し、デバイスサービスはそれを受け取って事前の設定に従ってデバイスに作用し、応答が返ってくることになります。</p>
+<p>ここでは実際に、確認できた URL にリクエストを発行します。外部からこの URL を直接叩くときは、<strong>ホスト名部分を環境に合わせて書き換え</strong> たうえで実行します。</p>
+<p>まずは、現在値を確認します。<code>get</code> コマンドの URL のホスト名を <code>localhost</code> に修正して、<code>GET</code> リクエストを送ります。</p>
+<div class="highlight"><pre><span></span><code>$ curl -s http://localhost:48082/api/v1/device/77fccbb8-f33b-42d8-bf21-6d55cdde2068/command/4daa4148-7c0e-4cfd-81cc-b2b740bb4de4 <span class="p">|</span> jq
+<span class="o">{</span>
+  <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+  <span class="s2">&quot;origin&quot;</span>: <span class="m">1579710432121478400</span>,
+  <span class="s2">&quot;readings&quot;</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">&quot;origin&quot;</span>: <span class="m">1579710432109675800</span>,
+      <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+      <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;message&quot;</span>,
+      <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;modified-message&quot;</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">&quot;EncodedEvent&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p><img alt="" src="../img/device-service-mqtt-device-api-command.png" /></p>
+<p>まだ何も変更していないので、初期値（<code>mqtt-script.js</code> で定義されている）か、または動作確認で変更したあとの文字列（上記では <code>modified-message</code>）が返ってきました。</p>
+<p>ここで、変更するための <code>PUT</code> を投げます。先ほど確認した <code>put</code> の URL（実は <code>get</code> と同じですが）のホスト名を <code>localhost</code> に修正して、リクエストのボディに JSON を含めて <code>PUT</code> します。</p>
+<div class="highlight"><pre><span></span><code>$ curl -s -X PUT -d <span class="s1">&#39;{&quot;message&quot;:&quot;control-from-edgex&quot;}&#39;</span> http://localhost:48082/api/v1/device/77fccbb8-f33b-42d8-bf21-6d55cdde2068/command/4daa4148-7c0e-4cfd-81cc-b2b740bb4de4
+</code></pre></div>
+
+<p>エラーがなければ、再度 <code>GET</code> すると、値が変わっていることが確認できます。</p>
+<div class="highlight"><pre><span></span><code>$ curl -s http://localhost:48082/api/v1/device/77fccbb8-f33b-42d8-bf21-6d55cdde2068/command/4daa4148-7c0e-4cfd-81cc-b2b740bb4de4 <span class="p">|</span> jq
+<span class="o">{</span>
+  <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+  <span class="s2">&quot;origin&quot;</span>: <span class="m">1579710963293832000</span>,
+  <span class="s2">&quot;readings&quot;</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">&quot;origin&quot;</span>: <span class="m">1579710963283338200</span>,
+      <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;MQ_DEVICE&quot;</span>,
+      <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;message&quot;</span>,
+      <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;control-from-edgex&quot;</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">&quot;EncodedEvent&quot;</span>: null
+<span class="o">}</span>
+</code></pre></div>
+
+<p>なお、このような <code>GET</code> や <code>PUT</code> に相当する操作は、GUI からも実行できます。</p>
+<p><img alt="" src="../img/device-service-mqtt-gui.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">GUI からの操作</p>
+<p>GUI からの <code>get</code> や <code>set</code> 操作は、たまにうまく動かないことがあります。ほとんどの場合、ブラウザをリロードして再試行すると成功します。</p>
+</div>
+<h2 id="_18">環境の停止<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
+<p>後続のラボでは、現在利用しているものとは別の <code>docker-compose.yml</code> ファイルを利用しますので、今回のこの環境はクリーンアップします。</p>
+<p>次のコマンドで、作成したコンテナと、自動で作成された永続ボリューム領域を削除します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose down --volumes
+</span>Stopping edgex-ui-go                          ... <span class="k">done</span>
+...
+Removing image portainer/portainer
+</code></pre></div>
+
+<p>また、動作させている MQTT ブローカとデバイスのシミュレータも停止させます。MQTT トピックを購読しているターミナルが残っていれば、<span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></span> で終了します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker stop broker
+</span>
+<span class="hll">$ docker rm -f mqtt-scripts
+</span></code></pre></div>
+
+<p>不要なコンテナが残っていないことを確認します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker ps -a
+</span>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre></div>
+
+<h2 id="_19">まとめ<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h2>
+<p>このラボでは、以下を取り扱いました。</p>
+<ul>
+<li>デバイスサービスの概要と、その構成要素を確認しました</li>
+<li>デバイスサービスを用いて、MQTT を利用するデバイスを EdgeX Foundry の制御下に置く手法を実践しました</li>
+</ul>
+<p>実際のユースケースでは、本当のデバイスの本当の仕様に合わせてデバイスサービスや設定ファイル群を構成する必要があります。場合によってはデバイスサービスそれ自体の実装を含めて開発が必要になる可能性もありますが、SDK を使ってゼロから開発するほか、既存の各プロトコル用のデバイスサービスの実装も参考にできるでしょう。</p>
+<p>なお、このラボでは MQTT 用のデバイスサービスを取り上げましたが、公式ドキュメントには <a href="https://fuji-docs.edgexfoundry.org/Ch-Examples.html">他のプロトコル用のデバイスサービスのチュートリアル</a> が含まれています。また、各デバイスサービスの Git リポジトリ（<a href="https://github.com/edgexfoundry/device-mqtt-go">MQTT</a>、<a href="https://github.com/edgexfoundry/device-bacnet-c">BACnet</a>、<a href="https://github.com/edgexfoundry/device-modbus-go">Modbus</a>、<a href="https://github.com/edgexfoundry/device-rest-go">REST API</a> など）に含まれる <code>README.md</code> も参考にできます。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="">
+        
+          <a href="../lab-getting-started/" title="Lab 2 - 導入とデータの確認" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  前
+                </span>
+                Lab 2 - 導入とデータの確認
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../lab-app-service-export-mqtt/" title="Lab 4 - データのエクスポート（MQTT）" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  次
+                </span>
+                Lab 4 - データのエクスポート（MQTT）
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+      <a href="https://github.com/kurokobo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://twitter.com/kurokobo" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.f81b9e8b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.23546af0.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "search.config.lang": "ja", "search.config.pipeline": "", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e]+", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1310 @@
+
+
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="kurokobo">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.3">
+    
+    
+      
+        <title>Lab 2 - 導入とデータの確認 - EdgeX Foundry ハンズオンラボ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.62d34fff.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.c8acc6db.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#757575">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    <body dir="" data-md-color-primary="grey" data-md-color-accent="blue">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-2-" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="">
+    <a href="../.." title="EdgeX Foundry ハンズオンラボ" class="md-header-nav__button md-logo" aria-label="EdgeX Foundry ハンズオンラボ">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            EdgeX Foundry ハンズオンラボ
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Lab 2 - 導入とデータの確認
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/kurokobo/edgex-hol-guide/" title="リポジトリへ" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="EdgeX Foundry ハンズオンラボ" class="md-nav__button md-logo" aria-label="EdgeX Foundry ハンズオンラボ">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    EdgeX Foundry ハンズオンラボ
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/kurokobo/edgex-hol-guide/" title="リポジトリへ" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="このガイドについて" class="md-nav__link">
+      このガイドについて
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Fuji リリース向けガイド
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Fuji リリース向けガイド" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Fuji リリース向けガイド
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Lab 0 - はじめに" class="md-nav__link">
+      Lab 0 - はじめに
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-overview/" title="Lab 1 - 概要" class="md-nav__link">
+      Lab 1 - 概要
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Lab 2 - 導入とデータの確認
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Lab 2 - 導入とデータの確認" class="md-nav__link md-nav__link--active">
+      Lab 2 - 導入とデータの確認
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    このラボのゴールと構成
+  </a>
+  
+    <nav class="md-nav" aria-label="このラボのゴールと構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edgex-foundry" class="md-nav__link">
+    EdgeX Foundry の起動
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    構成の確認
+  </a>
+  
+    <nav class="md-nav" aria-label="構成の確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    起動しているサービス
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    デバイスの取り扱い
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    操作手段
+  </a>
+  
+    <nav class="md-nav" aria-label="操作手段">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    GUI での操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    API での操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    CLI での操作
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    蓄積データの確認
+  </a>
+  
+    <nav class="md-nav" aria-label="蓄積データの確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    蓄積データの構造
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    蓄積データの確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    データベースの確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    環境の停止
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-device-service-mqtt/" title="Lab 3 - デバイスサービスの追加（MQTT）" class="md-nav__link">
+      Lab 3 - デバイスサービスの追加（MQTT）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-app-service-export-mqtt/" title="Lab 4 - データのエクスポート（MQTT）" class="md-nav__link">
+      Lab 4 - データのエクスポート（MQTT）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-support-rulesengine/" title="Lab 5 - ルールエンジンの利用" class="md-nav__link">
+      Lab 5 - ルールエンジンの利用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Geneva リリース向けガイド
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Geneva リリース向けガイド" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Geneva リリース向けガイド
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../geneva/" title="準備中" class="md-nav__link">
+      準備中
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    このラボのゴールと構成
+  </a>
+  
+    <nav class="md-nav" aria-label="このラボのゴールと構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edgex-foundry" class="md-nav__link">
+    EdgeX Foundry の起動
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    構成の確認
+  </a>
+  
+    <nav class="md-nav" aria-label="構成の確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    起動しているサービス
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    デバイスの取り扱い
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    操作手段
+  </a>
+  
+    <nav class="md-nav" aria-label="操作手段">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    GUI での操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    API での操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    CLI での操作
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    蓄積データの確認
+  </a>
+  
+    <nav class="md-nav" aria-label="蓄積データの確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    蓄積データの構造
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    蓄積データの確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    データベースの確認
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    環境の停止
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/kurokobo/edgex-hol-guide/edit/master/docs/fuji/lab-getting-started.md" title="編集" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="lab-2-">Lab 2 - 導入とデータの確認<a class="headerlink" href="#lab-2-" title="Permanent link">&para;</a></h1>
+<p>このラボでは、EdgeX Foundry をシンプルな構成で動作させ、テスト用のデバイスのデータがコアサービスに蓄積されていることを確認します。</p>
+<h2 id="_1">このラボのゴールと構成<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>このラボの目的は次の通りです。</p>
+<ul>
+<li>Docker Compose を利用した EdgeX Foundry の起動方法と停止方法を理解する</li>
+<li>EdgeX Foundry の大まかな構成と、デバイスを制御する考え方の概要を理解する</li>
+<li>GUI と API の操作方法を理解する</li>
+<li>データの確認方法を理解する</li>
+</ul>
+<p>このラボでは、Docker Compose を利用して、Ubuntu 上の Docker コンテナ群として EdgeX Foundry を起動させます。</p>
+<p><img alt="" src="../img/getting-started-overview.png" /></p>
+<h3 id="_2">必要なファイルの用意<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>ラボに必要なファイルは、GitHub 上に用意しています。Ubuntu 上でクローンし、CPU のアーキテクチャに応じてディレクトリを移動してください。</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">amd64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>git clone https://github.com/kurokobo/edgex-hol-fuji.git
+<span class="nb">cd</span> edgex-hol-fuji
+<span class="nb">cd</span> amd64
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">arm64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>git clone https://github.com/kurokobo/edgex-hol-fuji.git
+<span class="nb">cd</span> edgex-hol-fuji
+<span class="nb">cd</span> arm64
+</code></pre></div>
+
+</div>
+</div>
+<p>このラボでは、<code>lab-getting-started</code> ディレクトリの中身を利用します。</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> lab-getting-started
+ls -l
+</code></pre></div>
+
+<p>ファイル <code>docker-compose.yml</code> が存在しているはずです。</p>
+<div class="admonition tip">
+<p class="admonition-title">CPU のアーキテクチャ</p>
+<p>Ubuntu を Raspberry Pi で動作させている場合は、アーキテクチャは <code>arm64</code> に相当します。それ以外の場合は、通常は <code>amd64</code> です。</p>
+</div>
+<h2 id="edgex-foundry">EdgeX Foundry の起動<a class="headerlink" href="#edgex-foundry" title="Permanent link">&para;</a></h2>
+<p>手軽に起動できるよう、Docker Compose 用の YAML ファイルが、<a href="https://github.com/edgexfoundry/developer-scripts/tree/master/releases/fuji/compose-files">EdgeX Foundry の <code>developer-scripts</code> リポジトリ</a> で公開されています。</p>
+<p>このラボで利用する <code>docker-compose.yml</code> は、このうち <code>docker-compose-fuji-no-secty.yml</code> をリネームしたものです。エディタで開いて内容を確認するのもよいでしょう。</p>
+<div class="admonition note">
+<p class="admonition-title">no-secty とは</p>
+<p>EdgeX Foundry には、機微情報を暗号化して保持するためのシークレットストアや、API ゲートウェイとして機能するプロキシなど、セキュリティ関係のマイクロサービスが存在しています。本番環境では重要な機能ですが、構成が複雑になるため、今回はこれらのセキュリティ関係のマイクロサービスを含まない状態で起動できる YAML ファイル <code>*-no-secty.yml</code> を利用しています。</p>
+</div>
+<p>まずは、利用されているイメージを Docker Hub からプルします。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose pull
+</span>Pulling volume            ... <span class="k">done</span>
+Pulling consul            ... <span class="k">done</span>
+Pulling config-seed       ... <span class="k">done</span>
+Pulling mongo             ... <span class="k">done</span>
+Pulling logging           ... <span class="k">done</span>
+Pulling system            ... <span class="k">done</span>
+Pulling notifications     ... <span class="k">done</span>
+Pulling metadata          ... <span class="k">done</span>
+Pulling data              ... <span class="k">done</span>
+Pulling <span class="nb">command</span>           ... <span class="k">done</span>
+Pulling scheduler         ... <span class="k">done</span>
+Pulling app-service-rules ... <span class="k">done</span>
+Pulling rulesengine       ... <span class="k">done</span>
+Pulling device-virtual    ... <span class="k">done</span>
+Pulling ui                ... <span class="k">done</span>
+Pulling portainer         ... <span class="k">done</span>
+</code></pre></div>
+
+<p>プルできたら、デタッチモードで起動させます。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose up -d
+</span>Creating network <span class="s2">&quot;lab-getting-started_edgex-network&quot;</span> with driver <span class="s2">&quot;bridge&quot;</span>
+Creating network <span class="s2">&quot;lab-getting-started_default&quot;</span> with the default driver
+Creating volume <span class="s2">&quot;lab-getting-started_db-data&quot;</span> with default driver
+Creating volume <span class="s2">&quot;lab-getting-started_log-data&quot;</span> with default driver
+Creating volume <span class="s2">&quot;lab-getting-started_consul-config&quot;</span> with default driver
+Creating volume <span class="s2">&quot;lab-getting-started_consul-data&quot;</span> with default driver
+Creating volume <span class="s2">&quot;lab-getting-started_portainer_data&quot;</span> with default driver
+Creating edgex-files ... <span class="k">done</span>
+Creating edgex-core-consul               ... <span class="k">done</span>
+Creating lab-getting-started_portainer_1 ... <span class="k">done</span>
+Creating edgex-mongo                     ... <span class="k">done</span>
+Creating edgex-config-seed               ... <span class="k">done</span>
+Creating edgex-support-logging           ... <span class="k">done</span>
+Creating edgex-core-data                 ... <span class="k">done</span>
+Creating edgex-support-notifications     ... <span class="k">done</span>
+Creating edgex-sys-mgmt-agent            ... <span class="k">done</span>
+Creating edgex-core-metadata             ... <span class="k">done</span>
+Creating edgex-core-command                   ... <span class="k">done</span>
+Creating edgex-support-scheduler              ... <span class="k">done</span>
+Creating edgex-app-service-configurable-rules ... <span class="k">done</span>
+Creating edgex-device-virtual                 ... <span class="k">done</span>
+Creating edgex-ui-go                          ... <span class="k">done</span>
+Creating edgex-support-rulesengine            ... <span class="k">done</span>
+</code></pre></div>
+
+<p>すべてが <code>done</code> で完了したら、起動状態を確認します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose ps
+</span>                Name                              Command               State                                                           Ports
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+edgex-app-service-configurable-rules   /app-service-configurable  ...   Up       <span class="m">48095</span>/tcp, <span class="m">0</span>.0.0.0:48100-&gt;48100/tcp
+edgex-config-seed                      /edgex/cmd/config-seed/con ...   Exit <span class="m">0</span>
+edgex-core-command                     /core-command --registry - ...   Up       <span class="m">0</span>.0.0.0:48082-&gt;48082/tcp
+edgex-core-consul                      docker-entrypoint.sh agent ...   Up       <span class="m">8300</span>/tcp, <span class="m">8301</span>/tcp, <span class="m">8301</span>/udp, <span class="m">8302</span>/tcp, <span class="m">8302</span>/udp, <span class="m">0</span>.0.0.0:8400-&gt;8400/tcp, <span class="m">0</span>.0.0.0:8500-&gt;8500/tcp, <span class="m">8600</span>/tcp, <span class="m">8600</span>/udp
+edgex-core-data                        /core-data --registry --pr ...   Up       <span class="m">0</span>.0.0.0:48080-&gt;48080/tcp, <span class="m">0</span>.0.0.0:5563-&gt;5563/tcp
+edgex-core-metadata                    /core-metadata --registry  ...   Up       <span class="m">0</span>.0.0.0:48081-&gt;48081/tcp, <span class="m">48082</span>/tcp
+edgex-device-virtual                   /device-virtual --profile<span class="o">=</span> ...   Up       <span class="m">0</span>.0.0.0:49990-&gt;49990/tcp
+edgex-files                            /bin/sh -c /usr/bin/tail - ...   Up
+edgex-mongo                            /edgex-mongo/bin/edgex-mon ...   Up       <span class="m">0</span>.0.0.0:27017-&gt;27017/tcp
+edgex-support-logging                  /support-logging --registr ...   Up       <span class="m">0</span>.0.0.0:48061-&gt;48061/tcp
+edgex-support-notifications            /support-notifications --r ...   Up       <span class="m">0</span>.0.0.0:48060-&gt;48060/tcp
+edgex-support-rulesengine              /bin/sh -c java -jar -Djav ...   Up       <span class="m">0</span>.0.0.0:48075-&gt;48075/tcp
+edgex-support-scheduler                /support-scheduler --regis ...   Up       <span class="m">0</span>.0.0.0:48085-&gt;48085/tcp
+edgex-sys-mgmt-agent                   /sys-mgmt-agent --registry ...   Up       <span class="m">0</span>.0.0.0:48090-&gt;48090/tcp
+edgex-ui-go                            ./edgex-ui-server                Up       <span class="m">0</span>.0.0.0:4000-&gt;4000/tcp
+lab-getting-started_portainer_1        /portainer -H unix:///var/ ...   Up       <span class="m">0</span>.0.0.0:9000-&gt;9000/tcp
+</code></pre></div>
+
+<p>正常に起動できていれば、<code>edgex-config-seed</code> が <code>Exit 0</code> で終了している以外は、すべての <code>State</code> は <code>Up</code> に遷移します。</p>
+<div class="admonition tip">
+<p class="admonition-title">起動できない場合</p>
+<p>停止してしまったコンテナのログを <code>docker logs &lt;コンテナ名&gt;</code> などで確認し、原因を特定します。<code>docker-compose down --volumes</code> で停止・削除し、原因を取り除いてから再試行します。ログに <code>exec format error</code> が出力されている場合は、CPU のアーキテクチャが異なる場合があります。</p>
+</div>
+<h2 id="_3">構成の確認<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>起動処理は、大まかには以下の順序で行われています。この起動順序は、<code>docker-compose.yml</code> 中で各サービスに <code>depends_on</code> を指定することで制御されています。</p>
+<ol>
+<li>各サービス用の永続ボリュームが用意され、<code>edgex-files</code> が起動して必要な初期データを配置する</li>
+<li>各サービスの構成情報を提供するレジストリである Consul（<code>edgex-core-consul</code>）を起動する</li>
+<li>各サービスの軌道に必要な構成情報をレジストリ（Consul）に登録する <code>edgex-config-seed</code> を起動する（登録が終わったら終了するため、<code>Exit 0</code> に遷移する）</li>
+<li>残りの各サービスが、自身の構成情報を Consul から取得したうえで、依存関係のある順番通りに起動する</li>
+</ol>
+<h3 id="_4">起動しているサービス<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>今回の <code>docker-compose.yml</code> で定義されているマイクロサービスを、レイヤを踏まえて整理します。簡単にマッピングすると下図の通りです。</p>
+<p><img alt="" src="../img/getting-started-service-mapping.png" /></p>
+<table>
+<thead>
+<tr>
+<th>サービス名</th>
+<th>コンテナ名</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app-service-rules</code></td>
+<td><code>edgex-app-service-configurable-rules</code></td>
+<td>エクスポートサービス（アプリケーションサービス）のひとつです。ルールエンジンにデータを配送します。</td>
+</tr>
+<tr>
+<td><code>rulesengine</code></td>
+<td><code>edgex-support-rulesengine</code></td>
+<td>サポートサービスのひとつです。ルールエンジンです。</td>
+</tr>
+<tr>
+<td><code>logging</code></td>
+<td><code>edgex-support-logging</code></td>
+<td>サポートサービスのひとつです。各サービスからログを受け取ります。</td>
+</tr>
+<tr>
+<td><code>notifications</code></td>
+<td><code>edgex-support-notifications</code></td>
+<td>サポートサービスのひとつです。アラートや通知を制御します。</td>
+</tr>
+<tr>
+<td><code>scheduler</code></td>
+<td><code>edgex-support-scheduler</code></td>
+<td>サポートサービスのひとつです。データのクリーニングなどを制御します。</td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td><code>edgex-core-command</code></td>
+<td>コアサービスのひとつです。デバイスへのコマンド発行を制御します。</td>
+</tr>
+<tr>
+<td><code>consul</code></td>
+<td><code>edgex-core-consul</code></td>
+<td>コアサービスのひとつです。各サービスの構成情報を保持・提供するレジストリです。</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>edgex-core-data</code></td>
+<td>コアサービスのひとつです。データの収集と永続化を行います。</td>
+</tr>
+<tr>
+<td><code>mongo</code></td>
+<td><code>edgex-mongo</code></td>
+<td>コアサービスのひとつです。永続化されたデータの配置場所です。</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>edgex-core-metadata</code></td>
+<td>コアサービスのひとつです。EdgeX Foundry 配下のデバイスなどのオブジェクト群のメタデータを管理します。</td>
+</tr>
+<tr>
+<td><code>device-virtual</code></td>
+<td><code>edgex-device-virtual</code></td>
+<td>デバイスサービスのひとつです。仮想デバイスとそれ用のデバイスサービスです。</td>
+</tr>
+<tr>
+<td><code>ui</code></td>
+<td><code>edgex-ui-go</code></td>
+<td>Web GUI を提供します。</td>
+</tr>
+<tr>
+<td><code>config-seed</code></td>
+<td><code>edgex-config-seed</code></td>
+<td>EdgeX Foundry の起動時に、他のサービスの起動に必要な初期データをレジストリ（Consul）に登録します。</td>
+</tr>
+<tr>
+<td><code>volume</code></td>
+<td><code>edgex-files</code></td>
+<td>永続ボリュームに初期データを配置します。</td>
+</tr>
+<tr>
+<td><code>system</code></td>
+<td><code>edgex-sys-mgmt-agent</code></td>
+<td>EdgeX Foundry 自体を管理する API を提供します。</td>
+</tr>
+<tr>
+<td><code>portainer</code></td>
+<td><code>portainer</code></td>
+<td>Docker 環境自体の管理ツールです。</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">必要なサービスのいろいろ</p>
+<p>今回は、Docker Compose を利用して起動させているため、<code>volume</code> や <code>portainer</code> など Docker 環境ならではのサービスも起動していますが、Docker を利用しない場合など、構成次第では、必要なサービスや起動順序は変化します。</p>
+</div>
+<h3 id="_5">デバイスの取り扱い<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>このラボでは、EdgeX Foundry の最も基本的なユースケースとなる、</p>
+<ul>
+<li><strong>デバイスからのデータ収集</strong></li>
+<li><strong>デバイスの制御</strong></li>
+</ul>
+<p>に注目して、特に、コアサービスのうち <strong>データサービス</strong> と <strong>コマンドサービス</strong>、デバイスサービスのうち <strong>仮想デバイスサービス</strong> を取り上げます。これ以外のサービスについても、後続のラボで取り上げていきます。</p>
+<p><img alt="" src="../img/getting-started-architecture.png" /></p>
+<p>本来の使い方では、EdgeX Foundry でデータを収集したい、あるいは EdgeX Foundry から制御したい何らかの物理的なデバイスが存在しているはずですが、このラボでは存在しません。その代わりこのラボでは、テスト用に標準で用意されている <strong>仮想デバイス</strong> を利用します。</p>
+<p>詳細は後続のラボで取り上げますが、この段階では、</p>
+<ul>
+<li>EdgeX Foundry で <strong>何らかのデバイスを扱うには</strong></li>
+<li>そのデバイスを取り扱うための <strong>デバイスサービスが必要である</strong></li>
+</ul>
+<p>ことをおさえてください。つまり、このラボでは、<strong>仮想デバイスそのもの</strong> と、<strong>仮想デバイスを取り扱うデバイスサービス</strong> の二つの概念が登場します。</p>
+<div class="admonition note">
+<p class="admonition-title">仮想デバイスの実装</p>
+<p>仮想デバイスに限っては、ひとつのサービス <code>device-virtual</code> の中に、デバイスそのものとそれ用のデバイスサービスの両方の実装が内包されています。</p>
+</div>
+<p>仮想デバイスを用いた今回のラボでは、大まかには次のような構成になっています。</p>
+<p><img alt="" src="../img/getting-started-device-virtual.png" /></p>
+<ul>
+<li><strong>デバイス</strong><ul>
+<li>ランダムな値を生成し続けるだけの <strong>デバイス</strong> です</li>
+<li>ひとつのデバイスが複数の <strong>リソース</strong> を持っています<ul>
+<li>リソースとは、物理的なデバイスでは、センサやアクチュエータひとつひとつに相当するもので、データ収集や制御の実行単位です</li>
+</ul>
+</li>
+<li>指定したリソースの現在のランダム値を、外部から読み取れます</li>
+<li>指定したリソースの数値や生成ロジックを、外部から指定できます</li>
+</ul>
+</li>
+<li><strong>デバイスサービス</strong><ul>
+<li>4 つの仮想デバイスを管理するためのインタフェイスとして機能します</li>
+<li>事前に定義された間隔で、デバイスごと・リソースごとにその現在の値をデバイスから取得して、コアサービス（<code>data</code>）に送ります</li>
+<li>コアサービス（<code>commnad</code>）からコマンドの実行命令を受け取って、指定されたデバイスの指定されたリソースに対して、実際の操作（現在値の取得、または値の設定など）を行います</li>
+</ul>
+</li>
+<li><strong>コアサービス</strong><ul>
+<li>デバイスサービスから送られた値を蓄積します（<code>data</code>）</li>
+<li>デバイスに対する操作の実行をデバイスサービスに指示します（<code>command</code>）</li>
+</ul>
+</li>
+</ul>
+<p>実際のユースケースでは、EdgeX Foundry で制御したい物理的なデバイスは、そのデバイスごと・リソースごとにさまざまなプロトコルや手順で情報を取得したり制御したりする必要があります。デバイスサービスは、そうしたデバイスごとのお作法の差異を抽象化することで、異なるデバイスに対しても統一された操作体系と管理手段を提供するインタフェイスとして機能しています。</p>
+<h2 id="_6">操作手段<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>管理者が EdgeX Foundry に対して操作を行いたい場合は、Web GUI か REST API、CLI を利用します。ただし、GUI も CLI も現時点では <strong>実行できる機能は限定的</strong> であり、細かな制御には <strong>後述の API の利用が必須</strong> となる点には注意が必要です。</p>
+<div class="admonition tip">
+<p class="admonition-title">手動での操作の必要性</p>
+<p>値の確認だけでなく、各種設定の変更や新規デバイスの追加なども、API を利用して実行できます。とはいえ、起動後に何らかの構成変更を加えるよりは、理想的には、起動するだけで必要な構成がすべてできあがった状態になるように、設定ファイルをすべて事前に用意し、<code>docker-compose.yml</code> でそれをマウントする定義をあらかじめ入れておくなどの工夫をすべきです。そうすれば、すべての構成をテキストベースでリポジトリで管理できるようになり、いわゆる IaC の実現にもつなげられます。</p>
+</div>
+<h3 id="gui">GUI での操作<a class="headerlink" href="#gui" title="Permanent link">&para;</a></h3>
+<p><code>ui</code> サービス（<code>edgex-ui-go</code> コンテナ）が、標準の Web GUI です。</p>
+<p><img alt="" src="../img/getting-started-gui-architecture.png" /></p>
+<p>Docker ホストの IP アドレスを確認して、<code>http://&lt;IP アドレス&gt;:4000/</code> にブラウザでアクセスし、デフォルトのユーザ <code>admin</code>（パスワードも <code>admin</code>）でログインできます。</p>
+<p><img alt="" src="../img/getting-started-gui-login.png" /></p>
+<p>この GUI を利用するには、まずはこの GUI で操作する対象を登録する必要があります。左ペインの [<code>Gateway</code>] に遷移し、右ペインの [<code>Add</code>] ボタンで、[<code>Address</code>] に Docker ホストの IP アドレスを登録します。[<code>Name</code>] と [<code>Description</code>] は任意の文字列を入力しです。</p>
+<p><img alt="" src="../img/getting-started-gui-gateway.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">ゲートウェイ</p>
+<p>GUI を操作すると、<code>edgex-ui-go</code> が各マイクロサービスへの REST API の実行を肩代わりしてくれます。ここでの <strong>ゲートウェイ</strong> は、この API のリクエスト先の IP アドレスです。よって、もしマイクロサービスが複数のノードに分散配置されている場合は、操作ごとにリクエスト先の IP アドレスを変更する必要がありますが、現在の実装では困難です。このため、セキュリティサービス（この本ガイドでは取り扱いません）に含まれるプロキシを API ゲートウェイとして利用する構成を検討します。</p>
+</div>
+<p>登録したゲートウェイを選択した状態で左ペインから [<code>Device Service</code>] に遷移すると、仮想デバイスを制御しているデバイスサービスである <code>device-virtual</code> が登録されている様子が見えるはずです。</p>
+<p><img alt="" src="../img/getting-started-gui-device-service.png" /></p>
+<p>さらにデバイスサービス <code>device-virtual</code> の [<code>Devices</code>] アイコンを展開すると、このデバイスサービスで管理している配下のデバイス（仮想デバイス）が確認できます。</p>
+<p><img alt="" src="../img/getting-started-gui-devices.png" /></p>
+<p>さらにデバイスごとの [<code>Commands</code>] を展開すると、デバイスごとの各リソースからの情報の取得（<code>get</code>）や、制御命令の実行（<code>set</code>）ができるようになっています。</p>
+<div class="admonition note">
+<p class="admonition-title">別の GUI</p>
+<p>別の GUI が欲しい場合、<a href="https://github.com/edgexfoundry/edgex-ui-clojure"><code>edgex-ui-closure</code></a> という、Edge Xpert（EdgeX Foundry の商用版）の GUI のベースになったものも存在しています。見た目もきれいで最低限の動作もしますが、開発はあまり活発ではないようです。簡単な構成方法は、<a href="https://blog.kurokobo.com/archives/2665">こちらのブログエントリ（日本語）</a> でも紹介しています（情報が古い可能性があります）。</p>
+</div>
+<h3 id="api">API での操作<a class="headerlink" href="#api" title="Permanent link">&para;</a></h3>
+<p>各マイクロサービスは REST API のエンドポイントを持っています。cURL や Postman などのツールを用いて、<code>GET</code> や <code>POST</code> のリクエストを発行することで、様々な操作を行えます。<a href="https://fuji-docs.edgexfoundry.org/Ch-APIReference.html">公式のリファレンス</a> のほか、使い方の例は <a href="https://fuji-docs.edgexfoundry.org/Ch-Walkthrough.html">API のウォークスルー</a> も参考にできます。</p>
+<p><img alt="" src="../img/getting-started-api-architecture.png" /></p>
+<p>例えば、存在しているデバイスサービスや、そこで管理されているデバイス群を確認したい場合は、以下のエンドポイントに <code>GET</code> リクエストを投げると JSON で返ってきます。</p>
+<ul>
+<li>デバイスサービスの一覧<ul>
+<li><code>http://&lt;IP アドレス&gt;:48081/api/v1/deviceservice</code></li>
+</ul>
+</li>
+<li>各デバイスサービスの詳細<ul>
+<li><code>http://&lt;IP アドレス&gt;:48081/api/v1/deviceservice/name/&lt;デバイスサービス名&gt;</code></li>
+<li><code>http://&lt;IP アドレス&gt;:48081/api/v1/deviceservice/&lt;デバイスサービス ID&gt;</code></li>
+</ul>
+</li>
+<li>デバイスの一覧<ul>
+<li><code>http://&lt;IP アドレス&gt;:48081/api/v1/device</code></li>
+</ul>
+</li>
+<li>各デバイスの詳細<ul>
+<li><code>http://&lt;IP アドレス&gt;:48081/api/v1/device/name/&lt;デバイス名&gt;</code></li>
+<li><code>http://&lt;IP アドレス&gt;:48081/api/v1/device/&lt;デバイス ID&gt;</code></li>
+</ul>
+</li>
+</ul>
+<div class="admonition ポート番号">
+<p class="admonition-title">ポート番号</p>
+<p>このラボのように EdgeX Foundry を Docker Compose で起動している場合は、外部からはすべてのマイクロサービスの API エンドポイントが同じ IP アドレスでホストされているように見えます。ただし、IP アドレスが同じでも、各マイクロサービスのコンテナはそれぞれが異なるポート番号で待ち受けているので、目的の操作に応じて適切なポート番号を確認する必要があります。例えば、上記の <code>48081</code> 番ポートは、<code>metadata</code> サービスの待ち受けポートです。</p>
+</div>
+<h3 id="cli">CLI での操作<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h3>
+<p>CLI として、現時点ではまだ GA していませんが、<a href="https://github.com/edgexfoundry-holding/edgex-cli"><code>edgex-cli</code> というプロジェクト</a> で開発が進められています。</p>
+<p>開発途中であり仕様が大きく変更される可能性があることから、本ガイドでは取り扱いませんが、<a href="https://github.com/edgexfoundry-holding/edgex-cli/blob/master/README.md">リポジトリの <code>README.md</code></a> の導入手順に従うと利用できます。<a href="https://blog.kurokobo.com/archives/2665">こちらのブログエントリ（日本語）</a> では、コンテナを利用して動作させる方法を紹介しています（情報が古い可能性があります）。</p>
+<h2 id="_7">蓄積データの確認<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>今回利用しているデバイスサービスは、事前に構成された設定に従って、起動すると自動的に動作を開始します。つまり、仮想デバイスではランダムな数値が生成され、その値はデバイスサービス <code>virtual-device</code> を通じてコアサービスにすでに蓄積されています。</p>
+<p>ここでは、実際に蓄積された値を確認します。</p>
+<h3 id="_8">蓄積データの構造<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>EdgeX Foundry では、デバイスから取得したひとつのデータは <code>Reading</code> オブジェクトとして取り扱われ、デバイスサービスが一回の処理で取得した <code>Reading</code> の集合が、コアサービスに <code>Event</code> オブジェクトとして送信され、蓄積されていきます。</p>
+<ul>
+<li><strong><code>Reading</code></strong><ul>
+<li>単一のデバイスの単一のリソースから取得したひとつの値と、その取得時間などのメタ情報を含むオブジェクト</li>
+</ul>
+</li>
+<li><strong><code>Event</code></strong><ul>
+<li>あるデバイスサービスが、一回の処理で取得した一つ以上の <code>Reading</code> の集合</li>
+<li>デバイスサービスがコアサービスにデータを送る（<code>data</code> サービスの API に<code>POST</code> する）単位</li>
+</ul>
+</li>
+</ul>
+<p>例えば、あるデバイスで <strong>温度と湿度をセットで <code>get</code> できる</strong> ように構成した場合は、ひとつの <code>Event</code> に二つの <code>Reading</code> が含まれることになります。</p>
+<p><img alt="" src="../img/getting-started-event.png" /></p>
+<h3 id="_9">蓄積データの確認<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p><code>Event</code> を取得する <code>data</code> サービスのエンドポイントに <code>GET</code> すると、<code>Reading</code> を含む <code>Event</code> 情報が得られます。今回の仮想デバイスでは、ひとつの <code>Event</code> にはひとつの <code>Reading</code> が含まれます。</p>
+<p>ここでは、Docker ホスト上で <code>curl</code> コマンドを用いて、</p>
+<ul>
+<li>デバイス <code>Random-Float-Device</code> の</li>
+<li>直近の <code>Event</code> を <code>2</code> つ</li>
+</ul>
+<p>を確認します。URL にこの情報を含めて <code>GET</code> します。</p>
+<p><img alt="" src="../img/getting-started-event-api.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ curl -s http://localhost:48080/api/v1/event/device/Random-Float-Device/2 <span class="p">|</span> jq
+</span><span class="o">[</span>
+  <span class="o">{</span>
+    <span class="s2">&quot;id&quot;</span>: <span class="s2">&quot;4949fc7f-069b-49b1-bc52-f905c5109692&quot;</span>,
+    <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;Random-Float-Device&quot;</span>,
+    <span class="s2">&quot;created&quot;</span>: <span class="m">1579419158139</span>,
+    <span class="s2">&quot;modified&quot;</span>: <span class="m">1579419158139</span>,
+    <span class="s2">&quot;origin&quot;</span>: <span class="m">1579419158137800200</span>,
+    <span class="s2">&quot;readings&quot;</span>: <span class="o">[</span>
+      <span class="o">{</span>
+        <span class="s2">&quot;id&quot;</span>: <span class="s2">&quot;6dcac272-28ad-4755-972f-ad58b02aa000&quot;</span>,
+        <span class="s2">&quot;created&quot;</span>: <span class="m">1579419158138</span>,
+        <span class="s2">&quot;origin&quot;</span>: <span class="m">1579419158124917000</span>,
+        <span class="s2">&quot;modified&quot;</span>: <span class="m">1579419158138</span>,
+        <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;Random-Float-Device&quot;</span>,
+        <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;Float32&quot;</span>,
+        <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;fvU+Nw==&quot;</span>
+      <span class="o">}</span>
+    <span class="o">]</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">&quot;id&quot;</span>: <span class="s2">&quot;f4f62305-ce8c-4f19-960b-ba2977ab0b2b&quot;</span>,
+    <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;Random-Float-Device&quot;</span>,
+    <span class="s2">&quot;created&quot;</span>: <span class="m">1579419157643</span>,
+    <span class="s2">&quot;modified&quot;</span>: <span class="m">1579419157643</span>,
+    <span class="s2">&quot;origin&quot;</span>: <span class="m">1579419157642273800</span>,
+    <span class="s2">&quot;readings&quot;</span>: <span class="o">[</span>
+      <span class="o">{</span>
+        <span class="s2">&quot;id&quot;</span>: <span class="s2">&quot;227aa868-6dbe-4e53-af27-c773075eac85&quot;</span>,
+        <span class="s2">&quot;created&quot;</span>: <span class="m">1579419157642</span>,
+        <span class="s2">&quot;origin&quot;</span>: <span class="m">1579419157630999000</span>,
+        <span class="s2">&quot;modified&quot;</span>: <span class="m">1579419157642</span>,
+        <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;Random-Float-Device&quot;</span>,
+        <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;Float64&quot;</span>,
+        <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;1.258607e+308&quot;</span>
+      <span class="o">}</span>
+    <span class="o">]</span>
+  <span class="o">}</span>
+<span class="o">]</span>
+</code></pre></div>
+
+<p><code>Event</code> オブジェクトが二つ返り、それぞれに <code>Reading</code> オブジェクトが含まれていることが読み取れます。</p>
+<div class="admonition note">
+<p class="admonition-title">二種類のリソース</p>
+<p>デバイス <code>Random-Float-Device</code> には二つのリソース <code>Float32</code> と <code>Float64</code> が存在しており、デバイスサービス内ではこの二つからの値の取得はほぼ同時にトリガされます。このため、直近の二つを指定した今回の操作の結果には、この両方の値が含まれています。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title"><code>jq</code> コマンド</p>
+<p>JSON を扱うコマンドです。多くのディストリビューションでパッケージマネージャ（Ubuntu であれば <code>apt install jq</code> ）を用いてで導入できます。Windows 用のバイナリも用意されています。詳細は <a href="https://stedolan.github.io/jq/">公式サイト</a> を参照してください。ここでは、REST API のレスポンスを整形して表示するために利用しています。</p>
+</div>
+<p>特定のリソースで読み取った情報だけを得たい場合は、<code>Reading</code> を操作するエンドポイントにリソース名を指定して <code>GET</code> します。例えば、</p>
+<ul>
+<li>リソース <code>Float64</code> の</li>
+<li>直近の <code>Reading</code> を <code>2</code> つ</li>
+</ul>
+<p>であれば、次の通りです。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ curl -s http://localhost:48080/api/v1/reading/name/Float64/2 <span class="p">|</span> jq
+</span><span class="o">[</span>
+  <span class="o">{</span>
+    <span class="s2">&quot;id&quot;</span>: <span class="s2">&quot;e1e950c0-7533-4664-a606-91c97e8dbb85&quot;</span>,
+    <span class="s2">&quot;created&quot;</span>: <span class="m">1579419397777</span>,
+    <span class="s2">&quot;origin&quot;</span>: <span class="m">1579419397752820200</span>,
+    <span class="s2">&quot;modified&quot;</span>: <span class="m">1579419397777</span>,
+    <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;Random-Float-Device&quot;</span>,
+    <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;Float64&quot;</span>,
+    <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;8.073392e+305&quot;</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">&quot;id&quot;</span>: <span class="s2">&quot;2b30bdf3-cb3e-4bac-bd20-87653e9259f2&quot;</span>,
+    <span class="s2">&quot;created&quot;</span>: <span class="m">1579419367748</span>,
+    <span class="s2">&quot;origin&quot;</span>: <span class="m">1579419367735956200</span>,
+    <span class="s2">&quot;modified&quot;</span>: <span class="m">1579419367748</span>,
+    <span class="s2">&quot;device&quot;</span>: <span class="s2">&quot;Random-Float-Device&quot;</span>,
+    <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;Float64&quot;</span>,
+    <span class="s2">&quot;value&quot;</span>: <span class="s2">&quot;-3.105079e+307&quot;</span>
+  <span class="o">}</span>
+<span class="o">]</span>
+</code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title">エンコードされた数値のデコード</p>
+<p>データを確認した際、<code>Float32</code> の値が <code>/oyN8A==</code> のように文字列で表示されていました。これは、内部ではこの型の数値（を表すバイト列）を Base64 でエンコードして保持しているためです。</p>
+<p>数値を保持する際のエンコード有無は、デバイスを追加するときに作成するデバイスプロファイル（後続のラボで取り扱います）の中で指定できますが、今回は仮想デバイスをデフォルトの設定のまま利用しているため、デフォルトの設定に従ってこのようになっています。</p>
+<p>簡単な紹介のみにとどめますが、エンコードされた数値はデコードすると数値に戻せます。<a href="https://github.com/kurokobo/edgex-decode-base64">非常に簡単なデコーダを公開している</a> ので、Go 言語が動く環境があれば利用できます。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ git clone https://github.com/kurokobo/edgex-decode-base64.git
+</span><span class="hll">$ <span class="nb">cd</span> edgex-decode-base64/
+</span><span class="hll">$ go run main.go /eOKAw<span class="o">==</span>
+</span><span class="m">8</span>.163255e-37
+</code></pre></div>
+
+</div>
+<h3 id="_10">データベースの確認<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>確認した <code>Event</code> や <code>Reading</code> などのデータは、インタフェイスこそ <code>data</code> サービスの API でしたが、実際には MongoDB に保管されています。通常は行わない操作ですが、MongoDB に直接アクセスすることでも、実際のデータを確認できます。</p>
+<div class="admonition tip">
+<p class="admonition-title">Geneva リリースでのデータベース</p>
+<p>Geneva リリースからは、標準のデータベースが MongoDB から Redis に変更されます。</p>
+</div>
+<p>外部から MongoDB Compass などでアクセスする場合は、Docker ホストのポート <code>27017</code> にユーザ名 <code>core</code>、パスワード <code>password</code> で認証できますが、ここではコンテナのシェルに入って確認します。</p>
+<p>今回の構成では、<code>edgex-mongo</code> がMongoDB の実体のコンテナです。Docker ホストからこれのシェルを取って、MongoDB のプロンプトに入ります。複数のデータベースが存在していることがわかります。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker exec -it edgex-mongo bash
+</span>
+<span class="hll"># mongo
+</span>MongoDB shell version v4.2.0
+...
+
+<span class="hll">&gt; show databases
+</span>admin                0.000GB
+application-service  0.000GB
+config               0.000GB
+coredata             0.011GB
+exportclient         0.000GB
+local                0.000GB
+logging              0.006GB
+metadata             0.000GB
+notifications        0.000GB
+scheduler            0.000GB
+</code></pre></div>
+
+<p><code>Event</code> と <code>Reading</code> の値は、<code>coredata</code> 内のコレクションに保持されています。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">&gt; use coredata
+</span>switched to db coredata
+
+<span class="hll">&gt; show collections
+</span>event
+reading
+valueDescriptor
+</code></pre></div>
+
+<p>あとは MongoDB として操作すればよく、例えば <code>find()</code> などを叩けばデータを参照できます。終了するには <code>exit</code> します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">&gt; db.reading.find().limit(5)
+</span>{ &quot;_id&quot; : ObjectId(&quot;5e2471bb0e360800014be635&quot;), &quot;created&quot; : NumberLong(&quot;1579446715833&quot;), &quot;modified&quot; : NumberLong(&quot;1579446715833&quot;), &quot;origin&quot; : NumberLong(&quot;1579446715806322700&quot;), &quot;uuid&quot; : &quot;e0af3c99-be57-4cec-a59a-2af2da976d41&quot;, &quot;pushed&quot; : NumberLong(0), &quot;device&quot; : &quot;Random-Boolean-Device&quot;, &quot;name&quot; : &quot;Bool&quot;, &quot;value&quot; : &quot;true&quot; }
+{ &quot;_id&quot; : ObjectId(&quot;5e2471bb0e360800014be637&quot;), &quot;created&quot; : NumberLong(&quot;1579446715857&quot;), &quot;modified&quot; : NumberLong(&quot;1579446715857&quot;), &quot;origin&quot; : NumberLong(&quot;1579446715831613700&quot;), &quot;uuid&quot; : &quot;c336b11e-8e91-4007-bd3f-1ee63d80e45b&quot;, &quot;pushed&quot; : NumberLong(0), &quot;device&quot; : &quot;Random-Boolean-Device&quot;, &quot;name&quot; : &quot;Bool&quot;, &quot;value&quot; : &quot;false&quot; }
+{ &quot;_id&quot; : ObjectId(&quot;5e2471c00e360800014be639&quot;), &quot;created&quot; : NumberLong(&quot;1579446720829&quot;), &quot;modified&quot; : NumberLong(&quot;1579446720829&quot;), &quot;origin&quot; : NumberLong(&quot;1579446720815333700&quot;), &quot;uuid&quot; : &quot;2ae4befc-1fee-48ab-b621-b4d56747a446&quot;, &quot;pushed&quot; : NumberLong(0), &quot;device&quot; : &quot;Random-Integer-Device&quot;, &quot;name&quot; : &quot;Int16&quot;, &quot;value&quot; : &quot;9761&quot; }
+{ &quot;_id&quot; : ObjectId(&quot;5e2471c00e360800014be63b&quot;), &quot;created&quot; : NumberLong(&quot;1579446720843&quot;), &quot;modified&quot; : NumberLong(&quot;1579446720843&quot;), &quot;origin&quot; : NumberLong(&quot;1579446720830168500&quot;), &quot;uuid&quot; : &quot;317ea1f1-0c36-4e6d-a489-b48711ff5dd6&quot;, &quot;pushed&quot; : NumberLong(0), &quot;device&quot; : &quot;Random-Integer-Device&quot;, &quot;name&quot; : &quot;Int64&quot;, &quot;value&quot; : &quot;-9069744988884413669&quot; }
+{ &quot;_id&quot; : ObjectId(&quot;5e2471c00e360800014be63d&quot;), &quot;created&quot; : NumberLong(&quot;1579446720857&quot;), &quot;modified&quot; : NumberLong(&quot;1579446720857&quot;), &quot;origin&quot; : NumberLong(&quot;1579446720841898700&quot;), &quot;uuid&quot; : &quot;5be3634e-b171-4849-9bac-f13de720c11e&quot;, &quot;pushed&quot; : NumberLong(0), &quot;device&quot; : &quot;Random-Integer-Device&quot;, &quot;name&quot; : &quot;Int32&quot;, &quot;value&quot; : &quot;-913901160&quot; }
+
+<span class="hll">&gt; exit
+</span><span class="hll"># exit
+</span></code></pre></div>
+
+<h2 id="_11">環境の停止<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>後続のラボでは、現在利用しているものとは別の <code>docker-compose.yml</code> ファイルを利用しますので、今回のこの環境はクリーンアップします。</p>
+<p>次のコマンドで、作成したコンテナと、自動で作成された永続ボリューム領域を削除します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose down --volumes
+</span>Stopping edgex-ui-go                          ... <span class="k">done</span>
+...
+Removing image portainer/portainer
+</code></pre></div>
+
+<div class="admonition note イメージは削除しない">
+<p class="admonition-title">Note</p>
+<p>プルしたイメージは後続のラボでまた利用しますので、<code>--rmi all</code> は指定しません。</p>
+</div>
+<h2 id="_12">まとめ<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>このラボでは、以下を取り扱いました。</p>
+<ul>
+<li>Docker Compose を利用した EdgeX Foundry の起動と停止を実践しました</li>
+<li>EdgeX Foundry の大まかな構成を確認し、デバイスとデバイスサービスの考え方の概要を確認しました</li>
+<li>GUI と API の操作を実践しました</li>
+<li>蓄積されたデータの閲覧方法を確認しました</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="">
+        
+          <a href="../lab-overview/" title="Lab 1 - 概要" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  前
+                </span>
+                Lab 1 - 概要
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../lab-device-service-mqtt/" title="Lab 3 - デバイスサービスの追加（MQTT）" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  次
+                </span>
+                Lab 3 - デバイスサービスの追加（MQTT）
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+      <a href="https://github.com/kurokobo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://twitter.com/kurokobo" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.f81b9e8b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.23546af0.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "search.config.lang": "ja", "search.config.pipeline": "", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e]+", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

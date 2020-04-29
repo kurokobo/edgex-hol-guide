@@ -1,0 +1,1152 @@
+
+
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="kurokobo">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.3">
+    
+    
+      
+        <title>Lab 4 - データのエクスポート（MQTT） - EdgeX Foundry ハンズオンラボ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.62d34fff.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.c8acc6db.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#757575">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    <body dir="" data-md-color-primary="grey" data-md-color-accent="blue">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-4-mqtt" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="">
+    <a href="../.." title="EdgeX Foundry ハンズオンラボ" class="md-header-nav__button md-logo" aria-label="EdgeX Foundry ハンズオンラボ">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            EdgeX Foundry ハンズオンラボ
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Lab 4 - データのエクスポート（MQTT）
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/kurokobo/edgex-hol-guide/" title="リポジトリへ" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="EdgeX Foundry ハンズオンラボ" class="md-nav__button md-logo" aria-label="EdgeX Foundry ハンズオンラボ">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    EdgeX Foundry ハンズオンラボ
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/kurokobo/edgex-hol-guide/" title="リポジトリへ" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="このガイドについて" class="md-nav__link">
+      このガイドについて
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Fuji リリース向けガイド
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Fuji リリース向けガイド" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Fuji リリース向けガイド
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Lab 0 - はじめに" class="md-nav__link">
+      Lab 0 - はじめに
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-overview/" title="Lab 1 - 概要" class="md-nav__link">
+      Lab 1 - 概要
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-getting-started/" title="Lab 2 - 導入とデータの確認" class="md-nav__link">
+      Lab 2 - 導入とデータの確認
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-device-service-mqtt/" title="Lab 3 - デバイスサービスの追加（MQTT）" class="md-nav__link">
+      Lab 3 - デバイスサービスの追加（MQTT）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Lab 4 - データのエクスポート（MQTT）
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Lab 4 - データのエクスポート（MQTT）" class="md-nav__link md-nav__link--active">
+      Lab 4 - データのエクスポート（MQTT）
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    このラボのゴールと構成
+  </a>
+  
+    <nav class="md-nav" aria-label="このラボのゴールと構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    データのエクスポート手段
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    アプリケーションサービスの概念
+  </a>
+  
+    <nav class="md-nav" aria-label="アプリケーションサービスの概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    構成の考え方
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    設定ファイルの確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    環境変数によるオーバライド
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    アプリケーションサービスの実装
+  </a>
+  
+    <nav class="md-nav" aria-label="アプリケーションサービスの実装">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    ラボとしての構成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-composeyml" class="md-nav__link">
+    docker-compose.yml の修正
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    動作確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    パイプラインによるフィルタ処理
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    環境の停止
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lab-support-rulesengine/" title="Lab 5 - ルールエンジンの利用" class="md-nav__link">
+      Lab 5 - ルールエンジンの利用
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Geneva リリース向けガイド
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Geneva リリース向けガイド" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Geneva リリース向けガイド
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../geneva/" title="準備中" class="md-nav__link">
+      準備中
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    このラボのゴールと構成
+  </a>
+  
+    <nav class="md-nav" aria-label="このラボのゴールと構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    必要なファイルの用意
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    データのエクスポート手段
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    アプリケーションサービスの概念
+  </a>
+  
+    <nav class="md-nav" aria-label="アプリケーションサービスの概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    構成の考え方
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    設定ファイルの確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    環境変数によるオーバライド
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    アプリケーションサービスの実装
+  </a>
+  
+    <nav class="md-nav" aria-label="アプリケーションサービスの実装">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    ラボとしての構成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-composeyml" class="md-nav__link">
+    docker-compose.yml の修正
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    起動
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    動作確認
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    パイプラインによるフィルタ処理
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    環境の停止
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    まとめ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/kurokobo/edgex-hol-guide/edit/master/docs/fuji/lab-app-service-export-mqtt.md" title="編集" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="lab-4-mqtt">Lab 4 - データのエクスポート（MQTT）<a class="headerlink" href="#lab-4-mqtt" title="Permanent link">&para;</a></h1>
+<p>このラボでは、EdgeX Foundry から、外部の分析基盤などにリアルタイムにデータをエクスポートする手法を実践します。</p>
+<h2 id="_1">このラボのゴールと構成<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>このラボの目的は次の通りです。</p>
+<ul>
+<li>アプリケーションサービスの概要と考え方を理解する</li>
+<li>アプリケーションサービスを用いて、外部にリアルタイムにデータをエクスポートする手法を理解する</li>
+</ul>
+<p>このラボでは、Docker Compose を利用して、Ubuntu 上の Docker コンテナ群として EdgeX Foundry を起動させます。また、エクスポート先の MQTT のブローカも Docker コンテナとして起動させます。</p>
+<p><img alt="" src="../img/app-service-export-mqtt-overview.png" /></p>
+<h3 id="_2">必要なファイルの用意<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>ラボに必要なファイルは、前のラボでクローンしたリポジトリに含まれています。クローンを実施していない場合は、Ubuntu 上でクローンし、CPU のアーキテクチャに応じてディレクトリを移動してください。</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">amd64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>git clone https://github.com/kurokobo/edgex-hol-fuji.git
+<span class="nb">cd</span> edgex-hol-fuji
+<span class="nb">cd</span> amd64
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">arm64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>git clone https://github.com/kurokobo/edgex-hol-fuji.git
+<span class="nb">cd</span> edgex-hol-fuji
+<span class="nb">cd</span> arm64
+</code></pre></div>
+
+</div>
+</div>
+<p>このラボでは、<code>lab-app-service-export-mqtt</code> ディレクトリの中身を利用します。</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> lab-device-service-mqtt
+ls -l
+</code></pre></div>
+
+<p>ファイル <code>docker-compose.yml</code> と、ディレクトリ <code>device-service</code>、<code>app-service</code> が存在しているはずです。</p>
+<h2 id="_3">データのエクスポート手段<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>データのエクスポートの機能は、デバイスから EdgeX Foundry に入ってきたデータを、フィルタなどの処理を施したうえで外部の分析基盤やクラウド環境などにリアルタイムに送出したいユースケースで利用します。</p>
+<p><img alt="" src="../img/app-service-export-mqtt-usecase.png" /></p>
+<p>データをエクスポートするには、Fuji リリースでは次の二種類の方法がありますが、今日では後者の手法が推奨されるため、このラボでも後者を採用しています。</p>
+<ul>
+<li><strong>エクスポートサービス</strong> を利用してエクスポートする<ul>
+<li><code>export-client</code> サービスと <code>export-distro</code> サービスを利用する構成</li>
+</ul>
+</li>
+<li><strong>アプリケーションサービス</strong> を利用してエクスポートする<ul>
+<li><code>app-service</code> サービスを利用する構成</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">二つのサービス</p>
+<p>EdgeX Foundry にはもともとはエクスポートサービスのみが存在していましたが、Fuji リリース以降、新しい実装であるアプリケーションサービスが従来のエクスポートサービスを置き換えつつあります。<a href="https://fuji-docs.edgexfoundry.org/">Fuji リリースの公式ドキュメント</a> は、こうした変化を受けて、二つのサービスが部分的に混在して記述されているため、閲覧時は若干の注意が必要です。なお、Geneva リリースからは完全にアプリケーションサービスに置き換えられます。</p>
+</div>
+<p>従来のエクスポートサービスでは、<code>data</code> サービスからデータが来るたびに、登録されているエクスポート先（クライアント）に <code>export-distro</code> サービスが順番に配送していたようです。このため、エクスポート先が多い場合などに <code>export-distro</code> サービスがボトルネックになりリアルタイム性が失われる懸念があったほか、管理性や機能の分離の面でも望ましくなかったようです。</p>
+<p><img alt="" src="../img/app-service-export-mqtt-old-architecture.png" /></p>
+<p>他方、アプリケーションサービスでは、アプリケーションサービス自体をエクスポート先ごとに個別に用意することで、機能の分離とパフォーマンスの問題が解決されたほか、SDK が提供されることで、任意のフィルタ処理やフィルタ処理などを開発してアドオンする手段が用意されました。</p>
+<div class="admonition tip">
+<p class="admonition-title">エクスポートサービスを使いたい</p>
+<p>何らかの理由で従来のエクスポートサービスを利用したい場合は、<code>docker-compose.yml</code> の <code>export-client</code> と <code>export-distro</code> のコメントアウトを外すだけで利用できます。このコメントアウト部分は、<a href="https://github.com/edgexfoundry/developer-scripts/tree/master/releases/fuji/compose-files">公式にリリースされている YAML ファイル</a> にも含まれています。</p>
+</div>
+<h2 id="_4">アプリケーションサービスの概念<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>前述の図中、アプリケーションサービスの箱の中には、ファンクション（<code>Fn</code> で表記）を並べました。アプリケーションサービスでは、このように任意のファンクション群をパイプライン化し、データを処理するフローを定義できます。</p>
+<p>ファンクションは標準ですでにいくつか提供されており、これを利用するだけでも、例えば、</p>
+<ol>
+<li>デバイス名でフィルタするファンクション</li>
+<li>リソース名でフィルタするファンクション</li>
+<li>JSON 形式に変換するファンクション</li>
+<li>MQTT でエクスポートするファンクション</li>
+</ol>
+<p>のようにパイプラインを構成することで、<strong>任意のデバイスの任意のリソースの値だけ JSON 形式で MQTT トピックにエクスポートする処理</strong> を実現できます。現時点で利用できるファンクションは、<a href="https://github.com/edgexfoundry/app-functions-sdk-go">SDK の <code>README.md</code></a> で確認できます。</p>
+<h3 id="_5">構成の考え方<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>標準で実装されているアプリケーションサービスが、<code>app-service-configurable</code> です。これは、ひとつのパイプラインをひとつのインスタンス（コンテナ）で処理する前提で作られており、また、そのパイプラインは、インスタンスごとの設定ファイル <code>configuration.toml</code> で定義します。</p>
+<p>つまり、コンテナ環境の例でいえば、エクスポート先が複数あるのであれば、冒頭の絵のように、</p>
+<ul>
+<li>ルールエンジンにデータをエクスポートするパイプラインを実行する <code>app-service-configurable</code> コンテナ</li>
+<li>MQTT トピックにデータをエクスポートするパイプラインを実行する <code>app-service-configurable</code> コンテナ</li>
+</ul>
+<p>など、<code>app-service-configurable</code> のコンテナが目的に応じて複数起動している状態になります。</p>
+<h3 id="_6">設定ファイルの確認<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p><code>app-service-configurable</code> のコンテナイメージには、あらかじめ目的別に事前構成された複数の <code>configuration.toml</code> が、ディレクトリを分けて配置されています。お手元の <code>app-service</code> ディレクトリ配下がそれで、<code>mqtt-export</code> や <code>rules-engine</code> などのサブディレクトリごとに <code>configuration.toml</code> が配置されています。</p>
+<p>実際に利用する <code>configuration.toml</code> は、起動時に渡す環境変数 <code>edgex_profile</code> で指定します。</p>
+<p>例えば、MQTT トピックへのエクスポートでは、次のような <code>configuration.toml</code> が読み込まれます。</p>
+<div class="highlight"><pre><span></span><code><span class="err">$</span> <span class="n">cat</span> <span class="n">app-service</span><span class="err">/</span><span class="n">mqtt-export</span><span class="err">/</span><span class="n">configuration</span><span class="p">.</span><span class="n">toml</span>
+<span class="p">...</span>
+  <span class="k">[Writable.Pipeline]</span>
+    <span class="n">ExecutionOrder</span> <span class="o">=</span> <span class="s">&quot;TransformToJSON, MQTTSend, MarkAsPushed&quot;</span>
+
+    <span class="k">[Writable.Pipeline.Functions.TransformToJSON]</span>
+    <span class="k">[Writable.Pipeline.Functions.MarkAsPushed]</span>
+    <span class="k">[Writable.Pipeline.Functions.FilterByDeviceName]</span>
+      <span class="k">[Writable.Pipeline.Functions.FilterByDeviceName.Parameters]</span>
+        <span class="n">DeviceNames</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">[Writable.Pipeline.Functions.FilterByValueDescriptor]</span>
+      <span class="k">[Writable.Pipeline.Functions.FilterByValueDescriptor.Parameters]</span>
+        <span class="n">ValueDescriptors</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">[Writable.Pipeline.Functions.MQTTSend]</span>
+      <span class="k">[Writable.Pipeline.Functions.MQTTSend.Parameters]</span>
+        <span class="n">qos</span><span class="o">=</span><span class="s">&quot;0&quot;</span>
+        <span class="n">key</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+        <span class="n">autoreconnect</span><span class="o">=</span><span class="s">&quot;false&quot;</span>
+        <span class="n">retain</span><span class="o">=</span><span class="s">&quot;false&quot;</span>
+        <span class="n">cert</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+        <span class="n">persistOnError</span> <span class="o">=</span> <span class="s">&quot;false&quot;</span>
+      <span class="k">[Writable.Pipeline.Functions.MQTTSend.Addressable]</span>
+        <span class="n">Address</span><span class="o">=</span>   <span class="s">&quot;localhost&quot;</span>
+        <span class="n">Port</span><span class="o">=</span>      <span class="mi">1883</span>
+        <span class="n">Protocol</span><span class="o">=</span>  <span class="s">&quot;tcp&quot;</span>
+        <span class="n">Publisher</span><span class="o">=</span> <span class="s">&quot;AppServiceConfigurable-mqtt-export&quot;</span>
+        <span class="n">User</span><span class="o">=</span>      <span class="s">&quot;&quot;</span>
+        <span class="n">Password</span><span class="o">=</span>  <span class="s">&quot;&quot;</span>
+        <span class="n">Topic</span><span class="o">=</span>     <span class="s">&quot;edgex-events&quot;</span>
+<span class="p">...</span>
+</code></pre></div>
+
+<p>冒頭の <code>ExecutionOrder</code> に含まれるファンクションが、パイプラインとして順次実行されていきます。この例だと、JSON に変換してから MQTT トピックに送信しています。利用するファンクションごとの設定は、その下から列挙されていきます。<code>ExecutionOrder</code> に含まれないものは実際には無視されます。</p>
+<p>MQTT ブローカのホスト名に <code>localhost</code> が指定されていたり、トピック名が <code>edgex-events</code> になっていたりしますが、<code>Writable</code> で始まるセクション内の設定値は、後述する <strong>環境変数によるオーバライド</strong> で変更できるので、このままで問題ありません。</p>
+<h3 id="_7">環境変数によるオーバライド<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>設定ファイル <code>configuration.toml</code> に含まれるパラメータのうち、<code>Writable</code> で始まるセクション内の設定値は、</p>
+<ul>
+<li>セクション名の <code>.</code> を <code>_</code> に置き換えて</li>
+<li>パラメータ名と <code>_</code> で連結した名称の環境変数</li>
+</ul>
+<p>を設定することで、上書きが可能です。コンテナの起動時の環境変数は <code>docker-compose.yml</code> で指定できるため、<code>configuration.toml</code> を編集することなく目的の設定を投入できます。なお、大文字と小文字は厳密に区別されます。</p>
+<p>例えば、<code>configuration.toml</code> の</p>
+<div class="highlight"><pre><span></span><code>      <span class="k">[Writable.Pipeline.Functions.MQTTSend.Addressable]</span>
+        <span class="n">Address</span><span class="o">=</span>   <span class="s">&quot;localhost&quot;</span>
+</code></pre></div>
+
+<p>の <code>Address</code> を変更したい場合は、<code>docker-compose.yml</code> で <code>app-service-configurable</code> の環境変数として次の記述を加えれば実現できます。</p>
+<div class="highlight"><pre><span></span><code>    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.239</span>
+</code></pre></div>
+
+<h2 id="_8">アプリケーションサービスの実装<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>ここから、アプリケーションサービスを実際に構成します。</p>
+<h3 id="_9">ラボとしての構成<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>このラボで起動する EdgeX Foundry は、これまでのラボでも利用した <strong>仮想デバイス</strong> からのデータを収集しています。これらの値を、リアルタイムに外部に送出することを考えます。エクスポート先は、MQTT のトピックです。構成イメージは次の通りです。</p>
+<p><img alt="" src="../img/app-service-export-mqtt-architecture.png" /></p>
+<p>データを MQTT のトピックにエクスポートする場合、本来であれば、そのトピックを提供する MQTT ブローカは、例えば、クラウド上などに EdgeX Foundry とは別に用意します。ただし、今回はラボなので、すべてをラボ用の Ubuntu ホスト上で Docker コンテナとして動作させてしまいます。本来の姿とは若干の乖離がある点を理解した上で進めてください。</p>
+<p><img alt="" src="../img/app-service-export-mqtt-asis.png" /></p>
+<h3 id="docker-composeyml"><code>docker-compose.yml</code> の修正<a class="headerlink" href="#docker-composeyml" title="Permanent link">&para;</a></h3>
+<p>先の通り、環境依存の設定値は、環境変数として与えればよいため、今回編集するのは、Docker Compose 用の YAML ファイルです。</p>
+<p>公式に配布されている Docker Compose ファイルには、もともと、ルールエンジンにデータを送る用の <code>app-service-rules</code> サービスが定義されており、今回の <code>docker-compose.yml</code> にも、次の記述が含まれています。</p>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">amd64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>  <span class="nt">app-service-rules</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgexfoundry/docker-app-service-configurable:1.0.0</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;48100:48100&quot;</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-rules</span>
+    <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-rules</span>
+    <span class="nt">networks</span><span class="p">:</span>
+      <span class="nt">edgex-network</span><span class="p">:</span>
+        <span class="nt">aliases</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-rules</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">&lt;&lt;</span><span class="p">:</span> <span class="nv">*common-variables</span>
+      <span class="nt">edgex_service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://edgex-app-service-configurable-rules:48100</span>
+      <span class="nt">edgex_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rules-engine</span>
+      <span class="nt">Service_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-rules</span>
+      <span class="nt">MessageBus_SubscribeHost_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-core-data</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">consul</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">logging</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">arm64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>  <span class="nt">app-service-rules</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgexfoundry/docker-app-service-configurable-arm64:1.0.0</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;48100:48100&quot;</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-rules</span>
+    <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-rules</span>
+    <span class="nt">networks</span><span class="p">:</span>
+      <span class="nt">edgex-network</span><span class="p">:</span>
+        <span class="nt">aliases</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-rules</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">&lt;&lt;</span><span class="p">:</span> <span class="nv">*common-variables</span>
+      <span class="nt">edgex_service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://edgex-app-service-configurable-rules:48100</span>
+      <span class="nt">edgex_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rules-engine</span>
+      <span class="nt">Service_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-rules</span>
+      <span class="nt">MessageBus_SubscribeHost_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-core-data</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">consul</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">logging</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+</code></pre></div>
+
+</div>
+</div>
+<p>環境変数 <code>edgex_profile</code> に <code>rules-engine</code> が与えられているので、<code>rules-engine</code> 配下の設定ファイルが利用されることがわかります。また、<code>Writable</code> で始まる環境変数がないため、設定はすべてデフォルトのまま動作します。</p>
+<p>今回の <code>docker-compose.yml</code> では、これに加えて、MQTT トピックにエクスポートする <code>app-service-mqtt-export</code> サービスを追加しています。<strong>IP アドレス <code>192.168.0.239</code> を、ご自身の環境に合わせて修正し上書き</strong> してください。</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">amd64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>  <span class="nt">app-service-mqtt-export</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgexfoundry/docker-app-service-configurable:1.0.0</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;48097:48097&quot;</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+    <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+    <span class="nt">networks</span><span class="p">:</span>
+      <span class="nt">edgex-network</span><span class="p">:</span>
+        <span class="nt">aliases</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">&lt;&lt;</span><span class="p">:</span> <span class="nv">*common-variables</span>
+      <span class="nt">edgex_service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://edgex-app-service-configurable-mqtt-export:48097</span>
+      <span class="nt">edgex_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mqtt-export</span>
+      <span class="nt">Service_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+      <span class="nt">MessageBus_SubscribeHost_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-core-data</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.239</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1883</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tcp</span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_Publisher: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_User: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_Password: </span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Topic</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ExportTopic</span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Qos: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Key: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Cert: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Autoreconnect: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Retain: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_PersistOnError: </span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./app-service:/res</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">consul</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">logging</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">arm64</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>  <span class="nt">app-service-mqtt-export</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgexfoundry/docker-app-service-configurable-arm64:1.0.0</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;48097:48097&quot;</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+    <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+    <span class="nt">networks</span><span class="p">:</span>
+      <span class="nt">edgex-network</span><span class="p">:</span>
+        <span class="nt">aliases</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">&lt;&lt;</span><span class="p">:</span> <span class="nv">*common-variables</span>
+      <span class="nt">edgex_service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://edgex-app-service-configurable-mqtt-export:48097</span>
+      <span class="nt">edgex_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mqtt-export</span>
+      <span class="nt">Service_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+      <span class="nt">MessageBus_SubscribeHost_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-core-data</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.239</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1883</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tcp</span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_Publisher: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_User: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Addressable_Password: </span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Topic</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ExportTopic</span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Qos: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Key: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Cert: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Autoreconnect: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_Retain: </span>
+      <span class="c1"># Writable_Pipeline_Functions_MQTTSend_Parameters_PersistOnError: </span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./app-service:/res</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">consul</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">logging</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+</code></pre></div>
+
+</div>
+</div>
+<p>使っているコンテナイメージは、先ほどのルールエンジンへのエクスポート用のものとまったく同じですが、使う設定ファイルを <code>edgex_profile</code> で変更しています。また、設定ファイルの記述に合わせて、MQTT のブローカの IP アドレスやトピック名など、必要な設定を環境変数で入れています。</p>
+<p>冒頭で確認した通り、デフォルトのパイプラインにはフィルタ処理は含まれず、環境変数での上書きもしていないため、</p>
+<ul>
+<li>すべての仮想デバイスの</li>
+<li>すべてのリソースの値</li>
+</ul>
+<p>が MQTT トピックにエクスポートされてくる動作が期待できます。</p>
+<h3 id="_10">起動<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>下準備として、エクスポート先となる MQTT ブローカを起動します。起動後、<code>docker ps</code> で <code>STATUS</code> が <code>Up</code> であることを確認してください。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker run -d --rm --name broker -p <span class="m">1883</span>:1883 eclipse-mosquitto
+</span>9e1c5939be6a9c6366c2cbdad5eae5ab5c1665062125d0a8971aa030d2116a8d
+
+<span class="hll">$ docker ps
+</span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+9e1c5939be6a        eclipse-mosquitto   <span class="s2">&quot;/docker-entrypoint.…&quot;</span>   <span class="m">6</span> seconds ago       Up <span class="m">3</span> seconds        <span class="m">0</span>.0.0.0:1883-&gt;1883/tcp   broker
+</code></pre></div>
+
+<p>続いて新しいターミナルを起動し、先ほど起動した MQTT ブローカのすべてのトピックの購読を開始します。この段階では何もデータは流れてきませんが、正常です。今後の確認のため、開いたままにしておきます。<strong>コマンドに MQTT ブローカを示す IP アドレスを含む</strong> ため、ご自身の環境に合わせて <strong>適宜書き換えて</strong> ください。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker run --init --rm --name<span class="o">=</span>client -it kurokobo/mqtt-client sub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;#&quot;</span> -v
+</span></code></pre></div>
+
+<p>この状態で、EdgeX Foundry を起動します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose up -d
+</span></code></pre></div>
+
+<h3 id="_11">動作確認<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>必要な設定はすべて環境変数を使って与えていたので、EdgeX Foundry が起動して動作を開始すると、何もしないでも MQTT トピック <code>ExportTopic</code> に値が届き始めます。</p>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="err">$</span> <span class="err">docker</span> <span class="err">run</span> <span class="err">--init</span> <span class="err">--rm</span> <span class="err">--name=client</span> <span class="err">-it</span> <span class="err">kurokobo/mqtt-client</span> <span class="err">sub</span> <span class="err">-h</span> <span class="mf">192.168</span><span class="err">.</span><span class="mf">0.239</span> <span class="err">-t</span> <span class="s2">&quot;#&quot;</span> <span class="err">-v</span>
+</span><span class="err">...</span>
+<span class="err">ExportTopic</span> <span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;a11011bb-30cb-44fa-885c-8929c64e35b1&quot;</span><span class="p">,</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="s2">&quot;Random-UnsignedInteger-Device&quot;</span><span class="p">,</span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="mi">1580015685340757500</span><span class="p">,</span><span class="nt">&quot;readings&quot;</span><span class="p">:[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;26f50397-1e8b-4ca0-8db2-eeeee958a643&quot;</span><span class="p">,</span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="mi">1580015685326443600</span><span class="p">,</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="s2">&quot;Random-UnsignedInteger-Device&quot;</span><span class="p">,</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Uint8&quot;</span><span class="p">,</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;90&quot;</span><span class="p">}]}</span>
+<span class="err">ExportTopic</span> <span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;526631fd-a0f7-437d-98a9-4f6eb8a06775&quot;</span><span class="p">,</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="s2">&quot;Random-UnsignedInteger-Device&quot;</span><span class="p">,</span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="mi">1580015685369824800</span><span class="p">,</span><span class="nt">&quot;readings&quot;</span><span class="p">:[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;91ef8066-5c31-4377-84e6-a6d517457f62&quot;</span><span class="p">,</span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="mi">1580015685356418200</span><span class="p">,</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="s2">&quot;Random-UnsignedInteger-Device&quot;</span><span class="p">,</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Uint16&quot;</span><span class="p">,</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;27009&quot;</span><span class="p">}]}</span>
+<span class="err">...</span>
+</code></pre></div>
+
+<p><img alt="" src="../img/app-service-export-mqtt-dataflow.png" /></p>
+<p>ラボではすべてが単一のホストに閉じているためややわかりにくいですが、これらの値は、</p>
+<ol>
+<li>仮想デバイスで値が生成される</li>
+<li>デバイスサービスが値を取得してコアサービスに送る</li>
+<li>コアサービスが届いたデータを配信する</li>
+<li>アプリケーションサービスがコアサービスからデータを受け取る</li>
+<li>アプリケーションサービス内でパイプライン処理が走り、定義に従って MQTT トピックに配信される</li>
+</ol>
+<p>という一連の処理の結果として届いています。</p>
+<h3 id="_12">パイプラインによるフィルタ処理<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>前述の通り、ここまでの構成では、何のフィルタ処理も含まれないため、全デバイスの全データがエクスポートされていました。</p>
+<p>ここでは例として、仮想デバイスのうち <code>Random-Integer-Device</code> の値のみエクスポートしたいものとして、パイプラインを変更することで目的の状態を実現します。</p>
+<p>起動中の EdgeX Foundry を停止させます。MQTT ブローカやそれを購読中のターミナルは起動したままにしておきます。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose down --volumes
+</span></code></pre></div>
+
+<p>エディタで <code>docker-compose.yml</code> を開き、<code>app-service-mqtt-export</code> の環境変数の宣言部分に、次の 2 行（ハイライト行）を追加して上書き保存します。</p>
+<div class="highlight"><pre><span></span><code>    <span class="nt">environment</span><span class="p">:</span>
+      <span class="nt">&lt;&lt;</span><span class="p">:</span> <span class="nv">*common-variables</span>
+      <span class="nt">edgex_service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://edgex-app-service-configurable-mqtt-export:48097</span>
+      <span class="nt">edgex_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mqtt-export</span>
+      <span class="nt">Service_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-app-service-configurable-mqtt-export</span>
+      <span class="nt">MessageBus_SubscribeHost_Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edgex-core-data</span>
+<span class="hll">      <span class="nt">Writable_Pipeline_ExecutionOrder</span><span class="p">:</span> <span class="s">&quot;FilterByDeviceName,</span><span class="nv"> </span><span class="s">TransformToJSON,</span><span class="nv"> </span><span class="s">MQTTSend,</span><span class="nv"> </span><span class="s">MarkAsPushed&quot;</span>
+</span><span class="hll">      <span class="nt">Writable_Pipeline_Functions_FilterByDeviceName_Parameters_DeviceNames</span><span class="p">:</span> <span class="s">&quot;Random-Integer-Device&quot;</span>
+</span>      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.239</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1883</span>
+      <span class="nt">Writable_Pipeline_Functions_MQTTSend_Addressable_Protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tcp</span>
+</code></pre></div>
+
+<p>この 2 行で、<code>configuration.toml</code> の次の行がオーバライドされます。パイプラインに <code>FilterByDeviceName</code> ファンクションが追加され、<code>FilterByDeviceName</code> ファンクションはデバイス名 <code>Random-Integer-Device</code> でフィルタするようになるはずです。</p>
+<div class="highlight"><pre><span></span><code>  <span class="k">[Writable.Pipeline]</span>
+<span class="hll">    <span class="n">ExecutionOrder</span> <span class="o">=</span> <span class="s">&quot;TransformToJSON, MQTTSend, MarkAsPushed&quot;</span>
+</span><span class="p">...</span>
+    <span class="k">[Writable.Pipeline.Functions.FilterByDeviceName]</span>
+      <span class="k">[Writable.Pipeline.Functions.FilterByDeviceName.Parameters]</span>
+<span class="hll">        <span class="n">DeviceNames</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</span></code></pre></div>
+
+<p>EdgeX Foundry を起動し、MQTT トピックを購読しているターミナルに注目します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose up -d
+</span></code></pre></div>
+
+<p>MQTT トピック <code>ExportTopic</code> に、デバイス <code>Random-Integer-Device</code> の値のみが届くようになっていれば、パイプラインにフィルタ処理を加えられたと言えます。</p>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="err">$</span> <span class="err">docker</span> <span class="err">run</span> <span class="err">--init</span> <span class="err">--rm</span> <span class="err">--name=client</span> <span class="err">-it</span> <span class="err">kurokobo/mqtt-client</span> <span class="err">sub</span> <span class="err">-h</span> <span class="mf">192.168</span><span class="err">.</span><span class="mf">0.239</span> <span class="err">-t</span> <span class="s2">&quot;#&quot;</span> <span class="err">-v</span>
+</span><span class="err">...</span>
+<span class="err">ExportTopic</span> <span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;8f94c308-2f6c-4cb1-b91e-b9669c9236b8&quot;</span><span class="p">,</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="s2">&quot;Random-Integer-Device&quot;</span><span class="p">,</span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="mi">1588173403842331375</span><span class="p">,</span><span class="nt">&quot;readings&quot;</span><span class="p">:[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;7a754435-1684-439d-a176-177f36685cf6&quot;</span><span class="p">,</span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="mi">1588173403785579638</span><span class="p">,</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="s2">&quot;Random-Integer-Device&quot;</span><span class="p">,</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Int32&quot;</span><span class="p">,</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;1689980058&quot;</span><span class="p">}]}</span>
+<span class="err">ExportTopic</span> <span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;caf89d79-83e6-41a6-9935-5dd14a2fee73&quot;</span><span class="p">,</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="s2">&quot;Random-Integer-Device&quot;</span><span class="p">,</span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="mi">1588173404110843938</span><span class="p">,</span><span class="nt">&quot;readings&quot;</span><span class="p">:[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;298f5f12-1845-4080-ba17-520a199242fc&quot;</span><span class="p">,</span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="mi">1588173403950864427</span><span class="p">,</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="s2">&quot;Random-Integer-Device&quot;</span><span class="p">,</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Int16&quot;</span><span class="p">,</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;6486&quot;</span><span class="p">}]}</span>
+<span class="err">...</span>
+</code></pre></div>
+
+<h2 id="_13">環境の停止<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>後続のラボでは、現在利用しているものとは別の <code>docker-compose.yml</code> ファイルを利用しますので、今回のこの環境はクリーンアップします。</p>
+<p>次のコマンドで、作成したコンテナと、自動で作成された永続ボリューム領域を削除します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker-compose down --volumes
+</span>Stopping edgex-ui-go                          ... <span class="k">done</span>
+...
+Removing image portainer/portainer
+</code></pre></div>
+
+<p>また、動作させている MQTT ブローカも停止させます。MQTT トピックを購読しているターミナルが残っていれば、<span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></span> で終了します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker stop broker
+</span></code></pre></div>
+
+<p>不要なコンテナが残っていないことを確認します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker ps -a
+</span>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre></div>
+
+<h2 id="_14">まとめ<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<p>このラボでは、以下を取り扱いました。</p>
+<ul>
+<li>アプリケーションサービスの概要と考え方を確認しました</li>
+<li>アプリケーションサービスを用いて、外部にリアルタイムにデータをエクスポートする手法を実践しました</li>
+<li>実行されるパイプライン処理を環境変数を利用して変更する手法を実践しました</li>
+</ul>
+<p>パイプラインを構成できる GA 済みのファンクションは現時点ではベーシックなものですが、<code>edgexfoundry-holding</code> 配下の <a href="https://github.com/edgexfoundry-holding/app-service-examples"><code>app-service-examples</code> プロジェクト</a> では、AWS の Iot Core や Azure の IoT Hub にエクスポートする実装など、追加の実装例の開発が進められています。</p>
+<p>ここに含まれない機能でも、<a href="https://github.com/edgexfoundry/app-functions-sdk-go">アプリケーションサービス用の SDK</a> が公開されていますので、自製も可能です。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="">
+        
+          <a href="../lab-device-service-mqtt/" title="Lab 3 - デバイスサービスの追加（MQTT）" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  前
+                </span>
+                Lab 3 - デバイスサービスの追加（MQTT）
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../lab-support-rulesengine/" title="Lab 5 - ルールエンジンの利用" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  次
+                </span>
+                Lab 5 - ルールエンジンの利用
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+      <a href="https://github.com/kurokobo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://twitter.com/kurokobo" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.f81b9e8b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.23546af0.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "search.config.lang": "ja", "search.config.pipeline": "", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e]+", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
