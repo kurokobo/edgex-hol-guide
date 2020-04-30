@@ -1,0 +1,46 @@
+site_name: EdgeX Foundry ハンズオンラボ
+site_author: "kurokobo"
+repo_url: https://github.com/kurokobo/edgex-hol-guide
+
+theme:
+    name: "material"
+    language: "ja"
+    palette:
+        primary: "grey"
+        accent: "blue"
+
+markdown_extensions:
+    - admonition
+    - codehilite
+    - pymdownx.superfences
+    - pymdownx.tabbed
+    - pymdownx.keys
+    - toc:
+        permalink: true
+    - fontawesome_markdown
+
+extra_css:
+    - "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    - "css/custom.css"
+
+extra:
+    search:
+        language: "en, ja"
+    social:
+        - icon: fontawesome/brands/github-alt
+          link: "https://github.com/kurokobo"
+        - icon: fontawesome/brands/twitter
+          link: "https://twitter.com/kurokobo"
+
+nav:
+    - このガイドについて: index.md
+    - Fuji リリース向けガイド:
+        - Lab 0 - はじめに: "fuji/index.md"
+        - Lab 1 - 概要: "fuji/lab-overview.md"
+        - Lab 2 - 導入とデータの確認: "fuji/lab-getting-started.md"
+        - Lab 3 - デバイスサービスの追加（MQTT）: "fuji/lab-device-service-mqtt.md"
+        - Lab 4 - データのエクスポート（MQTT）: "fuji/lab-app-service-export-mqtt.md"
+        - Lab 5 - ルールエンジンの利用: "fuji/lab-support-rulesengine.md"
+    - Geneva リリース向けガイド:
+        - 準備中: "geneva/index.md"
+    
