@@ -66,7 +66,7 @@ ls -l
 * MQTT のトピック `DataTopic` にセンサ `randfloat32` の値を 15 秒ごとに配信する
     * `{"name":"MQ_DEVICE","cmd":"randfloat32","randfloat32":"<値>"}` の形式で配信する
 * MQTT のトピック `CommandTopic` を購読して、外部からのコマンドを待ち受ける
-    * `{"name":"MQTT_DEVICE","method":"<get または set>","cmd":"<コマンド名>"}` の形式のコマンドを受け取る
+    * `{"name":"MQ_DEVICE","method":"<get または set>","cmd":"<コマンド名>"}` の形式のコマンドを受け取る
 * 外部からのコマンドを受け取ったら、コマンド応じて処理を実行し、結果を MQTT のトピック `ResponseTopic` に配信する
     * コマンドのメソッドが `set` だった場合は、保存されている `message` を書き換える
     * コマンドが `ping` だった場合は、`pong` を返す
@@ -186,6 +186,8 @@ subscribe("CommandTopic", (topic, val) => {
     9e1c5939be6a        eclipse-mosquitto            "/docker-entrypoint.…"   16 minutes ago      Up 16 minutes       0.0.0.0:1883->1883/tcp   broker
     ```
 
+!!! warning "最初の `cd` の重要性"
+    `docker run` コマンド中の `-v "$(pwd):/scripts"` では、カレントディレクトリをコンテナ内の `/scripts` にマウントしています。このためここでは、`docker run` の前に、動作させたいスクリプト `mock-device.js` が含まれる `simulator` に `cd` しています。`cd` せずに `docker run` したい場合は、オプションを `-v "$(pwd)/simulator:/scripts"` に変更します。
 
 ### シミュレータの動作確認
 
@@ -209,9 +211,9 @@ DataTopic {"name":"MQ_DEVICE","cmd":"randfloat32","randfloat32":"28.6"}
 実行するごとに MQTT を購読しているターミナルを見ると、デバイスからの応答が確認できます。まずはデバイスからの情報の取得を行う `get` の動作を確認します。
 
 ```bash hl_lines="1 2 3"
-$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQTT_DEVICE","method":"get","cmd":"ping"}'
-$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQTT_DEVICE","method":"get","cmd":"randfloat32"}'
-$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQTT_DEVICE","method":"get","cmd":"randfloat64"}'
+$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQ_DEVICE","method":"get","cmd":"ping"}'
+$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQ_DEVICE","method":"get","cmd":"randfloat32"}'
+$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQ_DEVICE","method":"get","cmd":"randfloat64"}'
 ```
 
 !!! note "`failed to resize tty`"
@@ -223,37 +225,37 @@ $ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "Comma
 
 ```json
 ...
-CommandTopic {"name":"MQTT_DEVICE","method":"get","cmd":"ping"}
-ResponseTopic {"name":"MQTT_DEVICE","method":"get","cmd":"ping","ping":"pong"}
+CommandTopic {"name":"MQ_DEVICE","method":"get","cmd":"ping"}
+ResponseTopic {"name":"MQ_DEVICE","method":"get","cmd":"ping","ping":"pong"}
 ...
-CommandTopic {"name":"MQTT_DEVICE","method":"get","cmd":"randfloat32"}
-ResponseTopic {"name":"MQTT_DEVICE","method":"get","cmd":"randfloat32","randfloat32":"27.6"}
+CommandTopic {"name":"MQ_DEVICE","method":"get","cmd":"randfloat32"}
+ResponseTopic {"name":"MQ_DEVICE","method":"get","cmd":"randfloat32","randfloat32":"27.6"}
 ...
-CommandTopic {"name":"MQTT_DEVICE","method":"get","cmd":"randfloat64"}
-ResponseTopic {"name":"MQTT_DEVICE","method":"get","cmd":"randfloat64","randfloat64":"8.39883"}
+CommandTopic {"name":"MQ_DEVICE","method":"get","cmd":"randfloat64"}
+ResponseTopic {"name":"MQ_DEVICE","method":"get","cmd":"randfloat64","randfloat64":"8.39883"}
 ...
 ```
 
 同様に、デバイスを操作する `set` の動作も確認します。
 
 ```bash hl_lines="1 2 3"
-$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQTT_DEVICE","method":"get","cmd":"message"}' 
-$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQTT_DEVICE","method":"set","cmd":"message","message":"modified-message"}'
-$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQTT_DEVICE","method":"get","cmd":"message"}'
+$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQ_DEVICE","method":"get","cmd":"message"}' 
+$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQ_DEVICE","method":"set","cmd":"message","message":"modified-message"}'
+$ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "CommandTopic" -m '{"name":"MQ_DEVICE","method":"get","cmd":"message"}'
 ```
 
 購読している側では、`set` の実行前後で `message` コマンドの結果が変化していることが確認できます。
 
 ```json
 ...
-CommandTopic {"name":"MQTT_DEVICE","method":"get","cmd":"message"}
-ResponseTopic {"name":"MQTT_DEVICE","method":"get","cmd":"message","message":"test-message"}
+CommandTopic {"name":"MQ_DEVICE","method":"get","cmd":"message"}
+ResponseTopic {"name":"MQ_DEVICE","method":"get","cmd":"message","message":"test-message"}
 ...
-CommandTopic {"name":"MQTT_DEVICE","method":"set","cmd":"message","message":"modified-message"}
-ResponseTopic {"name":"MQTT_DEVICE","method":"set","cmd":"message","message":"modified-message"}
+CommandTopic {"name":"MQ_DEVICE","method":"set","cmd":"message","message":"modified-message"}
+ResponseTopic {"name":"MQ_DEVICE","method":"set","cmd":"message","message":"modified-message"}
 ...
-CommandTopic {"name":"MQTT_DEVICE","method":"get","cmd":"message"}
-ResponseTopic {"name":"MQTT_DEVICE","method":"get","cmd":"message","message":"modified-message"}
+CommandTopic {"name":"MQ_DEVICE","method":"get","cmd":"message"}
+ResponseTopic {"name":"MQ_DEVICE","method":"get","cmd":"message","message":"modified-message"}
 ...
 ```
 
