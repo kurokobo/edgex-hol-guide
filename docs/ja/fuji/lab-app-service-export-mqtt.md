@@ -12,7 +12,7 @@
 
 このラボでは、Docker Compose を利用して、Ubuntu 上の Docker コンテナ群として EdgeX Foundry を起動させます。また、エクスポート先の MQTT のブローカも Docker コンテナとして起動させます。
 
-![](img/app-service-export-mqtt-overview.png)
+![](../../img/fuji/app-service-export-mqtt-overview.png)
 
 
 ### 必要なファイルの用意
@@ -46,7 +46,7 @@ ls -l
 
 データのエクスポートの機能は、デバイスから EdgeX Foundry に入ってきたデータを、フィルタなどの処理を施したうえで外部の分析基盤やクラウド環境などにリアルタイムに送出したいユースケースで利用します。
 
-![](img/app-service-export-mqtt-usecase.png)
+![](../../img/fuji/app-service-export-mqtt-usecase.png)
 
 データをエクスポートするには、Fuji リリースでは次の二種類の方法がありますが、今日では後者の手法が推奨されるため、このラボでも後者を採用しています。
 
@@ -60,7 +60,7 @@ ls -l
 
 従来のエクスポートサービスでは、`data` サービスからデータが来るたびに、登録されているエクスポート先（クライアント）に `export-distro` サービスが順番に配送していたようです。このため、エクスポート先が多い場合などに `export-distro` サービスがボトルネックになりリアルタイム性が失われる懸念があったほか、管理性や機能の分離の面でも望ましくなかったようです。
 
-![](img/app-service-export-mqtt-old-architecture.png)
+![](../../img/fuji/app-service-export-mqtt-old-architecture.png)
 
 他方、アプリケーションサービスでは、アプリケーションサービス自体をエクスポート先ごとに個別に用意することで、機能の分離とパフォーマンスの問題が解決されたほか、SDK が提供されることで、任意のフィルタ処理やフィルタ処理などを開発してアドオンする手段が用意されました。
 
@@ -173,11 +173,11 @@ MQTT ブローカのホスト名に `localhost` が指定されていたり、�
 
 このラボで起動する EdgeX Foundry は、これまでのラボでも利用した **仮想デバイス** からのデータを収集しています。これらの値を、リアルタイムに外部に送出することを考えます。エクスポート先は、MQTT のトピックです。構成イメージは次の通りです。
 
-![](img/app-service-export-mqtt-architecture.png)
+![](../../img/fuji/app-service-export-mqtt-architecture.png)
 
 データを MQTT のトピックにエクスポートする場合、本来であれば、そのトピックを提供する MQTT ブローカは、例えば、クラウド上などに EdgeX Foundry とは別に用意します。ただし、今回はラボなので、すべてをラボ用の Ubuntu ホスト上で Docker コンテナとして動作させてしまいます。本来の姿とは若干の乖離がある点を理解した上で進めてください。
 
-![](img/app-service-export-mqtt-asis.png)
+![](../../img/fuji/app-service-export-mqtt-asis.png)
 
 
 ### `docker-compose.yml` の修正
@@ -362,7 +362,7 @@ ExportTopic {"id":"526631fd-a0f7-437d-98a9-4f6eb8a06775","device":"Random-Unsign
 ...
 ```
 
-![](img/app-service-export-mqtt-dataflow.png)
+![](../../img/fuji/app-service-export-mqtt-dataflow.png)
 
 ラボではすべてが単一のホストに閉じているためややわかりにくいですが、これらの値は、
 

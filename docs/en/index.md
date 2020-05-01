@@ -1,12 +1,7 @@
 # EdgeX Foundry Hands-on Labs
 
-![](img/index-logo.png)
+![](../img/index-logo.png)
 
-
-## Available Translations
-
-* [**Japanese / 日本語**](ja/)
-* [**English / 英語**](en/)
 
 
 ## About this guide

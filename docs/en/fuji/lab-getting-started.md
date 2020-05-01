@@ -1,4 +1,4 @@
-# Lab 2 - 導入とデータの確認
+# Lab 2 - Getting Started
 
 このラボでは、EdgeX Foundry をシンプルな構成で動作させ、テスト用のデバイスのデータがコアサービスに蓄積されていることを確認します。
 
@@ -14,7 +14,7 @@
 
 このラボでは、Docker Compose を利用して、Ubuntu 上の Docker コンテナ群として EdgeX Foundry を起動させます。
 
-![](img/getting-started-overview.png)
+![](../../img/fuji/getting-started-overview.png)
 
 
 ### 必要なファイルの用意
@@ -151,7 +151,7 @@ lab-getting-started_portainer_1        /portainer -H unix:///var/ ...   Up      
 
 今回の `docker-compose.yml` で定義されているマイクロサービスを、レイヤを踏まえて整理します。簡単にマッピングすると下図の通りです。
 
-![](img/getting-started-service-mapping.png)
+![](../../img/fuji/getting-started-service-mapping.png)
 
 | サービス名 | コンテナ名 | 役割 |
 |-|-|-|
@@ -185,7 +185,7 @@ lab-getting-started_portainer_1        /portainer -H unix:///var/ ...   Up      
 
 に注目して、特に、コアサービスのうち **データサービス** と **コマンドサービス**、デバイスサービスのうち **仮想デバイスサービス** を取り上げます。これ以外のサービスについても、後続のラボで取り上げていきます。
 
-![](img/getting-started-architecture.png)
+![](../../img/fuji/getting-started-architecture.png)
 
 本来の使い方では、EdgeX Foundry でデータを収集したい、あるいは EdgeX Foundry から制御したい何らかの物理的なデバイスが存在しているはずですが、このラボでは存在しません。その代わりこのラボでは、テスト用に標準で用意されている **仮想デバイス** を利用します。
 
@@ -201,7 +201,7 @@ lab-getting-started_portainer_1        /portainer -H unix:///var/ ...   Up      
 
 仮想デバイスを用いた今回のラボでは、大まかには次のような構成になっています。
 
-![](img/getting-started-device-virtual.png)
+![](../../img/fuji/getting-started-device-virtual.png)
 
 * **デバイス**
     * ランダムな値を生成し続けるだけの **デバイス** です
@@ -232,26 +232,26 @@ lab-getting-started_portainer_1        /portainer -H unix:///var/ ...   Up      
 
 `ui` サービス（`edgex-ui-go` コンテナ）が、標準の Web GUI です。
 
-![](img/getting-started-gui-architecture.png)
+![](../../img/fuji/getting-started-gui-architecture.png)
 
 Docker ホストの IP アドレスを確認して、`http://<IP アドレス>:4000/` にブラウザでアクセスし、デフォルトのユーザ `admin`（パスワードも `admin`）でログインできます。
 
-![](img/getting-started-gui-login.png)
+![](../../img/fuji/getting-started-gui-login.png)
 
 この GUI を利用するには、まずはこの GUI で操作する対象を登録する必要があります。左ペインの [`Gateway`] に遷移し、右ペインの [`Add`] ボタンで、[`Address`] に Docker ホストの IP アドレスを登録します。[`Name`] と [`Description`] は任意の文字列を入力しです。
 
-![](img/getting-started-gui-gateway.png)
+![](../../img/fuji/getting-started-gui-gateway.png)
 
 !!! tip "ゲートウェイ"
     GUI を操作すると、`edgex-ui-go` が各マイクロサービスへの REST API の実行を肩代わりしてくれます。ここでの **ゲートウェイ** は、この API のリクエスト先の IP アドレスです。よって、もしマイクロサービスが複数のノードに分散配置されている場合は、操作ごとにリクエスト先の IP アドレスを変更する必要がありますが、現在の実装では困難です。このため、セキュリティサービス（この本ガイドでは取り扱いません）に含まれるプロキシを API ゲートウェイとして利用する構成を検討します。
 
 登録したゲートウェイを選択した状態で左ペインから [`Device Service`] に遷移すると、仮想デバイスを制御しているデバイスサービスである `device-virtual` が登録されている様子が見えるはずです。
 
-![](img/getting-started-gui-device-service.png)
+![](../../img/fuji/getting-started-gui-device-service.png)
 
 さらにデバイスサービス `device-virtual` の [`Devices`] アイコンを展開すると、このデバイスサービスで管理している配下のデバイス（仮想デバイス）が確認できます。
 
-![](img/getting-started-gui-devices.png)
+![](../../img/fuji/getting-started-gui-devices.png)
 
 さらにデバイスごとの [`Commands`] を展開すると、デバイスごとの各リソースからの情報の取得（`get`）や、制御命令の実行（`set`）ができるようになっています。
 
@@ -263,7 +263,7 @@ Docker ホストの IP アドレスを確認して、`http://<IP アドレス>:4
 
 各マイクロサービスは REST API のエンドポイントを持っています。cURL や Postman などのツールを用いて、`GET` や `POST` のリクエストを発行することで、様々な操作を行えます。[公式のリファレンス](https://fuji-docs.edgexfoundry.org/Ch-APIReference.html) のほか、使い方の例は [API のウォークスルー](https://fuji-docs.edgexfoundry.org/Ch-Walkthrough.html) も参考にできます。
 
-![](img/getting-started-api-architecture.png)
+![](../../img/fuji/getting-started-api-architecture.png)
 
 例えば、存在しているデバイスサービスや、そこで管理されているデバイス群を確認したい場合は、以下のエンドポイントに `GET` リクエストを投げると JSON で返ってきます。
 
@@ -308,7 +308,7 @@ EdgeX Foundry では、デバイスから取得したひとつのデータは `R
 
 例えば、あるデバイスで **温度と湿度をセットで `get` できる** ように構成した場合は、ひとつの `Event` に二つの `Reading` が含まれることになります。
 
-![](img/getting-started-event.png)
+![](../../img/fuji/getting-started-event.png)
 
 
 ### 蓄積データの確認
@@ -322,7 +322,7 @@ EdgeX Foundry では、デバイスから取得したひとつのデータは `R
 
 を確認します。URL にこの情報を含めて `GET` します。
 
-![](img/getting-started-event-api.png)
+![](../../img/fuji/getting-started-event-api.png)
 
 ```bash hl_lines="1"
 $ curl -s http://localhost:48080/api/v1/event/device/Random-Float-Device/2 | jq

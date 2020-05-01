@@ -1,4 +1,4 @@
-# ハンズオンラボ for Fuji release
+# Hands-on Labs for Fuji release
 
 Fuji リリース向けのハンズオンラボです。
 
@@ -26,7 +26,7 @@ Ubuntu 上の Docker 環境を前提に、セットアップから起動確認�
 
 このガイドでは、以下の環境を前提としています。環境の構築自体はハンズオンガイドでは取り扱わないので、それぞれのドキュメントなどを参考に導入してください。
 
-![](img/index-requirements.png)
+![](../../img/fuji/index-requirements.png)
 
 ハンズオンは Ubuntu 上の Docker 環境を前提に進行します。**Ubuntu と Docker、Docker Compose の用意が必要** です。
 

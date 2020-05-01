@@ -1,4 +1,4 @@
-# Lab 5 - ルールエンジンの利用
+# Lab 5 - Using Rules Engine
 
 このラボでは、EdgeX Foundry のルールエンジンを構成して、あるデバイスの状態の変化をトリガにして別のデバイスを自動で操作させる手法を実践します。
 
@@ -15,7 +15,7 @@
 
 このラボでは、Docker Compose を利用して、Ubuntu 上の Docker コンテナ群として EdgeX Foundry を起動させます。また、自動制御対象とするデバイスのシミュレータと、それが利用する MQTT のブローカも Docker コンテナとして起動させます。
 
-![](img/support-rulesengine-overview.png)
+![](../../img/fuji/support-rulesengine-overview.png)
 
 これまでのラボでは、仮想デバイスや MQTT デバイスを用いて、デバイスからの情報の収集やデバイスへのコマンドの実行を試してきました。今回は、それらを応用して、ルールエンジンを利用して、
 
@@ -38,7 +38,7 @@
 
 ようなルールの実装を目指します。図示すると以下のような状態です。
 
-![](img/support-rulesengine-architecture.png)
+![](../../img/fuji/support-rulesengine-architecture.png)
 
 
 ### 必要なファイルの用意
@@ -75,7 +75,7 @@ MQTT を利用するデバイス用のデバイスサービス `device-mqtt-go` 
 * 外部の REST API のエンドポイントに `POST` することで値を送るようなデバイスを対象として
 * `POST` されたリクエストのボディを値として EdgeX Foundry に取り込む
 
-![](img/support-rulesengine-device-service-rest.png)
+![](../../img/fuji/support-rulesengine-device-service-rest.png)
 
 このデバイスサービスを構成すると、デバイスサービス自身が `POST` リクエストを受け付けるエンドポイントを持つようになります。
 
@@ -425,9 +425,9 @@ ID が得られたので、ルールを組み上げます。最終的に、今�
 
 Postman の `Body` に `raw` 形式で JSON 文字列を入力し、`POST` します。
 
-![](img/support-rulesengine-rule1.png)
+![](../../img/fuji/support-rulesengine-rule1.png)
 
-![](img/support-rulesengine-rule2.png)
+![](../../img/fuji/support-rulesengine-rule2.png)
 
 `true` が返ってきたら正常です。登録されているルールは、同じ URL に `GET` すると一覧で得られます。
 
@@ -508,7 +508,7 @@ REST デバイスが何か値を送った状況を模して、まずはルール
 $ curl -X POST -H "Content-Type: text/plain" -d 50 http://localhost:49986/api/v1/resource/REST_DEVICE/int
 ```
 
-![](img/support-rulesengine-test-not-triggered.png)
+![](../../img/fuji/support-rulesengine-test-not-triggered.png)
 
 直後に、ルールエンジンのログでは、`REST_DEVICE` からの値が届けられたことが確認できます。ただし、いずれのルールにも合致しない値であるため、ここでは何も起きません。
 
@@ -548,7 +548,7 @@ ResponseTopic {"cmd":"message","message":"HIGH","method":"set","uuid":"5e2c4946b
 ...
 ```
 
-![](img/support-rulesengine-test-triggered.png)
+![](../../img/fuji/support-rulesengine-test-triggered.png)
 
 試しにこの段階で MQTT デバイスの `testmessage` コマンドに `GET` してみると、値が狙い通りに変更されていることがわかります。
 
@@ -577,7 +577,7 @@ $ curl -X POST -H "Content-Type: text/plain" -d 10 http://localhost:49986/api/v1
 
 ログやトピックから、コマンドが実行されたことが確認でき、最終的には MQTT デバイス側の値が変わったことが確認できます。
 
-![](img/support-rulesengine-test-triggered.png)
+![](../../img/fuji/support-rulesengine-test-triggered.png)
 
 ```bash hl_lines="1"
 $ curl -s http://localhost:48082/api/v1/device/name/MQ_DEVICE/command/testmessage | jq

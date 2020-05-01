@@ -1,4 +1,4 @@
-# Lab 1 - 概要
+# Lab 1 - Overview
 
 EdgeX Foundry の大まかなアーキテクチャを理解します。
 
@@ -28,7 +28,7 @@ EdgeX Foundry は Linux Foundation が立ち上げた LF Edge のプロジェク
 
 アーキテクチャの概要は [公式のドキュメント](https://fuji-docs.edgexfoundry.org/Ch-Intro.html) からも読み解けます。
 
-![](img/overview-architecture.png)
+![](../../img/fuji/overview-architecture.png)
 
 EdgeX Foundry は多数のマイクロサービスの集合体として実装されており、図中の各コンポーネントそれぞれがひとつのサービス（プロセスまたはコンテナ）として動作します。コンポーネント同士は、REST API や ZMQ で連携します。
 

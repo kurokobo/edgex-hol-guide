@@ -1,4 +1,4 @@
-site_name: EdgeX Foundry ハンズオンラボ
+site_name: EdgeX Foundry Hands-on Labs
 site_author: "kurokobo"
 repo_url: https://github.com/kurokobo/edgex-hol-guide
 
@@ -33,14 +33,26 @@ extra:
           link: "https://twitter.com/kurokobo"
 
 nav:
-    - このガイドについて: index.md
-    - Fuji リリース向けガイド:
-        - Lab 0 - はじめに: "fuji/index.md"
-        - Lab 1 - 概要: "fuji/lab-overview.md"
-        - Lab 2 - 導入とデータの確認: "fuji/lab-getting-started.md"
-        - Lab 3 - デバイスサービスの追加（MQTT）: "fuji/lab-device-service-mqtt.md"
-        - Lab 4 - データのエクスポート（MQTT）: "fuji/lab-app-service-export-mqtt.md"
-        - Lab 5 - ルールエンジンの利用: "fuji/lab-support-rulesengine.md"
-    - Geneva リリース向けガイド:
-        - 準備中: "geneva/index.md"
-    
+    - Index: "index.md"
+    - Japanese:
+        - このガイドについて: "ja/index.md"
+        - Fuji リリース向けガイド:
+            - Lab 0 - はじめに: "ja/fuji/index.md"
+            - Lab 1 - 概要: "ja/fuji/lab-overview.md"
+            - Lab 2 - 導入とデータの確認: "ja/fuji/lab-getting-started.md"
+            - Lab 3 - デバイスサービスの追加（MQTT）: "ja/fuji/lab-device-service-mqtt.md"
+            - Lab 4 - データのエクスポート（MQTT）: "ja/fuji/lab-app-service-export-mqtt.md"
+            - Lab 5 - ルールエンジンの利用: "ja/fuji/lab-support-rulesengine.md"
+        - Geneva リリース向けガイド:
+            - 準備中: "ja/geneva/index.md"
+    - English:
+        - About this guide: "en/index.md"
+        - Guide for Fuji release:
+            - Lab 0 - Introduction: "en/fuji/index.md"
+            - Lab 1 - Overview: "en/fuji/lab-overview.md"
+            - Lab 2 - Getting Started: "en/fuji/lab-getting-started.md"
+            - Lab 3 - Adding a Device Service for MQTT: "en/fuji/lab-device-service-mqtt.md"
+            - Lab 4 - Exporting data to MQTT: "en/fuji/lab-app-service-export-mqtt.md"
+            - Lab 5 - Using Rules Engine: "en/fuji/lab-support-rulesengine.md"
+        - Guide for Geneva release:
+            - WIP: "en/geneva/index.md"

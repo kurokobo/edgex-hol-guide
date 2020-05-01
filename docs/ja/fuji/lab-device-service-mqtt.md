@@ -4,7 +4,7 @@
 
 ここでは、MQTT プロトコルを利用するデバイス（のシミュレータ）を用意し、これを制御するためのデバイスサービスを構成することで、下図のように EdgeX Foundry がそのデバイスと実際に（MQTT ブローカを介して）インタラクションできる状態を構成します。
 
-![](img/device-service-mqtt-architecture.png)
+![](../../img/fuji/device-service-mqtt-architecture.png)
 
 
 ## このラボのゴールと構成
@@ -16,7 +16,7 @@
 
 このラボでは、Docker Compose を利用して、Ubuntu 上の Docker コンテナ群として EdgeX Foundry を起動させます。また、デバイスのシミュレータと MQTT のブローカも Docker コンテナとして起動させます。
 
-![](img/device-service-mqtt-overview.png)
+![](../../img/fuji/device-service-mqtt-overview.png)
 
 
 ### 必要なファイルの用意
@@ -55,7 +55,7 @@ ls -l
 
 今回は、以下のような仕様のデバイスが存在するものとして、これを EdgeX Foundry の制御下に置くことを考えます。
 
-![](img/device-service-mqtt-device-overview.png)
+![](../../img/fuji/device-service-mqtt-device-overview.png)
 
 * 二種類のセンサを持つ
     * `randfloat32`
@@ -81,11 +81,11 @@ ls -l
 
 MQTT を利用するデバイスを EdgeX Foundry で管理する場合、典型的には、EdgeX Foundry のホストとは別に、MQTT ブローカと実際のデバイスが存在すると考えられます。
 
-![](img/device-service-mqtt-lab-tobe.png)
+![](../../img/fuji/device-service-mqtt-lab-tobe.png)
 
 ただし、今回はラボなので、すべてをラボ用の Ubuntu ホスト上で Docker コンテナとして動作させてしまいます。本来の姿とは若干の乖離がある点を理解した上で進めてください。
 
-![](img/device-service-mqtt-lab-asis.png)
+![](../../img/fuji/device-service-mqtt-lab-asis.png)
 
 
 ### シミュレータの起動
@@ -195,7 +195,7 @@ subscribe("CommandTopic", (topic, val) => {
 
 新しいターミナルを起動して、ブローカの全トピックを購読するためのコンテナを新たに起動します。15 秒ごとにトピック `DataTopic` にセンサ `randfloat32` の値が届いていれば、動作は正常です。ここでも、**コマンドに MQTT ブローカを示す IP アドレスを含む** ため、ご自身の環境に合わせて **適宜書き換えて** ください。
 
-![](img/device-service-mqtt-device-test1.png)
+![](../../img/fuji/device-service-mqtt-device-test1.png)
 
 ```bash hl_lines="1"
 $ docker run --init --rm --name=client -it kurokobo/mqtt-client sub -h 192.168.0.239 -t "#" -v
@@ -219,7 +219,7 @@ $ docker run --init -it --rm kurokobo/mqtt-client pub -h 192.168.0.239 -t "Comma
 !!! note "`failed to resize tty`"
     実行時に `failed to resize tty, using default size` のメッセージが表示される場合がありますが、無視して構いません。
 
-![](img/device-service-mqtt-device-test2.png)
+![](../../img/fuji/device-service-mqtt-device-test2.png)
 
 購読している側では、命令が `CommandTopic` に届き、そのコマンドに応じた応答が `ResponseTopic` に配信されていることが確認できます。
 
@@ -275,7 +275,7 @@ ResponseTopic {"name":"MQ_DEVICE","method":"get","cmd":"message","message":"modi
 
 この実態を踏まえ、EdgeX Foundry では、実デバイスと EdgeX Foundry の間を取り持つ存在として、**デバイスサービス** とよばれるマイクロサービスを定義しています。デバイスサービスは、典型的には **プロトコルごと** または **デバイスの種類ごと** に用意します。ひとつのデバイスサービスで **ひとつ以上のデバイスを制御** できます。
 
-![](img/device-service-mqtt-device-service-overview.png)
+![](../../img/fuji/device-service-mqtt-device-service-overview.png)
 
 デバイスサービスは、以下のような役割を持ちます。
 
@@ -637,7 +637,7 @@ $ docker-compose ps
 !!! tip "マイクロサービスの起動状態"
     EdgeX Foundry は、マイクロサービス群の状態管理に [HashiCorp の Consul](https://www.consul.io/) を利用しており、各サービスの起動状態や登録状態は、この Consul を通じても確認できます。
 
-    ![](img/device-service-mqtt-consul.png)
+    ![](../../img/fuji/device-service-mqtt-consul.png)
 
     Consul の GUI には、`http://<IP アドレス>:8500/` でアクセスでき、サービスの状態のほか、構成情報（Key-Value ストアの中身）も確認できます。
 
@@ -659,7 +659,7 @@ Web GUI を利用して、登録状態を確認します。
 
 API でも、同様の確認を行えます。API でデバイスサービスやデバイスの登録状態を確認する場合は、リクエスト先は `metadata` サービス（`48081` 番ポート）です。
 
-![](img/device-service-mqtt-device-api-metadata.png)
+![](../../img/fuji/device-service-mqtt-device-api-metadata.png)
 
 ```json hl_lines="1 28"
 $ curl -s  http://localhost:48081/api/v1/deviceservice | jq
@@ -886,7 +886,7 @@ $ curl -s http://localhost:48082/api/v1/device/77fccbb8-f33b-42d8-bf21-6d55cdde2
 }
 ```
 
-![](img/device-service-mqtt-device-api-command.png)
+![](../../img/fuji/device-service-mqtt-device-api-command.png)
 
 まだ何も変更していないので、初期値（`mqtt-script.js` で定義されている）か、または動作確認で変更したあとの文字列（上記では `modified-message`）が返ってきました。
 
@@ -917,7 +917,7 @@ $ curl -s http://localhost:48082/api/v1/device/77fccbb8-f33b-42d8-bf21-6d55cdde2
 
 なお、このような `GET` や `PUT` に相当する操作は、GUI からも実行できます。
 
-![](img/device-service-mqtt-gui.png)
+![](../../img/fuji/device-service-mqtt-gui.png)
 
 !!! tip "GUI からの操作"
     GUI からの `get` や `set` 操作は、たまにうまく動かないことがあります。ほとんどの場合、ブラウザをリロードして再試行すると成功します。
