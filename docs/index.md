@@ -52,6 +52,13 @@
 * :fa-book: [ブログ](https://blog.kurokobo.com/)
 
 
+### お問い合わせ
+
+本ガイドの内容について、問題の指摘や改善の提案、質問などがあるときは、[このガイドのリポジトリに Issue を作成](https://github.com/kurokobo/edgex-hol-guide/issues) してください。
+
+**修正や改善の Pull Request も歓迎** します。
+
+
 ## ハンズオンラボガイド
 
 ガイド本編です。
