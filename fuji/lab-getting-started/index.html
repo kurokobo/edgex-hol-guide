@@ -989,7 +989,7 @@ lab-getting-started_portainer_1        /portainer -H unix:///var/ ...   Up      
 <p>さらにデバイスごとの [<code>Commands</code>] を展開すると、デバイスごとの各リソースからの情報の取得（<code>get</code>）や、制御命令の実行（<code>set</code>）ができるようになっています。</p>
 <div class="admonition note">
 <p class="admonition-title">別の GUI</p>
-<p>別の GUI が欲しい場合、<a href="https://github.com/edgexfoundry/edgex-ui-clojure"><code>edgex-ui-closure</code></a> という、Edge Xpert（EdgeX Foundry の商用版）の GUI のベースになったものも存在しています。見た目もきれいで最低限の動作もしますが、開発はあまり活発ではないようです。簡単な構成方法は、<a href="https://blog.kurokobo.com/archives/2665">こちらのブログエントリ（日本語）</a> でも紹介しています（情報が古い可能性があります）。</p>
+<p>別の GUI が欲しい場合、<a href="https://github.com/edgexfoundry/edgex-ui-clojure"><code>edgex-ui-closure</code></a> という、Edge Xpert（EdgeX Foundry の商用版）の GUI のベースになったものも存在しています。見た目もきれいで最低限の動作もしますが、開発はあまり活発ではないようです。簡単な構成方法は、<a href="https://blog.kurokobo.com/archives/2665">こちらのブログエントリ（日本語）</a> でも紹介されています（情報が古い可能性があります）。</p>
 </div>
 <h3 id="api">API での操作<a class="headerlink" href="#api" title="Permanent link">&para;</a></h3>
 <p>各マイクロサービスは REST API のエンドポイントを持っています。cURL や Postman などのツールを用いて、<code>GET</code> や <code>POST</code> のリクエストを発行することで、様々な操作を行えます。<a href="https://fuji-docs.edgexfoundry.org/Ch-APIReference.html">公式のリファレンス</a> のほか、使い方の例は <a href="https://fuji-docs.edgexfoundry.org/Ch-Walkthrough.html">API のウォークスルー</a> も参考にできます。</p>
@@ -1021,7 +1021,7 @@ lab-getting-started_portainer_1        /portainer -H unix:///var/ ...   Up      
 </div>
 <h3 id="cli">CLI での操作<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h3>
 <p>CLI として、現時点ではまだ GA していませんが、<a href="https://github.com/edgexfoundry-holding/edgex-cli"><code>edgex-cli</code> というプロジェクト</a> で開発が進められています。</p>
-<p>開発途中であり仕様が大きく変更される可能性があることから、本ガイドでは取り扱いませんが、<a href="https://github.com/edgexfoundry-holding/edgex-cli/blob/master/README.md">リポジトリの <code>README.md</code></a> の導入手順に従うと利用できます。<a href="https://blog.kurokobo.com/archives/2665">こちらのブログエントリ（日本語）</a> では、コンテナを利用して動作させる方法を紹介しています（情報が古い可能性があります）。</p>
+<p>開発途中であり仕様が大きく変更される可能性があることから、本ガイドでは取り扱いませんが、<a href="https://github.com/edgexfoundry-holding/edgex-cli/blob/master/README.md">リポジトリの <code>README.md</code></a> の導入手順に従うと利用できます。<a href="https://blog.kurokobo.com/archives/2665">こちらのブログエントリ（日本語）</a> では、コンテナを利用して動作させる方法が紹介されています（情報が古い可能性があります）。</p>
 <h2 id="_7">蓄積データの確認<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p>今回利用しているデバイスサービスは、事前に構成された設定に従って、起動すると自動的に動作を開始します。つまり、仮想デバイスではランダムな数値が生成され、その値はデバイスサービス <code>virtual-device</code> を通じてコアサービスにすでに蓄積されています。</p>
 <p>ここでは、実際に蓄積された値を確認します。</p>
