@@ -837,6 +837,14 @@ ls -l
 
 </div>
 </div>
+<p>この段階で、今回利用する MQTT デバイスのシミュレータが動作を開始します。<strong>新しいターミナル</strong> でブローカの全トピックを購読し、<code>DataTopic</code> に定期的に値が届いていることを確認します。ここでも、<strong>コマンドに IP アドレスを含むため、適宜修正して実行</strong> します。</p>
+<div class="highlight"><pre><span></span><code><span class="hll">$ docker run --init --rm --name<span class="o">=</span>client -it kurokobo/mqtt-client sub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;#&quot;</span> -v
+</span>...
+DataTopic <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;MQ_DEVICE&quot;</span>,<span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat32&quot;</span>,<span class="s2">&quot;randfloat32&quot;</span>:<span class="s2">&quot;27.4&quot;</span><span class="o">}</span>
+DataTopic <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;MQ_DEVICE&quot;</span>,<span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat32&quot;</span>,<span class="s2">&quot;randfloat32&quot;</span>:<span class="s2">&quot;28.6&quot;</span><span class="o">}</span>
+</code></pre></div>
+
+<p>このターミナルは、今後の動作確認のためにも <strong>起動させたまま</strong> にします。</p>
 <p>最後に、EdgeX Foundry を起動します。<code>State</code> が <code>Up</code> になることを確認します。</p>
 <div class="highlight"><pre><span></span><code><span class="hll">$ <span class="nb">cd</span> ../
 </span>
@@ -1094,6 +1102,10 @@ export.zeromq.host<span class="o">=</span>tcp://edgex-app-service-configurable-r
 <p><img alt="" src="../img/support-rulesengine-rule1.png" /></p>
 <p><img alt="" src="../img/support-rulesengine-rule2.png" /></p>
 <p><code>true</code> が返ってきたら正常です。登録されているルールは、同じ URL に <code>GET</code> すると一覧で得られます。</p>
+<div class="admonition tip">
+<p class="admonition-title"><code>Could not get any response</code> が返る</p>
+<p>ルールエンジンは若干動作が不安定で、たまに落ちることがあるようです。Postman で <code>Could not get any response</code> が返ってきた場合、ルールエンジンのコンテナ <code>edgex-support-rulesengine</code> が停止している可能性があります。<code>docker-compose ps</code> で確認し、もし停止していれば <code>docker-compose up -d</code> で再度起動させます。</p>
+</div>
 <h3 id="_11">ルールの確認<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <p>ルールが投入されると、ルールエンジンが <code>rule-template.drl</code> を元にして新しい <code>&lt;ルール名&gt;.drl</code> ファイルを生成し、利用が開始されます。生成されたファイルはコンテナ内にあるため、ここでは <code>edgex-support-rulesengine</code> 内のファイルを <code>cat</code> して覗きます。</p>
 <div class="highlight"><pre><span></span><code><span class="hll">$ docker <span class="nb">exec</span> edgex-support-rulesengine cat /edgex/edgex-support-rulesengine/rules/rule_int_high.drl
@@ -1112,9 +1124,9 @@ executor.fireCommand<span class="o">(</span><span class="s2">&quot;09dae1fc-e2be
 logger.info<span class="o">(</span><span class="s2">&quot;Action triggered: The value is too high.&quot;</span><span class="o">)</span><span class="p">;</span>
 end
 
-$ docker <span class="nb">exec</span> edgex-support-rulesengine cat /edgex/edgex-support-rulesengine/rules/rule_int_low.drl
-<span class="hll">package org.edgexfoundry.rules<span class="p">;</span>
-</span>global org.edgexfoundry.engine.CommandExecutor executor<span class="p">;</span>
+<span class="hll">$ docker <span class="nb">exec</span> edgex-support-rulesengine cat /edgex/edgex-support-rulesengine/rules/rule_int_low.drl
+</span>package org.edgexfoundry.rules<span class="p">;</span>
+global org.edgexfoundry.engine.CommandExecutor executor<span class="p">;</span>
 global org.edgexfoundry.support.logging.client.EdgeXLogger logger<span class="p">;</span>
 import org.edgexfoundry.domain.core.Event<span class="p">;</span>
 import org.edgexfoundry.domain.core.Reading<span class="p">;</span>
@@ -1133,12 +1145,7 @@ end
 <p>なお、現在の API では、定義されたルールの名称を一覧できるのみで、具体的なルールの中身までは確認できないようです。ルールの中身を確認するには、上記のようにコンテナ内のファイルを確認する必要があります。</p>
 <h2 id="_12">ルールエンジンの動作確認<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
 <p>ここから、ルールの動作を確認していきます。</p>
-<p>動きを追いやすくするため、新しいターミナルを二つ開き、それぞれ、</p>
-<ul>
-<li><code>edgex-support-rulesengine</code> のログを常時表示させ</li>
-<li>MQTT ブローカの全トピックを購読する</li>
-</ul>
-<p>ようにしておきます。</p>
+<p>動きを追いやすくするため、追加で新しいターミナルを開き、ルールエンジンのコンテナ <code>edgex-support-rulesengine</code> のログを常時表示させます。</p>
 <div class="highlight"><pre><span></span><code><span class="hll">$ docker logs -f --tail<span class="o">=</span><span class="m">10</span> edgex-support-rulesengine
 </span><span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:15.023<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: JSON event received
 <span class="o">[</span><span class="m">2020</span>-01-25 <span class="m">13</span>:44:15.024<span class="o">]</span> boot - <span class="m">6</span>  INFO <span class="o">[</span>main<span class="o">]</span> --- ZeroMQEventSubscriber: Event sent to rules engine <span class="k">for</span> device id:  MQ_DEVICE
@@ -1147,13 +1154,18 @@ end
 ...
 </code></pre></div>
 
+<div class="admonition tip">
+<p class="admonition-title"><code>Aborted (core dumped)</code> が表示される</p>
+<p>ログの最下行が <code>Aborted (core dumped)</code> で、プロンプトが返ってきてしまう場合、ルールエンジンのコンテナ <code>edgex-support-rulesengine</code> が停止しています。<code>docker-compose ps</code> で確認し、停止していれば <code>docker-compose up -d</code> で再度起動させます。ルールの再投入は不要です。</p>
+</div>
+<p>MQTT ブローカを購読しているターミナルが無ければ、これも新しいターミナルで起動させます。</p>
 <div class="highlight"><pre><span></span><code><span class="hll">$ docker run --init --rm --name<span class="o">=</span>client -it kurokobo/mqtt-client sub -h <span class="m">192</span>.168.0.239 -t <span class="s2">&quot;#&quot;</span> -v
 </span>logic/connected <span class="m">2</span>
 DataTopic <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;MQ_DEVICE&quot;</span>,<span class="s2">&quot;cmd&quot;</span>:<span class="s2">&quot;randfloat32&quot;</span>,<span class="s2">&quot;randfloat32&quot;</span>:<span class="s2">&quot;27.0&quot;</span><span class="o">}</span>
 ...
 </code></pre></div>
 
-<p>REST デバイスが何か値を送った状況を模して、まずはルールに合致しないデータを REST デバイスサービスに <code>POST</code> します。</p>
+<p>ここで、REST デバイスが何か値を送った状況を模して、まずはルールに合致しないデータを REST デバイスサービスに <code>POST</code> します。</p>
 <div class="highlight"><pre><span></span><code><span class="hll">$ curl -X POST -H <span class="s2">&quot;Content-Type: text/plain&quot;</span> -d <span class="m">50</span> http://localhost:49986/api/v1/resource/REST_DEVICE/int
 </span></code></pre></div>
 
