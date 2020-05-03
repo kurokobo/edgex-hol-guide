@@ -256,7 +256,7 @@ Docker ホストの IP アドレスを確認して、`http://<IP アドレス>:4
 さらにデバイスごとの [`Commands`] を展開すると、デバイスごとの各リソースからの情報の取得（`get`）や、制御命令の実行（`set`）ができるようになっています。
 
 !!! note "別の GUI"
-    別の GUI が欲しい場合、[`edgex-ui-closure`](https://github.com/edgexfoundry/edgex-ui-clojure) という、Edge Xpert（EdgeX Foundry の商用版）の GUI のベースになったものも存在しています。見た目もきれいで最低限の動作もしますが、開発はあまり活発ではないようです。簡単な構成方法は、[こちらのブログエントリ（日本語）](https://blog.kurokobo.com/archives/2665) でも紹介しています（情報が古い可能性があります）。
+    別の GUI が欲しい場合、[`edgex-ui-closure`](https://github.com/edgexfoundry/edgex-ui-clojure) という、Edge Xpert（EdgeX Foundry の商用版）の GUI のベースになったものも存在しています。見た目もきれいで最低限の動作もしますが、開発はあまり活発ではないようです。簡単な構成方法は、[こちらのブログエントリ（日本語）](https://blog.kurokobo.com/archives/2665) でも紹介されています（情報が古い可能性があります）。
 
 
 ### API での操作
@@ -286,7 +286,7 @@ Docker ホストの IP アドレスを確認して、`http://<IP アドレス>:4
 
 CLI として、現時点ではまだ GA していませんが、[`edgex-cli` というプロジェクト](https://github.com/edgexfoundry-holding/edgex-cli) で開発が進められています。
 
-開発途中であり仕様が大きく変更される可能性があることから、本ガイドでは取り扱いませんが、[リポジトリの `README.md`](https://github.com/edgexfoundry-holding/edgex-cli/blob/master/README.md) の導入手順に従うと利用できます。[こちらのブログエントリ（日本語）](https://blog.kurokobo.com/archives/2665) では、コンテナを利用して動作させる方法を紹介しています（情報が古い可能性があります）。
+開発途中であり仕様が大きく変更される可能性があることから、本ガイドでは取り扱いませんが、[リポジトリの `README.md`](https://github.com/edgexfoundry-holding/edgex-cli/blob/master/README.md) の導入手順に従うと利用できます。[こちらのブログエントリ（日本語）](https://blog.kurokobo.com/archives/2665) では、コンテナを利用して動作させる方法が紹介されています（情報が古い可能性があります）。
 
 
 ## 蓄積データの確認

@@ -37,19 +37,18 @@
 
 **このガイドは :fa-exclamation-triangle: 非公式 :fa-exclamation-triangle: です。**
 
-このガイドは、EdgeX Foundry を趣味で触っている個人が、趣味の範囲で作成したものです。本業とは無関係であり、事業や営利目的の活動ではありません。
-
 * EdgeX Foundry 開発コミュニティの承認やレビュなどは受けていません。
-* 内容は個人の見解であり、所属する組織の公式見解ではありません。
+* 内容は執筆者の各個人の見解であり、所属する組織の公式見解ではありません。
 * 正しい情報を記載するよう努めていますが、必ずしも正確性を保証するものではありません。
 * 本ガイドに掲載された内容によって生じた損害などの一切の責任を負いません。
 
 
 ### 書いたひと
 
-* :fa-twitter: [Twitter](https://twitter.com/kurokobo)
-* :fa-github: [GitHub](https://github.com/kurokobo)
-* :fa-book: [ブログ](https://blog.kurokobo.com/)
+* [**@kurokobo**](https://github.com/kurokobo)
+    * [:fa-github: GitHub](https://github.com/kurokobo)
+    * [:fa-twitter: Twitter](https://twitter.com/kurokobo)
+    * [:fa-book: Blog](https://blog.kurokobo.com/)
 
 
 ## ハンズオンラボガイド
