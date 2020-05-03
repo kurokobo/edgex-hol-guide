@@ -156,6 +156,17 @@ REST デバイスだけでなく MQTT デバイスも使うので、これも準
     9e1c5939be6a        eclipse-mosquitto            "/docker-entrypoint.…"   16 minutes ago      Up 16 minutes       0.0.0.0:1883->1883/tcp   broker
     ```
 
+この段階で、今回利用する MQTT デバイスのシミュレータが動作を開始します。**新しいターミナル** でブローカの全トピックを購読し、`DataTopic` に定期的に値が届いていることを確認します。ここでも、**コマンドに IP アドレスを含むため、適宜修正して実行** します。
+
+```bash hl_lines="1"
+$ docker run --init --rm --name=client -it kurokobo/mqtt-client sub -h 192.168.0.239 -t "#" -v
+...
+DataTopic {"name":"MQ_DEVICE","cmd":"randfloat32","randfloat32":"27.4"}
+DataTopic {"name":"MQ_DEVICE","cmd":"randfloat32","randfloat32":"28.6"}
+```
+
+このターミナルは、今後の動作確認のためにも **起動させたまま** にします。
+
 最後に、EdgeX Foundry を起動します。`State` が `Up` になることを確認します。
 
 ```bash hl_lines="1 3 5"
@@ -431,12 +442,15 @@ Postman の `Body` に `raw` 形式で JSON 文字列を入力し、`POST` し�
 
 `true` が返ってきたら正常です。登録されているルールは、同じ URL に `GET` すると一覧で得られます。
 
+!!! tip "`Could not get any response` が返る"
+    ルールエンジンは若干動作が不安定で、たまに落ちることがあるようです。Postman で `Could not get any response` が返ってきた場合、ルールエンジンのコンテナ `edgex-support-rulesengine` が停止している可能性があります。`docker-compose ps` で確認し、もし停止していれば `docker-compose up -d` で再度起動させます。
+
 
 ### ルールの確認
 
 ルールが投入されると、ルールエンジンが `rule-template.drl` を元にして新しい `<ルール名>.drl` ファイルを生成し、利用が開始されます。生成されたファイルはコンテナ内にあるため、ここでは `edgex-support-rulesengine` 内のファイルを `cat` して覗きます。
 
-```bash hl_lines="1 18"
+```bash hl_lines="1 17"
 $ docker exec edgex-support-rulesengine cat /edgex/edgex-support-rulesengine/rules/rule_int_high.drl
 package org.edgexfoundry.rules;
 global org.edgexfoundry.engine.CommandExecutor executor;
@@ -479,12 +493,7 @@ end
 
 ここから、ルールの動作を確認していきます。
 
-動きを追いやすくするため、新しいターミナルを二つ開き、それぞれ、
-
-* `edgex-support-rulesengine` のログを常時表示させ
-* MQTT ブローカの全トピックを購読する
-
-ようにしておきます。
+動きを追いやすくするため、追加で新しいターミナルを開き、ルールエンジンのコンテナ `edgex-support-rulesengine` のログを常時表示させます。
 
 ```bash hl_lines="1"
 $ docker logs -f --tail=10 edgex-support-rulesengine
@@ -495,6 +504,11 @@ $ docker logs -f --tail=10 edgex-support-rulesengine
 ...
 ```
 
+!!! tip "`Aborted (core dumped)` が表示される"
+    ログの最下行が `Aborted (core dumped)` で、プロンプトが返ってきてしまう場合、ルールエンジンのコンテナ `edgex-support-rulesengine` が停止しています。`docker-compose ps` で確認し、停止していれば `docker-compose up -d` で再度起動させます。ルールの再投入は不要です。
+
+MQTT ブローカを購読しているターミナルが無ければ、これも新しいターミナルで起動させます。
+
 ```bash hl_lines="1"
 $ docker run --init --rm --name=client -it kurokobo/mqtt-client sub -h 192.168.0.239 -t "#" -v
 logic/connected 2
@@ -502,7 +516,7 @@ DataTopic {"name":"MQ_DEVICE","cmd":"randfloat32","randfloat32":"27.0"}
 ...
 ```
 
-REST デバイスが何か値を送った状況を模して、まずはルールに合致しないデータを REST デバイスサービスに `POST` します。
+ここで、REST デバイスが何か値を送った状況を模して、まずはルールに合致しないデータを REST デバイスサービスに `POST` します。
 
 ```bash hl_lines="1"
 $ curl -X POST -H "Content-Type: text/plain" -d 50 http://localhost:49986/api/v1/resource/REST_DEVICE/int
